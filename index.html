@@ -37,20 +37,20 @@
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.4s ease-in-out;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
         }
-        .dark-theme .card:not(.no-hover-effect):not(.hero-about-flip-card .card):not(.education-item):hover {
+        .dark-theme .card:not(.no-hover-effect):not(.education-item):hover { 
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.25), 0 4px 6px -4px rgba(220, 38, 38, 0.25); /* Red shadow */
+            box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.25), 0 4px 6px -4px rgba(220, 38, 38, 0.25); 
         }
         .dark-theme .tag {
             background-color: #374151; /* Medium Gray */
             color: #D1D5DB; /* Lighter Gray */
         }
-        .dark-theme .hobby-tag { /* Red accent for hobby tags */
+        .dark-theme .hobby-tag { 
             background-color: #B91C1C; /* Darker Red */
             color: #FEE2E2; /* Lightest Red */
         }
-        .dark-theme .icon-link { color: #9CA3AF; } /* Standard Gray */
-        .dark-theme .icon-link:hover { color: #F87171; } /* Light Red hover */
+        .dark-theme .icon-link { color: #9CA3AF; } 
+        .dark-theme .icon-link:hover { color: #F87171; } 
 
         .dark-theme nav {
             background-color: rgba(17, 24, 39, 0.85); 
@@ -81,26 +81,31 @@
         }
         .dark-theme .btn-secondary:hover { background-color: #EF4444; color: white; }
         
-        .dark-theme .hero-about-flip-card .flip-card-front .hero-name {
+        /* Hero Section Specific Styles - Dark Theme */
+        .dark-theme #hero .hero-name {
             background: linear-gradient(to right, #FCA5A5, #FECACA, #FEE2E2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .dark-theme .hero-about-flip-card .flip-card-front .hero-designation {
+        .dark-theme #hero .hero-designation {
             color: #9CA3AF !important;
         }
-         .dark-theme .hero-about-flip-card .flip-card-front .profile-image-border {
+        .dark-theme #hero .profile-image-border {
             border-color: #EF4444;
         }
 
+        /* About Me Section Specific Styles - Dark Theme */
+        .dark-theme #about-me .text-content-color { 
+             color: #9CA3AF !important; 
+        }
+
+
         .dark-theme .text-content-area .text-gray-400, 
-        .dark-theme .education-folder-content .text-gray-400, 
-        .dark-theme .hero-about-flip-card .flip-card-back .text-gray-400
+        .dark-theme .education-folder-content .text-gray-400
         { color: #9CA3AF !important; }
 
         .dark-theme .text-content-area .text-gray-500, 
-        .dark-theme .education-folder-content .text-gray-500, 
-        .dark-theme .hero-about-flip-card .flip-card-back .text-gray-500
+        .dark-theme .education-folder-content .text-gray-500
         { color: #6B7280 !important; }
         
         .dark-theme .education-folder-tab .text-indigo-400 { color: #FCA5A5 !important; } 
@@ -121,11 +126,12 @@
         .dark-theme #contact .card a:hover { color: #F43F5E !important; }
         .dark-theme #hobbies .card .text-gray-300 { color: #D1D5DB !important; }
         
-        .dark-theme .education-folder-content p, .dark-theme .education-folder-content ul, .dark-theme .education-folder-content li, .dark-theme .education-folder-content span, .dark-theme .education-folder-content a, 
-        .dark-theme .hero-about-flip-card .flip-card-back p
+        .dark-theme .education-folder-content p, .dark-theme .education-folder-content ul, .dark-theme .education-folder-content li, .dark-theme .education-folder-content span, .dark-theme .education-folder-content a
         { color: #D1D5DB; }
+         .dark-theme #about-me .card p { color: #D1D5DB; } 
+        .dark-theme #about-me .text-content-color { color: #9CA3AF !important; } 
 
-        .dark-theme .hero-about-flip-card .flip-card-back .buttons-container { margin-top: 1.5rem; }
+
         .dark-theme .education-folder-content .text-gray-400 { color: #9CA3AF !important; } 
         .dark-theme .education-folder-content .text-gray-500 { color: #6B7280 !important; } 
         .dark-theme .education-folder-content .text-amber-500 { color: #F87171 !important; } 
@@ -168,7 +174,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
             border: 1px solid #E5E7EB; 
         }
-        .light-theme .card:not(.no-hover-effect):not(.hero-about-flip-card .card):not(.education-item):hover {
+        .light-theme .card:not(.no-hover-effect):not(.education-item):hover { 
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1), 0 4px 6px -4px rgba(16, 185, 129, 0.1); 
         }
@@ -213,34 +219,38 @@
         }
         .light-theme .btn-secondary:hover { background-color: #10B981; color: white; }
 
-        .light-theme .hero-about-flip-card .flip-card-front .hero-name {
+        /* Hero Section Specific Styles - Light Theme */
+        .light-theme #hero .hero-name {
             background: linear-gradient(to right, #34D399, #6EE7B7, #A7F3D0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .light-theme .hero-about-flip-card .flip-card-front .hero-designation {
+        .light-theme #hero .hero-designation {
              color: #4B5563 !important; 
         }
-        .light-theme .hero-about-flip-card .flip-card-front .profile-image-border {
+        .light-theme #hero .profile-image-border {
             border-color: #10B981; 
+        }
+
+        /* About Me Section Specific Styles - Light Theme */
+        .light-theme #about-me .text-content-color { 
+            color: #4B5563 !important; 
         }
 
 
         .light-theme .text-content-area h3, .light-theme .text-content-area p, .light-theme .text-content-area li, .light-theme .text-content-area a,
-        .light-theme .education-folder-content h3, .light-theme .education-folder-content p, .light-theme .education-folder-content li, .light-theme .education-folder-content a, 
-        .light-theme .hero-about-flip-card .flip-card-back p
+        .light-theme .education-folder-content h3, .light-theme .education-folder-content p, .light-theme .education-folder-content li, .light-theme .education-folder-content a
         { color: #1F2937; }
+        .light-theme #about-me .card p { color: #1F2937; } 
+        .light-theme #about-me .text-content-color { color: #4B5563 !important; } 
 
-        .light-theme .hero-about-flip-card .flip-card-back .buttons-container { margin-top: 1.5rem; }
         
         .light-theme .text-content-area .text-gray-400, 
-        .light-theme .education-folder-content .text-gray-400, 
-        .light-theme .hero-about-flip-card .flip-card-back .text-gray-400
+        .light-theme .education-folder-content .text-gray-400
         { color: #6B7280 !important; } 
 
         .light-theme .text-content-area .text-gray-500, 
-        .light-theme .education-folder-content .text-gray-500, 
-        .light-theme .hero-about-flip-card .flip-card-back .text-gray-500
+        .light-theme .education-folder-content .text-gray-500
         { color: #4B5563 !important; } 
         
         .light-theme .education-folder-tab .text-indigo-400 { color: #065F46 !important; } 
@@ -317,102 +327,18 @@
         .light-theme .theme-slider .sun-icon { color: #FBBF24; opacity: 0;} 
         .light-theme .theme-slider .moon-icon { color: #059669; opacity: 1;} 
 
-
-        /* FLIP CARD STYLES (Only for Hero/About) */
-        .flip-card-container-base { 
-            perspective: 1500px;
-        }
-        .flip-card-inner-base {
-            position: relative;
-            width: 100%;
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transform-style: preserve-3d;
-        }
-        
-        .flip-card-container-base:hover .flip-card-inner-base { 
-            transform: rotateY(180deg);
-        }
-        
-        .flip-card-front-base,
-        .flip-card-back-base {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 0.75rem; 
-            overflow: hidden; 
-            display: flex; 
-            flex-direction: column;
-        }
-        .flip-card-front-base { padding: 1.5rem; } 
-        .flip-card-back-base { padding: 1.5rem; } 
-
-
-        .flip-card-back-base {
-            transform: rotateY(180deg); 
-        }
-
-        /* Hero/About Flip Card Specifics */
-        .hero-about-flip-card { 
+        /* Hero Section Specifics (Static Layout) */
+        #hero { 
             margin-bottom: 3rem; 
             scroll-margin-top: 5rem; 
         }
-        .hero-about-flip-card .flip-card-inner-base {
-            min-height: 450px; 
-        }
-        .hero-about-flip-card .flip-card-front-base,
-        .hero-about-flip-card .flip-card-back-base {
-            justify-content: center; 
-        }
-        .dark-theme .hero-about-flip-card .flip-card-front-base,
-        .dark-theme .hero-about-flip-card .flip-card-back-base {
-            background-color: #1F2937; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-        .light-theme .hero-about-flip-card .flip-card-front-base,
-        .light-theme .hero-about-flip-card .flip-card-back-base {
-            background-color: #F9FAFB; 
-            border: 1px solid #E5E7EB; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        .hero-about-flip-card .flip-card-back-base {
-            align-items: center; 
-        }
-        .hero-about-flip-card .flip-card-front-base .content-wrapper { 
-            width: 100%;
-            text-align: center; 
-        }
-        .hero-about-flip-card .flip-card-back-base .content-wrapper { 
-            width: 100%;
-            max-width: 600px; 
-            text-align: center; 
-        }
-        .hero-about-flip-card .flip-card-back-base .content-wrapper p { 
-            text-align: center; 
-            margin-bottom: 1rem; 
-        }
-        .hero-about-flip-card .flip-card-back-base .about-me-separator {
-            width: 50%; 
-            margin: 1rem auto 1.5rem auto; 
-        }
-        .flip-hint { 
-            font-size: 0.875rem; 
-            font-style: italic;
-            margin-top: 1rem;
-        }
-        .dark-theme .flip-hint { color: #9CA3AF; }
-        .light-theme .flip-hint { color: #6B7280; }
-
-        /* Education Card Specifics (Reverted to Docked Info) */
+        
+        /* Education Card Specifics (Docked Info) */
         #education-carousel-container { 
             overflow: hidden;
         }
-        .education-item { /* Main container for each education card */
+        .education-item { 
             min-height: 330px; 
-            /* Base card styling (bg, shadow, radius) comes from '.card' class via Tailwind */
-            /* `p-0` is added directly to the HTML element to override card padding */
-            /* `relative` is added directly to the HTML element for positioning children */
         }
 
         .institute-info-dock {
@@ -420,14 +346,14 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 0.75rem; /* Tailwind: p-3 */
+            padding: 0.75rem; 
             text-align: center;
             z-index: 10;
             transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out;
         }
 
         .dark-theme .institute-info-dock {
-            background-color: rgba(31, 41, 55, 0.85); /* Semi-transparent dark */
+            background-color: rgba(31, 41, 55, 0.85); 
         }
         .dark-theme .institute-info-dock .degree-title { 
             color: #FCA5A5 !important; 
@@ -437,7 +363,7 @@
         }
 
         .light-theme .institute-info-dock {
-            background-color: rgba(229, 231, 235, 0.85); /* Semi-transparent light */
+            background-color: rgba(229, 231, 235, 0.85); 
         }
         .light-theme .institute-info-dock .degree-title { 
             color: #059669 !important; 
@@ -446,18 +372,18 @@
             color: #374151 !important; 
         }
         
-        .degree-title { /* General styling for degree titles in the dock */
-            font-size: 1rem; /* Tailwind: text-base */
-            font-weight: 600; /* Tailwind: font-semibold */
-            margin-bottom: 0.25rem; /* Tailwind: mb-1 */
+        .degree-title { 
+            font-size: 1rem; 
+            font-weight: 600; 
+            margin-bottom: 0.25rem; 
         }
-        .degree-info { /* General styling for other info in the dock */
-            font-size: 0.875rem; /* Tailwind: text-sm or text-xs */
-            line-height: 1.25rem; /* Tailwind: leading-tight */
+        .degree-info { 
+            font-size: 0.875rem; 
+            line-height: 1.25rem; 
         }
 
 
-        /* Education Carousel Arrows (No change needed here) */
+        /* Education Carousel Arrows */
         .edu-nav-arrow {
             position: absolute;
             top: 50%;
@@ -491,7 +417,7 @@
             background-color: #D1D5DB; 
         }
 
-        /* Folder Styles (For other sections like Experience, Projects, Publications) - No change */
+        /* Folder Styles */
         .education-folders-wrapper { 
             display: flex;
             flex-direction: column;
@@ -588,7 +514,8 @@
                 
                 <div class="flex items-center">
                     <div id="nav-links" class="hidden md:flex md:items-center md:space-x-1 lg:space-x-2">
-                        <a href="#hero-about-section" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">About</a>
+                        <a href="#hero" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Hero</a>
+                        <a href="#about-me" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">About Me</a>
                         <a href="#education" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Education</a>
                         <a href="#skills" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Skills</a>
                         <a href="#experience" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Experience</a>
@@ -616,7 +543,8 @@
                 </div>
             </div>
             <div id="mobile-menu" class="hidden md:hidden pb-3">
-                 <a href="#hero-about-section" class="block py-2 px-3 text-sm rounded-md">About</a>
+                 <a href="#hero" class="block py-2 px-3 text-sm rounded-md">Hero</a>
+                 <a href="#about-me" class="block py-2 px-3 text-sm rounded-md">About Me</a>
                 <a href="#education" class="block py-2 px-3 text-sm rounded-md">Education</a>
                 <a href="#skills" class="block py-2 px-3 text-sm rounded-md">Skills</a>
                 <a href="#experience" class="block py-2 px-3 text-sm rounded-md">Experience</a>
@@ -630,31 +558,30 @@
 
     <main class="container mx-auto px-4 sm:px-6 py-12">
 
-        <section id="hero-about-section" class="hero-about-flip-card flip-card-container-base scroll-mt-20">
-            <div class="flip-card-inner-base">
-                <div class="flip-card-front-base">
-                    <div class="content-wrapper text-center">
-                        <img src="Kusal_D.jpg" alt="Kusal Debnath" 
-                             class="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto rounded-full object-cover border-4 profile-image-border shadow-xl mb-6"
-                             onerror="this.onerror=null; this.src='https://placehold.co/192x192/111827/E5E7EB?text=KD';">
-                        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 hero-name">
-                            Kusal <span class="accent-gradient-text">Debnath</span>
-                        </h1>
-                        <p class="text-base sm:text-lg md:text-xl hero-designation mb-6 sm:mb-8">Graduate Researcher | AI-driven Drug Discovery</p>
-                        </div>
-                </div>
-                <div class="flip-card-back-base">
-                    <div class="content-wrapper"> 
-                        <h2 class="text-2xl sm:text-3xl font-bold mb-4 accent-gradient-text">About Me</h2>
-                        <div class="about-me-separator accent-border"></div>
-                        <p class="text-base sm:text-lg leading-relaxed text-gray-400"> 
-                            Graduate Researcher specializing in AI-driven drug discovery, with expertise in Machine Learning (ML), Deep Learning (DL), Generative AI (Gen-AI) RNA-Seq analysis, and molecular docking. Experienced in de novo drug design and drug-target interaction (DTI) prediction modeling. Passionate about leveraging computational biology and AI to advance precision medicine and cheminformatics. Aspiring to lead interdisciplinary research integrating AI and pharmacogenomics for drug discovery.
-                        </p>
-                        <div class="buttons-container flex flex-col space-y-3 w-full max-w-xs mx-auto sm:flex-row sm:space-y-0 sm:space-x-4 sm:max-w-sm">
-                            <a href="#contact" class="btn btn-primary w-full text-sm py-2.5 sm:text-base sm:py-3 rounded-lg text-center">Get in Touch</a>
-                            <a href="CV.pdf" target="_blank" class="btn btn-secondary w-full text-sm py-2.5 sm:text-base sm:py-3 rounded-lg text-center" id="cvLink">Download CV</a>
-                        </div>
+        <section id="hero" class="scroll-mt-20 mb-12 md:mb-16">
+            <div class="card no-hover-effect p-6 md:p-8 overflow-hidden"> 
+                <div class="flex flex-col items-center text-center">
+                    <img src="Kusal_D.jpg" alt="Kusal Debnath" 
+                         class="profile-image w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto rounded-full object-cover border-4 profile-image-border shadow-xl mb-6"
+                         onerror="this.onerror=null; this.src='https://placehold.co/192x192/111827/E5E7EB?text=KD';">
+                    
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 hero-name">
+                        Kusal <span class="accent-gradient-text">Debnath</span>
+                    </h1>
+                    <p class="text-base sm:text-lg md:text-xl hero-designation mb-6">Graduate Researcher | AI-driven Drug Discovery</p>
                     </div>
+            </div>
+        </section>
+
+        <section id="about-me" class="mb-12 md:mb-16 scroll-mt-20">
+            <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">About Me</h2>
+            <div class="card no-hover-effect text-content-area"> 
+                <p class="text-base sm:text-lg leading-relaxed text-content-color text-left sm:text-center mb-6"> 
+                    Graduate Researcher specializing in AI-driven drug discovery, with expertise in Machine Learning (ML), Deep Learning (DL), Generative AI (Gen-AI) RNA-Seq analysis, and molecular docking. Experienced in de novo drug design and drug-target interaction (DTI) prediction modeling. Passionate about leveraging computational biology and AI to advance precision medicine and cheminformatics. Aspiring to lead interdisciplinary research integrating AI and pharmacogenomics for drug discovery.
+                </p>
+                <div class="buttons-container flex flex-col space-y-3 w-full max-w-xs mx-auto sm:flex-row sm:space-y-0 sm:space-x-4 sm:max-w-sm mt-4">
+                    <a href="#contact" class="btn btn-primary w-full text-sm py-2.5 sm:text-base sm:py-3 rounded-lg text-center">Get in Touch</a>
+                    <a href="CV.pdf" target="_blank" class="btn btn-secondary w-full text-sm py-2.5 sm:text-base sm:py-3 rounded-lg text-center" id="cvLink">Download CV</a>
                 </div>
             </div>
         </section>
@@ -668,9 +595,11 @@
                         <img src="vcu.jpg" alt="Virginia Commonwealth University" 
                              class="edu-card-image absolute inset-0 w-full h-full object-cover" 
                              onerror="this.src='https://placehold.co/400x200/1f2937/e5e7eb?text=VCU'">
-                        <div class="institute-info-dock"> <h3 class="degree-title">Doctor of Philosophy (PhD) in Computer Science</h3>
+                        <div class="institute-info-dock"> 
+                            <h3 class="degree-title">Doctor of Philosophy (PhD) in Computer Science</h3>
                             <p class="degree-info">Virginia Commonwealth University</p>
-                            <p class="degree-info text-xs">Aug 2023 – Present</p> </div>
+                            <p class="degree-info text-xs">Aug 2023 – Present</p> 
+                        </div>
                     </div>
 
                     <div class="education-item card rounded-lg shadow-lg overflow-hidden relative p-0">
@@ -911,7 +840,7 @@
             // DOM Elements
             const themeToggleSlider = document.getElementById('theme-toggle-slider');
             const body = document.body;
-            const profileImage = document.querySelector('#hero-about-section .flip-card-front-base img');
+            const profileImage = document.querySelector('#hero img.profile-image'); 
             const educationLogos = document.querySelectorAll('.edu-card-image'); 
     
     
@@ -921,11 +850,9 @@
                 const isLightTheme = theme === 'light';
                 body.classList.add(isLightTheme ? 'light-theme' : 'dark-theme');
 
-                // Define placeholder URLs based on the theme
                 const placeholderBase = isLightTheme ? 'https://placehold.co/192x192/FFFFFF/1F2937?text=' : 'https://placehold.co/192x192/111827/E5E7EB?text=';
-                const eduPlaceholderBase = isLightTheme ? 'https://placehold.co/400x200/F9FAFB/1F2937?text=' : 'https://placehold.co/400x200/1f2937/e5e7eb?text='; // Adjusted placeholder size for education cards
+                const eduPlaceholderBase = isLightTheme ? 'https://placehold.co/400x200/F9FAFB/1F2937?text=' : 'https://placehold.co/400x200/1f2937/e5e7eb?text='; 
     
-                // Update profile image placeholder
                 if (profileImage) {
                     profileImage.onerror = () => { profileImage.src = placeholderBase + 'KD'; };
                     if (profileImage.src.startsWith('https://placehold.co/')) {
@@ -933,7 +860,6 @@
                     }
                 }
 
-                // Update education logos placeholders
                 educationLogos.forEach(logo => {
                     const altText = logo.alt.split(' ')[0] || 'IMG'; 
                     logo.onerror = () => { logo.src = eduPlaceholderBase + altText.substring(0,6).toUpperCase(); }; 
@@ -956,7 +882,6 @@
                 });
             }
     
-            // Function to toggle between dark and light themes
             function toggleTheme() {
                 const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
                 const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -1020,18 +945,18 @@
                     let navHeight = document.querySelector('nav').offsetHeight || 60; 
                     let offset = navHeight + 40; 
     
-                    const heroAboutSection = document.getElementById('hero-about-section');
-                    if (heroAboutSection) {
-                        const heroAboutTop = heroAboutSection.offsetTop;
-                        const heroAboutHeight = heroAboutSection.offsetHeight;
-                        if (pageYOffset < heroAboutTop + heroAboutHeight - (window.innerHeight * 0.3)) {
-                            currentSectionId = 'hero-about-section';
+                    const heroSection = document.getElementById('hero'); 
+                    if (heroSection) {
+                        const heroTop = heroSection.offsetTop;
+                        const heroHeight = heroSection.offsetHeight;
+                        if (pageYOffset < heroTop + heroHeight - (window.innerHeight * 0.3)) {
+                            currentSectionId = 'hero'; 
                         }
                     }
     
                     if (!currentSectionId) { 
                         sections.forEach(section => {
-                            if (section.id === 'hero-about-section') return; 
+                            if (section.id === 'hero') return; 
                             const sectionTop = section.offsetTop;
                             const sectionHeight = section.offsetHeight;
                             if (pageYOffset >= sectionTop - offset && pageYOffset < sectionTop + sectionHeight - offset) {
@@ -1041,12 +966,12 @@
                     }
     
                     if (!currentSectionId && sections.length > 0) {
-                        if (pageYOffset < sections[0].offsetTop - offset && sections[0].id !== 'hero-about-section') {
+                         if (pageYOffset < sections[0].offsetTop - offset && sections[0].id !== 'hero') { 
                             currentSectionId = sections[0].getAttribute('id');
                         } else if (pageYOffset + window.innerHeight >= document.body.scrollHeight - 20) {
                             currentSectionId = sections[sections.length - 1].getAttribute('id');
-                        } else if (!currentSectionId && heroAboutSection) { 
-                             currentSectionId = 'hero-about-section';
+                        } else if (!currentSectionId && heroSection) { 
+                             currentSectionId = 'hero';
                         }
                     }
     
@@ -1129,8 +1054,6 @@
                         eduItems.forEach(item => {
                             item.style.width = '100%'; 
                             item.style.flexShrink = '0';
-                            // item.style.display = 'flex'; // Already has flex for column layout if needed, but for carousel, block or flex is fine.
-                                                        // The card itself (.education-item) is now relative, not flex-col
                         });
                         
                         showEduSlide(currentEduSlideIndex); 
