@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kusal Debnath - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Default Dark Theme Styles - BLACK/GRAY BASE, RED ACCENTS */
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out;
+        }
+
+        body.dark-theme {
+            background-color: #111827; /* Dark Gray (almost black) */
+            color: #E5E7EB; /* Light Gray */
+        }
+
+        .dark-theme .accent-gradient-text {
+            background: linear-gradient(to right, #EF4444, #F87171, #DC2626); /* Red gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .dark-theme .accent-border {
+            border-bottom-width: 4px; /* Match section-title border thickness */
+            border-style: solid;
+            border-image-slice: 1;
+            border-image-source: linear-gradient(to right, #EF4444, #DC2626); /* Red gradient */
+        }
+        .dark-theme .card { 
+            background-color: #1F2937; /* Gray-blue (darker gray) */
+            border-radius: 0.75rem; 
+            padding: 1.5rem;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.4s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
+        }
+        .dark-theme .card:not(.no-hover-effect):not(.hero-about-flip-card .card):not(.education-item):hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.25), 0 4px 6px -4px rgba(220, 38, 38, 0.25); /* Red shadow */
+        }
+        .dark-theme .tag {
+            background-color: #374151; /* Medium Gray */
+            color: #D1D5DB; /* Lighter Gray */
+        }
+        .dark-theme .hobby-tag { /* Red accent for hobby tags */
+            background-color: #B91C1C; /* Darker Red */
+            color: #FEE2E2; /* Lightest Red */
+        }
+        .dark-theme .icon-link { color: #9CA3AF; } /* Standard Gray */
+        .dark-theme .icon-link:hover { color: #F87171; } /* Light Red hover */
+
+        .dark-theme nav {
+            background-color: rgba(17, 24, 39, 0.85); 
+            backdrop-filter: blur(5px); 
+        }
+        .dark-theme #nav-links a { color: #D1D5DB; } 
+        .dark-theme #nav-links a:hover, .dark-theme #nav-links a.active {
+            color: #FCA5A5; 
+            border-bottom-color: #FCA5A5;
+        }
+        .dark-theme #mobile-menu a { color: #D1D5DB; }
+        .dark-theme #mobile-menu a:hover { background-color: #374151; color: #FCA5A5; }
+        .dark-theme #mobile-menu a.active { background-color: #4B5563; color: #FCA5A5; }
+        .dark-theme #mobile-menu-button svg { stroke: #D1D5DB; }
+        
+        .dark-theme .btn-primary {
+            background: linear-gradient(to right, #DC2626, #B91C1C); 
+            color: white;
+        }
+        .dark-theme .btn-primary:hover {
+            background: linear-gradient(to right, #B91C1C, #991B1B);
+            box-shadow: 0 0 15px rgba(220, 38, 38, 0.5); 
+        }
+        .dark-theme .btn-secondary {
+            background-color: transparent;
+            color: #FCA5A5; 
+            border-color: #EF4444; 
+        }
+        .dark-theme .btn-secondary:hover { background-color: #EF4444; color: white; }
+        
+        .dark-theme .hero-about-flip-card .flip-card-front .hero-name {
+            background: linear-gradient(to right, #FCA5A5, #FECACA, #FEE2E2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .dark-theme .hero-about-flip-card .flip-card-front .hero-designation {
+            color: #9CA3AF !important;
+        }
+         .dark-theme .hero-about-flip-card .flip-card-front .profile-image-border {
+            border-color: #EF4444;
+        }
+
+        .dark-theme .text-content-area .text-gray-400, 
+        .dark-theme .education-folder-content .text-gray-400, 
+        .dark-theme .hero-about-flip-card .flip-card-back .text-gray-400
+        { color: #9CA3AF !important; }
+
+        .dark-theme .text-content-area .text-gray-500, 
+        .dark-theme .education-folder-content .text-gray-500, 
+        .dark-theme .hero-about-flip-card .flip-card-back .text-gray-500
+        { color: #6B7280 !important; }
+        
+        .dark-theme .education-folder-tab .text-indigo-400 { color: #FCA5A5 !important; } 
+        .dark-theme .education-folder-tab .text-amber-400 { color: #F87171 !important; }  
+        .dark-theme .education-folder-tab .text-teal-400 { color: #FCA5A5 !important; }   
+        .dark-theme .education-folder-tab .text-purple-400 { color: #FB7185 !important; } 
+
+        .dark-theme .text-content-area .text-pink-400 { color: #FB7185 !important; } 
+        .dark-theme .text-content-area .text-amber-400:not(.education-folder-tab .text-amber-400) { color: #F87171 !important; } 
+        .dark-theme .text-content-area .text-teal-400:not(.education-folder-tab .text-teal-400) { color: #FCA5A5 !important; }
+        .dark-theme .text-content-area .text-purple-400:not(.education-folder-tab .text-purple-400) { color: #FB7185 !important; }
+
+        .dark-theme .project-card-footer a { color: #F87171; } 
+        .dark-theme .project-card-footer a:hover { color: #EF4444; }
+        .dark-theme .text-content-area .text-amber-500 { color: #F87171; }
+        .dark-theme .text-content-area .text-amber-500:hover { color: #EF4444; }
+        .dark-theme #contact .card .text-pink-400 { color: #FB7185 !important; } 
+        .dark-theme #contact .card a:hover { color: #F43F5E !important; }
+        .dark-theme #hobbies .card .text-gray-300 { color: #D1D5DB !important; }
+        
+        .dark-theme .education-folder-content p, .dark-theme .education-folder-content ul, .dark-theme .education-folder-content li, .dark-theme .education-folder-content span, .dark-theme .education-folder-content a, 
+        .dark-theme .hero-about-flip-card .flip-card-back p
+        { color: #D1D5DB; }
+
+        .dark-theme .hero-about-flip-card .flip-card-back .buttons-container { margin-top: 1.5rem; }
+        .dark-theme .education-folder-content .text-gray-400 { color: #9CA3AF !important; } 
+        .dark-theme .education-folder-content .text-gray-500 { color: #6B7280 !important; } 
+        .dark-theme .education-folder-content .text-amber-500 { color: #F87171 !important; } 
+        .dark-theme .education-folder-content .text-amber-500:hover { color: #EF4444 !important; }
+
+        .dark-theme footer { background-color: #0B0F1A; color: #9CA3AF; } 
+        .dark-theme footer .text-gray-500 { color: #6B7280 !important; }
+        .dark-theme footer .text-gray-600 { color: #4B5563 !important; }
+        .dark-theme footer .fa-heart { color: #EF4444 !important; } 
+        
+        .dark-theme ::-webkit-scrollbar-track { background: #1F2937; } 
+        .dark-theme ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #EF4444, #B91C1C); } 
+        .dark-theme ::-webkit-scrollbar-thumb:hover { background: linear-gradient(to bottom, #DC2626, #991B1B); }
+
+        /* Light Theme Styles - WHITE BASE, GREEN ACCENTS */
+        body.light-theme {
+            background-color: #FFFFFF; 
+            color: #1F2937; 
+        }
+
+        .light-theme .accent-gradient-text {
+            background: linear-gradient(to right, #10B981, #34D399, #059669); 
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .light-theme .accent-border {
+            border-bottom-width: 4px; 
+            border-style: solid;
+            border-image-slice: 1;
+            border-image-source: linear-gradient(to right, #10B981, #059669); 
+        }
+        .light-theme .section-title {
+            color: #047857; 
+        }
+        .light-theme .card { 
+            background-color: #F9FAFB; 
+            border-radius: 0.75rem; 
+            padding: 1.5rem;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.4s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            border: 1px solid #E5E7EB; 
+        }
+        .light-theme .card:not(.no-hover-effect):not(.hero-about-flip-card .card):not(.education-item):hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1), 0 4px 6px -4px rgba(16, 185, 129, 0.1); 
+        }
+        .light-theme .tag {
+            background-color: #D1FAE5; 
+            color: #065F46; 
+        }
+        .light-theme .hobby-tag { 
+            background-color: #059669; 
+            color: #ECFDF5; 
+        }
+        .light-theme .icon-link { color: #047857; } 
+        .light-theme .icon-link:hover { color: #10B981; } 
+        
+        .light-theme nav {
+            background-color: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid #E5E7EB; 
+        }
+        .light-theme #nav-links a { color: #374151; } 
+        .light-theme #nav-links a:hover, .light-theme #nav-links a.active {
+            color: #059669; 
+            border-bottom-color: #059669;
+        }
+        .light-theme #mobile-menu a { color: #374151; }
+        .light-theme #mobile-menu a:hover { background-color: #F3F4F6; color: #059669; }
+        .light-theme #mobile-menu a.active { background-color: #E5E7EB; color: #059669; }
+        .light-theme #mobile-menu-button svg { stroke: #374151; }
+
+        .light-theme .btn-primary {
+            background: linear-gradient(to right, #10B981, #059669); 
+            color: white;
+        }
+        .light-theme .btn-primary:hover {
+            background: linear-gradient(to right, #059669, #047857);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+        .light-theme .btn-secondary {
+            background-color: transparent;
+            color: #059669; 
+            border-color: #10B981; 
+        }
+        .light-theme .btn-secondary:hover { background-color: #10B981; color: white; }
+
+        .light-theme .hero-about-flip-card .flip-card-front .hero-name {
+            background: linear-gradient(to right, #34D399, #6EE7B7, #A7F3D0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .light-theme .hero-about-flip-card .flip-card-front .hero-designation {
+             color: #4B5563 !important; 
+        }
+        .light-theme .hero-about-flip-card .flip-card-front .profile-image-border {
+            border-color: #10B981; 
+        }
+
+
+        .light-theme .text-content-area h3, .light-theme .text-content-area p, .light-theme .text-content-area li, .light-theme .text-content-area a,
+        .light-theme .education-folder-content h3, .light-theme .education-folder-content p, .light-theme .education-folder-content li, .light-theme .education-folder-content a, 
+        .light-theme .hero-about-flip-card .flip-card-back p
+        { color: #1F2937; }
+
+        .light-theme .hero-about-flip-card .flip-card-back .buttons-container { margin-top: 1.5rem; }
+        
+        .light-theme .text-content-area .text-gray-400, 
+        .light-theme .education-folder-content .text-gray-400, 
+        .light-theme .hero-about-flip-card .flip-card-back .text-gray-400
+        { color: #6B7280 !important; } 
+
+        .light-theme .text-content-area .text-gray-500, 
+        .light-theme .education-folder-content .text-gray-500, 
+        .light-theme .hero-about-flip-card .flip-card-back .text-gray-500
+        { color: #4B5563 !important; } 
+        
+        .light-theme .education-folder-tab .text-indigo-400 { color: #065F46 !important; } 
+        .light-theme .education-folder-tab .text-amber-400 { color: #047857 !important; }  
+        .light-theme .education-folder-tab .text-teal-400 { color: #065F46 !important; }   
+        .light-theme .education-folder-tab .text-purple-400 { color: #047857 !important; } 
+
+        .light-theme .text-content-area .text-pink-400 { color: #34D399 !important; } 
+        .light-theme .text-content-area .text-amber-400:not(.education-folder-tab .text-amber-400) { color: #059669 !important; }
+        .light-theme .text-content-area .text-teal-400:not(.education-folder-tab .text-teal-400) { color: #059669 !important; }
+        .light-theme .text-content-area .text-purple-400:not(.education-folder-tab .text-purple-400) { color: #059669 !important; }
+
+        .light-theme .project-card-footer a { color: #059669; }
+        .light-theme .project-card-footer a:hover { color: #047857; }
+        .light-theme .text-content-area .text-amber-500 { color: #059669; }
+        .light-theme .text-content-area .text-amber-500:hover { color: #047857; }
+        .light-theme #contact .card .text-pink-400 { color: #34D399 !important; }
+        .light-theme #contact .card a:hover { color: #10B981 !important; }
+        .light-theme #hobbies .card .text-gray-300 { color: #1F2937 !important; } 
+
+        .light-theme .education-folder-content p, .light-theme .education-folder-content ul, .light-theme .education-folder-content li, .light-theme .education-folder-content span, .light-theme .education-folder-content a
+        { color: #374151; }
+
+        .light-theme .education-folder-content .text-gray-400 { color: #6B7280 !important; }
+        .light-theme .education-folder-content .text-gray-500 { color: #4B5563 !important; }
+        .light-theme .education-folder-content .text-amber-500 { color: #059669 !important; } 
+        .light-theme .education-folder-content .text-amber-500:hover { color: #047857 !important; }
+
+        .light-theme footer { background-color: #F3F4F6; color: #4B5563; border-top: 1px solid #E5E7EB;} 
+        .light-theme footer .text-gray-500 { color: #6B7280 !important; }
+        .light-theme footer .text-gray-600 { color: #4B5563 !important; }
+        .light-theme footer .fa-heart { color: #10B981 !important; } 
+
+        .light-theme ::-webkit-scrollbar-track { background: #F3F4F6; } 
+        .light-theme ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #34D399, #10B981); } 
+        .light-theme ::-webkit-scrollbar-thumb:hover { background: linear-gradient(to bottom, #10B981, #059669); }
+
+        /* Common styles */
+        .section-title {
+            font-size: 2rem; 
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom-width: 4px; 
+            border-style: solid;
+        }
+        .tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px; 
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { border-radius: 4px; }
+
+        /* Theme Toggle Slider Styles */
+        .theme-slider-container { display: flex; align-items: center; margin-left: 1rem; }
+        .theme-slider { display: flex; align-items: center; cursor: pointer; width: 64px; height: 32px; border-radius: 16px; position: relative; transition: background-color 0.4s ease-in-out; border: 1px solid transparent; }
+        .theme-slider-thumb { width: 26px; height: 26px; border-radius: 50%; position: absolute; top: 2px; left: 3px; transition: transform 0.4s ease-in-out, background-color 0.4s ease-in-out; box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); }
+        .theme-slider .icon { font-size: 14px; transition: opacity 0.4s ease-in-out, color 0.4s ease-in-out; position: absolute; top: 50%; transform: translateY(-50%); pointer-events: none; }
+        .theme-slider .sun-icon { left: 6px; }
+        .theme-slider .moon-icon { right: 6px; }
+        
+        .dark-theme .theme-slider { background-color: #4B5563; border-color: #6B7280; } 
+        .dark-theme .theme-slider-thumb { background-color: #FEE2E2; transform: translateX(30px); } 
+        .dark-theme .theme-slider .sun-icon { color: #FBBF24; opacity: 1;} 
+        .dark-theme .theme-slider .moon-icon { color: #EF4444; opacity: 0;} 
+        
+        .light-theme .theme-slider { background-color: #D1FAE5; border-color: #A7F3D0; } 
+        .light-theme .theme-slider-thumb { background-color: #ffffff; border: 1px solid #E5E7EB; transform: translateX(0px); }
+        .light-theme .theme-slider .sun-icon { color: #FBBF24; opacity: 0;} 
+        .light-theme .theme-slider .moon-icon { color: #059669; opacity: 1;} 
+
+
+        /* FLIP CARD STYLES (Only for Hero/About) */
+        .flip-card-container-base { 
+            perspective: 1500px;
+        }
+        .flip-card-inner-base {
+            position: relative;
+            width: 100%;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card-container-base:hover .flip-card-inner-base { 
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front-base,
+        .flip-card-back-base {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 0.75rem; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column;
+        }
+        .flip-card-front-base { padding: 1.5rem; } 
+        .flip-card-back-base { padding: 1.5rem; } 
+
+
+        .flip-card-back-base {
+            transform: rotateY(180deg); 
+        }
+
+        /* Hero/About Flip Card Specifics */
+        .hero-about-flip-card { 
+            margin-bottom: 3rem; 
+            scroll-margin-top: 5rem; 
+        }
+        .hero-about-flip-card .flip-card-inner-base {
+            min-height: 450px; 
+        }
+        .hero-about-flip-card .flip-card-front-base,
+        .hero-about-flip-card .flip-card-back-base {
+            justify-content: center; 
+        }
+        .dark-theme .hero-about-flip-card .flip-card-front-base,
+        .dark-theme .hero-about-flip-card .flip-card-back-base {
+            background-color: #1F2937; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .light-theme .hero-about-flip-card .flip-card-front-base,
+        .light-theme .hero-about-flip-card .flip-card-back-base {
+            background-color: #F9FAFB; 
+            border: 1px solid #E5E7EB; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .hero-about-flip-card .flip-card-back-base {
+            align-items: center; 
+        }
+        .hero-about-flip-card .flip-card-front-base .content-wrapper { 
+            width: 100%;
+            text-align: center; 
+        }
+        .hero-about-flip-card .flip-card-back-base .content-wrapper { 
+            width: 100%;
+            max-width: 600px; 
+            text-align: center; 
+        }
+        .hero-about-flip-card .flip-card-back-base .content-wrapper p { 
+            text-align: center; 
+            margin-bottom: 1rem; 
+        }
+        .hero-about-flip-card .flip-card-back-base .about-me-separator {
+            width: 50%; 
+            margin: 1rem auto 1.5rem auto; 
+        }
+        .flip-hint { 
+            font-size: 0.875rem; 
+            font-style: italic;
+            margin-top: 1rem;
+        }
+        .dark-theme .flip-hint { color: #9CA3AF; }
+        .light-theme .flip-hint { color: #6B7280; }
+
+        /* Education Card Specifics (Reverted to Docked Info) */
+        #education-carousel-container { 
+            overflow: hidden;
+        }
+        .education-item { /* Main container for each education card */
+            min-height: 330px; 
+            /* Base card styling (bg, shadow, radius) comes from '.card' class via Tailwind */
+            /* `p-0` is added directly to the HTML element to override card padding */
+            /* `relative` is added directly to the HTML element for positioning children */
+        }
+
+        .institute-info-dock {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0.75rem; /* Tailwind: p-3 */
+            text-align: center;
+            z-index: 10;
+            transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out;
+        }
+
+        .dark-theme .institute-info-dock {
+            background-color: rgba(31, 41, 55, 0.85); /* Semi-transparent dark */
+        }
+        .dark-theme .institute-info-dock .degree-title { 
+            color: #FCA5A5 !important; 
+        }
+        .dark-theme .institute-info-dock .degree-info { 
+            color: #D1D5DB !important; 
+        }
+
+        .light-theme .institute-info-dock {
+            background-color: rgba(229, 231, 235, 0.85); /* Semi-transparent light */
+        }
+        .light-theme .institute-info-dock .degree-title { 
+            color: #059669 !important; 
+        }
+        .light-theme .institute-info-dock .degree-info { 
+            color: #374151 !important; 
+        }
+        
+        .degree-title { /* General styling for degree titles in the dock */
+            font-size: 1rem; /* Tailwind: text-base */
+            font-weight: 600; /* Tailwind: font-semibold */
+            margin-bottom: 0.25rem; /* Tailwind: mb-1 */
+        }
+        .degree-info { /* General styling for other info in the dock */
+            font-size: 0.875rem; /* Tailwind: text-sm or text-xs */
+            line-height: 1.25rem; /* Tailwind: leading-tight */
+        }
+
+
+        /* Education Carousel Arrows (No change needed here) */
+        .edu-nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0.75rem; 
+            border-radius: 9999px; 
+            z-index: 10;
+            cursor: pointer;
+            transition: background-color 0.2s ease, opacity 0.2s ease;
+        }
+        .edu-nav-arrow:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        #edu-prev { left: -1rem; }
+        #edu-next { right: -1rem; }
+
+        .dark-theme .edu-nav-arrow {
+            background-color: #4B5563; 
+            color: #FEE2E2; 
+        }
+        .dark-theme .edu-nav-arrow:not(:disabled):hover {
+            background-color: #6B7280; 
+        }
+
+        .light-theme .edu-nav-arrow {
+            background-color: #E5E7EB; 
+            color: #059669; 
+        }
+        .light-theme .edu-nav-arrow:not(:disabled):hover {
+            background-color: #D1D5DB; 
+        }
+
+        /* Folder Styles (For other sections like Experience, Projects, Publications) - No change */
+        .education-folders-wrapper { 
+            display: flex;
+            flex-direction: column;
+            gap: 1rem; 
+        }
+        .education-folder-container { 
+            border-radius: 0.75rem; 
+            transition: box-shadow 0.3s ease-in-out;
+            overflow: hidden; 
+        }
+        .education-folder-tab { 
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            position: relative; 
+            transition: background-color 0.3s ease;
+            border: 1px solid; 
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+        }
+        .education-folder-tab h3 { 
+            margin-bottom: 0; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            font-size: 1.125rem; 
+        }
+        .education-folder-tab .tab-arrow { 
+            transition: transform 0.3s ease-in-out;
+            font-size: 0.8em; 
+            margin-left: 0.5rem;
+        }
+        .education-folder-content { 
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 1.5rem; 
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-out, padding-top 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding-bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid; 
+            border-top: none; 
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
+        }
+        .education-folder-container:hover .education-folder-content {
+            max-height: 700px; 
+            opacity: 1;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+        .education-folder-container:hover .tab-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dark-theme .education-folder-tab {
+            background-color: #374151; 
+            border-color: #4B5563; 
+        }
+        .dark-theme .education-folder-tab:hover {
+            background-color: #4B5563; 
+        }
+        .dark-theme .education-folder-content {
+            background-color: #1F2937; 
+            border-color: #4B5563; 
+        }
+        .dark-theme .education-folder-container:hover {
+            box-shadow: 0 6px 12px rgba(220, 38, 38, 0.2); 
+        }
+
+        .light-theme .education-folder-tab {
+            background-color: #F3F4F6; 
+            border-color: #E5E7EB; 
+        }
+        .light-theme .education-folder-tab:hover {
+            background-color: #E5E7EB; 
+        }
+        .light-theme .education-folder-content {
+            background-color: #FFFFFF; 
+            border-color: #E5E7EB; 
+        }
+        .light-theme .education-folder-container:hover {
+            box-shadow: 0 6px 12px rgba(16, 185, 129, 0.15); 
+        }
+        .text-content-area { 
+            /* General text content area styling if needed */
+        }
+
+    </style>
+</head>
+<body class="antialiased"> 
+    <nav class="sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex justify-between items-center py-3">
+                <a href="#" class="text-2xl font-bold accent-gradient-text">KD</a>
+                
+                <div class="flex items-center">
+                    <div id="nav-links" class="hidden md:flex md:items-center md:space-x-1 lg:space-x-2">
+                        <a href="#hero-about-section" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">About</a>
+                        <a href="#education" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Education</a>
+                        <a href="#skills" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Skills</a>
+                        <a href="#experience" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Experience</a>
+                        <a href="#projects" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Projects</a>
+                        <a href="#publications" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Publications</a>
+                        <a href="#hobbies" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Hobbies</a>
+                        <a href="#contact" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Contact</a>
+                    </div>
+
+                    <div class="theme-slider-container">
+                        <div id="theme-toggle-slider" class="theme-slider" aria-label="Toggle theme">
+                            <i class="fas fa-sun icon sun-icon"></i>
+                            <div class="theme-slider-thumb"></div>
+                            <i class="fas fa-moon icon moon-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="md:hidden flex items-center ml-2">
+                        <button id="mobile-menu-button" class="focus:outline-none">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pb-3">
+                 <a href="#hero-about-section" class="block py-2 px-3 text-sm rounded-md">About</a>
+                <a href="#education" class="block py-2 px-3 text-sm rounded-md">Education</a>
+                <a href="#skills" class="block py-2 px-3 text-sm rounded-md">Skills</a>
+                <a href="#experience" class="block py-2 px-3 text-sm rounded-md">Experience</a>
+                <a href="#projects" class="block py-2 px-3 text-sm rounded-md">Projects</a>
+                <a href="#publications" class="block py-2 px-3 text-sm rounded-md">Publications</a>
+                <a href="#hobbies" class="block py-2 px-3 text-sm rounded-md">Hobbies</a>
+                <a href="#contact" class="block py-2 px-3 text-sm rounded-md">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 sm:px-6 py-12">
+
+        <section id="hero-about-section" class="hero-about-flip-card flip-card-container-base scroll-mt-20">
+            <div class="flip-card-inner-base">
+                <div class="flip-card-front-base">
+                    <div class="content-wrapper text-center">
+                        <img src="Kusal_D.jpg" alt="Kusal Debnath" 
+                             class="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto rounded-full object-cover border-4 profile-image-border shadow-xl mb-6"
+                             onerror="this.onerror=null; this.src='https://placehold.co/192x192/111827/E5E7EB?text=KD';">
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 hero-name">
+                            Kusal <span class="accent-gradient-text">Debnath</span>
+                        </h1>
+                        <p class="text-base sm:text-lg md:text-xl hero-designation mb-6 sm:mb-8">Graduate Researcher | AI-driven Drug Discovery</p>
+                        </div>
+                </div>
+                <div class="flip-card-back-base">
+                    <div class="content-wrapper"> 
+                        <h2 class="text-2xl sm:text-3xl font-bold mb-4 accent-gradient-text">About Me</h2>
+                        <div class="about-me-separator accent-border"></div>
+                        <p class="text-base sm:text-lg leading-relaxed text-gray-400"> 
+                            Graduate Researcher specializing in AI-driven drug discovery, with expertise in Machine Learning (ML), Deep Learning (DL), Generative AI (Gen-AI) RNA-Seq analysis, and molecular docking. Experienced in de novo drug design and drug-target interaction (DTI) prediction modeling. Passionate about leveraging computational biology and AI to advance precision medicine and cheminformatics. Aspiring to lead interdisciplinary research integrating AI and pharmacogenomics for drug discovery.
+                        </p>
+                        <div class="buttons-container flex flex-col space-y-3 w-full max-w-xs mx-auto sm:flex-row sm:space-y-0 sm:space-x-4 sm:max-w-sm">
+                            <a href="#contact" class="btn btn-primary w-full text-sm py-2.5 sm:text-base sm:py-3 rounded-lg text-center">Get in Touch</a>
+                            <a href="CV.pdf" target="_blank" class="btn btn-secondary w-full text-sm py-2.5 sm:text-base sm:py-3 rounded-lg text-center" id="cvLink">Download CV</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="education" class="mb-12 md:mb-16 scroll-mt-20">
+            <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Education</h2>
+            <div id="education-carousel-container" class="relative">
+                <div id="education-items-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    
+                    <div class="education-item card rounded-lg shadow-lg overflow-hidden relative p-0">
+                        <img src="vcu.jpg" alt="Virginia Commonwealth University" 
+                             class="edu-card-image absolute inset-0 w-full h-full object-cover" 
+                             onerror="this.src='https://placehold.co/400x200/1f2937/e5e7eb?text=VCU'">
+                        <div class="institute-info-dock"> <h3 class="degree-title">Doctor of Philosophy (PhD) in Computer Science</h3>
+                            <p class="degree-info">Virginia Commonwealth University</p>
+                            <p class="degree-info text-xs">Aug 2023 – Present</p> </div>
+                    </div>
+
+                    <div class="education-item card rounded-lg shadow-lg overflow-hidden relative p-0">
+                        <img src="iitkgp.jpg" alt="IIT Kharagpur" 
+                             class="edu-card-image absolute inset-0 w-full h-full object-cover" 
+                             onerror="this.src='https://placehold.co/400x200/1f2937/e5e7eb?text=IITKGP'">
+                        <div class="institute-info-dock">
+                            <h3 class="degree-title">Master of Technology (MTech) in Biomedical Engineering</h3>
+                            <p class="degree-info">Indian Institute of Technology, Kharagpur</p>
+                            <p class="degree-info text-xs">Aug 2021 – June 2023 (GPA: 8.70/10.0)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="education-item card rounded-lg shadow-lg overflow-hidden relative p-0">
+                         <img src="hit.jpeg" alt="Haldia Institute of Technology" 
+                             class="edu-card-image absolute inset-0 w-full h-full object-cover" 
+                             onerror="this.src='https://placehold.co/400x200/1f2937/e5e7eb?text=HIT'">
+                        <div class="institute-info-dock">
+                            <h3 class="degree-title">Bachelor of Technology (BTech) in Biotechnology</h3>
+                            <p class="degree-info">Haldia Institute of Technology, Haldia</p>
+                            <p class="degree-info text-xs">Aug 2017 – July 2021 (GPA: 9.43/10.0)</p>
+                        </div>
+                    </div>
+                </div>
+                <button id="edu-prev" class="edu-nav-arrow hidden">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button id="edu-next" class="edu-nav-arrow hidden">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="skills" class="mb-12 md:mb-16 scroll-mt-20">
+            <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Skills</h2>
+            <div class="card text-content-area no-hover-effect"> 
+                <div class="mb-4">
+                    <h3 class="text-md sm:text-lg font-semibold text-pink-400 mb-2">Programming Languages:</h3>
+                    <span class="tag">C</span> <span class="tag">C++</span> <span class="tag">Python</span> <span class="tag">R</span> <span class="tag">JavaScript</span>
+                </div>
+                <div class="mb-4">
+                    <h3 class="text-md sm:text-lg font-semibold text-pink-400 mb-2">Frameworks:</h3>
+                    <span class="tag">PyTorch</span> <span class="tag">TensorFlow</span>
+                </div>
+                <div>
+                    <h3 class="text-md sm:text-lg font-semibold text-pink-400 mb-2">Soft Skills:</h3>
+                    <span class="tag">Research Communication</span> <span class="tag">Adaptability</span> <span class="tag">Team Player</span> <span class="tag">Critical Thinking</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="mb-12 md:mb-16 scroll-mt-20">
+            <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Research Experience</h2>
+            <div class="education-folders-wrapper"> 
+                <div class="education-folder-container">
+                    <div class="education-folder-tab">
+                        <h3 class="font-semibold text-amber-400"> Research Assistant
+                            <i class="fas fa-chevron-down tab-arrow"></i>
+                        </h3>
+                    </div>
+                    <div class="education-folder-content">
+                        <p class="text-gray-400 text-sm sm:text-base">Virginia Commonwealth University, Richmond, VA, USA</p>
+                        <p class="text-xs sm:text-sm text-gray-500 mb-2">Aug 2023 – Present</p>
+                        <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm">
+                            <li>Developed comprehensive deep-learning pipelines to investigate drug-target interactions (DTI) for exploring novel drugs for biological targets.</li>
+                            <li>Constructed generative deep-learning models for designing de novo drugs against multiple cancer subtypes.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="education-folder-container">
+                    <div class="education-folder-tab">
+                        <h3 class="font-semibold text-amber-400">
+                            Research Assistant
+                            <i class="fas fa-chevron-down tab-arrow"></i>
+                        </h3>
+                    </div>
+                    <div class="education-folder-content">
+                        <p class="text-gray-400 text-sm sm:text-base">Indian Institute of Technology, Kharagpur, India</p>
+                        <p class="text-xs sm:text-sm text-gray-500 mb-2">June 2022 – May 2023</p>
+                        <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm">
+                            <li>Developed robust RNA-Seq analysis pipelines to uncover and examine primary differential gene expressions contributing to Glioblastoma Multiforme (GBM) progression.</li>
+                            <li>Identified potential protein-protein interactions (PPIs) linked to differentially expressed genes as novel drug targets for treating GBM using classical machine learning algorithms.</li>
+                        </ul>
+                    </div>
+                </div>
+                 <div class="education-folder-container">
+                    <div class="education-folder-tab">
+                        <h3 class="font-semibold text-amber-400">
+                            Research Intern
+                            <i class="fas fa-chevron-down tab-arrow"></i>
+                        </h3>
+                    </div>
+                    <div class="education-folder-content">
+                        <p class="text-gray-400 text-sm sm:text-base">Calcutta National Medical College, Kolkata, India</p>
+                        <p class="text-xs sm:text-sm text-gray-500 mb-2">Jan 2020 – Feb 2020</p>
+                        <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm">
+                            <li>Designed experiments to investigate restriction digestion of PCR-amplified G6PD gene to detect the +563 C/T single nucleotide polymorphism (SNP).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="mb-12 md:mb-16 scroll-mt-20">
+            <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Research Projects</h2>
+            <div class="education-folders-wrapper"> 
+                <div class="education-folder-container">
+                    <div class="education-folder-tab">
+                        <h3 class="font-semibold text-teal-400"> GramSeq-DTA: A Grammar-based Drug-Target Affinity Prediction Approach Fusing Gene Expression Information
+                            <i class="fas fa-chevron-down tab-arrow"></i>
+                        </h3>
+                    </div>
+                    <div class="education-folder-content">
+                        <p class="text-xs sm:text-sm text-gray-400 mb-1">Sep 2023 – Mar 2025</p>
+                        <p class="text-xs sm:text-sm mb-3">Developed a multi-modal deep learning model for drug-target affinity (DTA) prediction by integrating differential gene expression information with drug and protein structural information. Demonstrated improved performance upon benchmarking.</p>
+                        <div class="project-card-footer pt-3">
+                            <a href="https://github.com/debnathk/gramseq" target="_blank" class="text-xs sm:text-sm font-medium hover:underline text-amber-500"><i class="fab fa-github mr-1"></i> GitHub Repository</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="education-folder-container">
+                    <div class="education-folder-tab">
+                        <h3 class="font-semibold text-teal-400">
+                            Commonsense Inference using Large-Language Models
+                            <i class="fas fa-chevron-down tab-arrow"></i>
+                        </h3>
+                    </div>
+                    <div class="education-folder-content">
+                        <p class="text-xs sm:text-sm text-gray-400 mb-1">Feb 2024 – Apr 2024</p>
+                        <p class="text-xs sm:text-sm mb-3">Fine-tuned LLMs, including BERT, ERNIE-2.0, and UnifiedQA, using Hugging Face to evaluate commonsense capabilities on the Com2Sense benchmark. Identified UnifiedQA as the best-performing model.</p>
+                        <div class="project-card-footer pt-3">
+                            <a href="https://github.com/debnathk/commonsense_inference" target="_blank" class="text-xs sm:text-sm font-medium hover:underline text-amber-500"><i class="fab fa-github mr-1"></i> GitHub Repository</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="education-folder-container">
+                    <div class="education-folder-tab">
+                        <h3 class="font-semibold text-teal-400">
+                            Leveraging Neural Style Transfer for Early Detection of Cardiac Arrest from ECG Imaging
+                            <i class="fas fa-chevron-down tab-arrow"></i>
+                        </h3>
+                    </div>
+                    <div class="education-folder-content">
+                        <p class="text-xs sm:text-sm text-gray-400 mb-1">Feb 2025 – Apr 2025</p>
+                        <p class="text-xs sm:text-sm mb-3">Generated augmented Electrocardiogram (ECG) images leveraging Neural Style Transfer (NST) using VGG-19 deep learning model. Improved model F1 score for disease classification by 2.4 times.</p>
+                        <div class="project-card-footer pt-3">
+                            <a href="https://github.com/debnathk/nst_ecg" target="_blank" class="text-xs sm:text-sm font-medium hover:underline text-amber-500"><i class="fab fa-github mr-1"></i> GitHub Repository</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications" class="mb-12 md:mb-16 scroll-mt-20">
+            <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Publications</h2>
+            <div class="education-folders-wrapper"> 
+                <div class="education-folder-container">
+                    <div class="education-folder-tab">
+                        <h3 class="font-semibold text-purple-400"> GramSeq-DTA: A Grammar-Based Drug-Target Affinity Prediction Approach Fusing Gene Expression Information
+                            <i class="fas fa-chevron-down tab-arrow"></i>
+                        </h3>
+                    </div>
+                    <div class="education-folder-content">
+                        <p class="text-xs sm:text-sm text-gray-400 italic">Biomolecules, MDPI (Journal Category: Q1, Impact factor: 4.8) - Mar 2025</p>
+                        <p class="text-xs text-gray-500">Kusal Debnath, Pratip Rana, Preetam Ghosh</p>
+                        <p class="text-xs sm:text-sm mt-1">Developed an end-to-end deep learning model to analyze and extract features from drug and protein structural data along with gene expression information, demonstrating proficiency in predictive analysis of drug-target binding.</p>
+                        <a href="https://doi.org/10.3390/biom15030405" target="_blank" class="text-xs sm:text-sm text-amber-500 hover:text-amber-400 mt-2 inline-block">DOI: 10.3390/biom15030405</a>
+                    </div>
+                </div>
+                 <div class="education-folder-container">
+                    <div class="education-folder-tab">
+                        <h3 class="font-semibold text-purple-400">
+                            24R,25(OH)2D3 Regulates Tumorigenesis in Estrogen Sensitive Laryngeal Cancer Cells via Membrane-Associated Receptor Complexes in ER+ and ER- Cells
+                            <i class="fas fa-chevron-down tab-arrow"></i>
+                        </h3>
+                    </div>
+                    <div class="education-folder-content">
+                        <p class="text-xs sm:text-sm text-gray-400 italic">International Journal of Cancer, Wiley (Journal Category: Q1, Impact factor: 5.7)</p>
+                        <p class="text-xs text-gray-500">Cydney Dennis, D. Joshua Cohen, Kusal Debnath, Nofrat Schwartz, Brock Lodato, Jonathan Dillon, Tillat Batool, Matthew Halquist, Preetam Ghosh, Zvi Schwartz, and Barbara Boyan</p>
+                        <p class="text-xs sm:text-sm mt-1">Conducted extensive ligand-protein docking analyses, utilizing advanced computational techniques to predict the binding affinity and interactions between the ligand of interest and numerous target proteins.</p>
+                    </div>
+                </div>
+                <div class="education-folder-container">
+                    <div class="education-folder-tab">
+                        <h3 class="font-semibold text-purple-400">
+                            Bio-electrochemical System Analysis and Improvement: A Technical Review
+                            <i class="fas fa-chevron-down tab-arrow"></i>
+                        </h3>
+                    </div>
+                    <div class="education-folder-content">
+                        <p class="text-xs sm:text-sm text-gray-400 italic">Cleaner and Circular Bioeconomy, Elsevier (Journal Category: Q2) - Dec 2023</p>
+                        <p class="text-xs text-gray-500">Kusal Debnath, Subhasish Dutta</p>
+                        <p class="text-xs sm:text-sm mt-1">Discussed integrating BESs with electrochemical capacitors, surfactants, biogas generation, 3D electrodes, and thermoelectric regulators, highlighting potential applications and research gaps.</p>
+                        <a href="https://doi.org/10.1016/j.clcb.2023.100052" target="_blank" class="text-xs sm:text-sm text-amber-500 hover:text-amber-400 mt-2 inline-block">DOI: 10.1016/j.clcb.2023.100052</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="hobbies" class="mb-12 md:mb-16 scroll-mt-20">
+            <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Hobbies & Interests</h2>
+            <div class="card text-content-area no-hover-effect"> 
+                <p class="text-gray-300 mb-4 text-base sm:text-lg">Beyond my academic and research pursuits, I enjoy a variety of activities that help me relax and grow:</p>
+                <div>
+                    <span class="tag hobby-tag"><i class="fas fa-utensils mr-1"></i> Cooking</span>
+                    <span class="tag hobby-tag"><i class="fas fa-guitar mr-1"></i> Guitar</span>
+                    <span class="tag hobby-tag"><i class="fas fa-film mr-1"></i> Movies</span>
+                    <span class="tag hobby-tag"><i class="fas fa-music mr-1"></i> Music</span>
+                    <span class="tag hobby-tag"><i class="fas fa-dumbbell mr-1"></i> Workout</span>
+                    <span class="tag hobby-tag"><i class="fas fa-language mr-1"></i> Learning New Languages</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="scroll-mt-20">
+            <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Get in Touch</h2>
+            <div class="card text-center text-content-area no-hover-effect"> 
+                <p class="text-base sm:text-lg mb-6">
+                    I'm always open to discussing new research, projects, or collaboration opportunities.
+                </p>
+                <p class="mb-2 text-sm sm:text-base"><i class="fas fa-envelope mr-2 text-pink-400"></i> <a href="mailto:debnathkusal8@gmail.com" class="hover:text-pink-400">debnathkusal8@gmail.com</a></p>
+                <p class="mb-2 text-sm sm:text-base"><i class="fas fa-phone mr-2 text-pink-400"></i> +1 (804)-933-7613</p>
+                <p class="mb-6 text-sm sm:text-base"><i class="fas fa-map-marker-alt mr-2 text-pink-400"></i> Richmond, VA 23220, USA</p>
+                <div class="flex justify-center space-x-6 text-2xl sm:text-3xl">
+                    <a href="https://www.linkedin.com/in/debnathkusal221b/" target="_blank" class="icon-link text-gray-400 hover:text-indigo-400"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/debnathk/" target="_blank" class="icon-link text-gray-400 hover:text-purple-400"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-8 mt-12 md:mt-16">
+        <p class="text-gray-500 text-sm">&copy; <span id="currentYear"></span> Kusal Debnath. All rights reserved.</p>
+        <p class="text-gray-600 text-xs mt-1">Designed with <i class="fas fa-heart"></i> using Tailwind CSS.</p> 
+    </footer>
+
+        <script>
+            // DOM Elements
+            const themeToggleSlider = document.getElementById('theme-toggle-slider');
+            const body = document.body;
+            const profileImage = document.querySelector('#hero-about-section .flip-card-front-base img');
+            const educationLogos = document.querySelectorAll('.edu-card-image'); 
+    
+    
+            // Function to apply the chosen theme
+            function applyTheme(theme) {
+                body.classList.remove('dark-theme', 'light-theme');
+                const isLightTheme = theme === 'light';
+                body.classList.add(isLightTheme ? 'light-theme' : 'dark-theme');
+
+                // Define placeholder URLs based on the theme
+                const placeholderBase = isLightTheme ? 'https://placehold.co/192x192/FFFFFF/1F2937?text=' : 'https://placehold.co/192x192/111827/E5E7EB?text=';
+                const eduPlaceholderBase = isLightTheme ? 'https://placehold.co/400x200/F9FAFB/1F2937?text=' : 'https://placehold.co/400x200/1f2937/e5e7eb?text='; // Adjusted placeholder size for education cards
+    
+                // Update profile image placeholder
+                if (profileImage) {
+                    profileImage.onerror = () => { profileImage.src = placeholderBase + 'KD'; };
+                    if (profileImage.src.startsWith('https://placehold.co/')) {
+                        profileImage.src = placeholderBase + 'KD';
+                    }
+                }
+
+                // Update education logos placeholders
+                educationLogos.forEach(logo => {
+                    const altText = logo.alt.split(' ')[0] || 'IMG'; 
+                    logo.onerror = () => { logo.src = eduPlaceholderBase + altText.substring(0,6).toUpperCase(); }; 
+                     if (logo.src.startsWith('https://placehold.co/')) {
+                        logo.src = eduPlaceholderBase + altText.substring(0,6).toUpperCase();
+                    }
+                });
+
+                if (profileImage && (profileImage.complete && profileImage.naturalWidth === 0) || !profileImage.complete && !profileImage.src.startsWith('https://placehold.co/')) {
+                     const currentSrc = profileImage.src; 
+                     profileImage.src = ''; 
+                     profileImage.src = currentSrc; 
+                }
+                 educationLogos.forEach(logo => {
+                    if ((logo.complete && logo.naturalWidth === 0) || !logo.complete && !logo.src.startsWith('https://placehold.co/')) {
+                        const currentSrc = logo.src;
+                        logo.src = '';
+                        logo.src = currentSrc;
+                    }
+                });
+            }
+    
+            // Function to toggle between dark and light themes
+            function toggleTheme() {
+                const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(newTheme);
+                localStorage.setItem('portfolioTheme', newTheme); 
+            }
+    
+            if (themeToggleSlider) {
+                themeToggleSlider.addEventListener('click', toggleTheme);
+            }
+    
+            document.addEventListener('DOMContentLoaded', () => {
+                const savedTheme = localStorage.getItem('portfolioTheme');
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+                let initialTheme = 'light'; 
+                if (savedTheme) {
+                    initialTheme = savedTheme;
+                } else if (prefersDark) {
+                    initialTheme = 'dark';
+                }
+                applyTheme(initialTheme); 
+    
+                document.getElementById('currentYear').textContent = new Date().getFullYear();
+    
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const hamburgerIconPath = "M4 6h16M4 12h16M4 18h16"; 
+                const closeIconPath = "M6 18L18 6M6 6l12 12"; 
+    
+                if (mobileMenuButton && mobileMenu) {
+                    mobileMenuButton.addEventListener('click', () => {
+                        const isOpen = !mobileMenu.classList.contains('hidden');
+                        mobileMenu.classList.toggle('hidden');
+                        const iconSvg = mobileMenuButton.querySelector('svg');
+                        const iconPath = iconSvg.querySelector('path');
+                        if (iconPath) {
+                            iconPath.setAttribute('d', isOpen ? hamburgerIconPath : closeIconPath);
+                        }
+                    });
+    
+                    const mobileNavLinks = mobileMenu.querySelectorAll('a');
+                    mobileNavLinks.forEach(link => {
+                        link.addEventListener('click', () => {
+                            mobileMenu.classList.add('hidden');
+                            const iconSvg = mobileMenuButton.querySelector('svg');
+                            const iconPath = iconSvg.querySelector('path');
+                            if (iconPath) {
+                                 iconPath.setAttribute('d', hamburgerIconPath); 
+                            }
+                        });
+                    });
+                }
+    
+                const sections = document.querySelectorAll('section[id]');
+                const desktopNavLinks = document.querySelectorAll('#nav-links a');
+                const mobileNavLinksForScroll = document.querySelectorAll('#mobile-menu a');
+    
+                function updateActiveNavLink() {
+                    let currentSectionId = '';
+                    let navHeight = document.querySelector('nav').offsetHeight || 60; 
+                    let offset = navHeight + 40; 
+    
+                    const heroAboutSection = document.getElementById('hero-about-section');
+                    if (heroAboutSection) {
+                        const heroAboutTop = heroAboutSection.offsetTop;
+                        const heroAboutHeight = heroAboutSection.offsetHeight;
+                        if (pageYOffset < heroAboutTop + heroAboutHeight - (window.innerHeight * 0.3)) {
+                            currentSectionId = 'hero-about-section';
+                        }
+                    }
+    
+                    if (!currentSectionId) { 
+                        sections.forEach(section => {
+                            if (section.id === 'hero-about-section') return; 
+                            const sectionTop = section.offsetTop;
+                            const sectionHeight = section.offsetHeight;
+                            if (pageYOffset >= sectionTop - offset && pageYOffset < sectionTop + sectionHeight - offset) {
+                                currentSectionId = section.getAttribute('id');
+                            }
+                        });
+                    }
+    
+                    if (!currentSectionId && sections.length > 0) {
+                        if (pageYOffset < sections[0].offsetTop - offset && sections[0].id !== 'hero-about-section') {
+                            currentSectionId = sections[0].getAttribute('id');
+                        } else if (pageYOffset + window.innerHeight >= document.body.scrollHeight - 20) {
+                            currentSectionId = sections[sections.length - 1].getAttribute('id');
+                        } else if (!currentSectionId && heroAboutSection) { 
+                             currentSectionId = 'hero-about-section';
+                        }
+                    }
+    
+                    desktopNavLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${currentSectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+    
+                    mobileNavLinksForScroll.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${currentSectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+    
+                window.addEventListener('scroll', updateActiveNavLink);
+                updateActiveNavLink(); 
+    
+                const eduCarouselContainer = document.getElementById('education-carousel-container');
+                const eduGrid = document.getElementById('education-items-grid');
+                const eduItems = eduGrid ? Array.from(eduGrid.children).filter(child => child.classList.contains('education-item')) : [];
+                const eduPrevButton = document.getElementById('edu-prev');
+                const eduNextButton = document.getElementById('edu-next');
+                let currentEduSlideIndex = 0;
+                let eduIsSmallScreen = false; 
+                let eduAutoSlideInterval = null; 
+                const AUTO_SLIDE_DELAY = 3000; 
+    
+                function showEduSlide(index) {
+                    if (!eduGrid || eduItems.length === 0) return;
+                    const percentage = -index * 100;
+                    eduGrid.style.transform = `translateX(${percentage}%)`;
+                    currentEduSlideIndex = index;
+                    if (eduPrevButton) eduPrevButton.disabled = index === 0;
+                    if (eduNextButton) eduNextButton.disabled = index === eduItems.length - 1;
+                }
+    
+                function nextEduSlide() {
+                    if (eduItems.length === 0) return;
+                    let nextIndex = (currentEduSlideIndex + 1);
+                    if (nextIndex >= eduItems.length) {
+                        nextIndex = 0; 
+                    }
+                    showEduSlide(nextIndex);
+                }
+    
+                function prevEduSlide() {
+                    if (eduItems.length === 0) return;
+                    let prevIndex = (currentEduSlideIndex - 1);
+                    if (prevIndex < 0) {
+                        prevIndex = eduItems.length - 1; 
+                    }
+                    showEduSlide(prevIndex);
+                }
+    
+                function startEduAutoSlide() {
+                    stopEduAutoSlide(); 
+                    if (eduIsSmallScreen && eduItems.length > 1) { 
+                        eduAutoSlideInterval = setInterval(nextEduSlide, AUTO_SLIDE_DELAY);
+                    }
+                }
+    
+                function stopEduAutoSlide() {
+                    clearInterval(eduAutoSlideInterval);
+                    eduAutoSlideInterval = null;
+                }
+    
+                function updateEduCarouselVisibility() {
+                    if (!eduGrid || !eduPrevButton || !eduNextButton || !eduCarouselContainer) return;
+
+                    if (eduIsSmallScreen) {
+                        eduCarouselContainer.style.overflow = 'hidden'; 
+                        eduGrid.classList.remove('grid', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-6', 'md:gap-8');
+                        eduGrid.classList.add('flex'); 
+                        eduGrid.style.transition = 'transform 0.5s ease-in-out';
+
+                        eduItems.forEach(item => {
+                            item.style.width = '100%'; 
+                            item.style.flexShrink = '0';
+                            // item.style.display = 'flex'; // Already has flex for column layout if needed, but for carousel, block or flex is fine.
+                                                        // The card itself (.education-item) is now relative, not flex-col
+                        });
+                        
+                        showEduSlide(currentEduSlideIndex); 
+
+                        if (eduItems.length > 1) {
+                            eduPrevButton.classList.remove('hidden');
+                            eduNextButton.classList.remove('hidden');
+                            startEduAutoSlide();
+                        } else {
+                            eduPrevButton.classList.add('hidden');
+                            eduNextButton.classList.add('hidden');
+                        }
+                    } else {
+                        eduCarouselContainer.style.overflow = ''; 
+                        eduGrid.classList.remove('flex');
+                        eduGrid.classList.add('grid', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-6', 'md:gap-8'); 
+                        eduGrid.style.transform = ''; 
+                        eduGrid.style.transition = ''; 
+
+                        eduItems.forEach(item => {
+                            item.style.width = ''; 
+                            item.style.flexShrink = '';
+                        });
+                        eduPrevButton.classList.add('hidden');
+                        eduNextButton.classList.add('hidden');
+                        stopEduAutoSlide();
+                    }
+                }
+    
+                function handleEduScreenResize() {
+                    const smallScreenBreakpoint = 640; 
+                    const newIsSmallScreen = window.innerWidth < smallScreenBreakpoint;
+                    
+                    if (newIsSmallScreen !== eduIsSmallScreen) { 
+                        eduIsSmallScreen = newIsSmallScreen;
+                        if (!eduIsSmallScreen) { 
+                            currentEduSlideIndex = 0; 
+                        }
+                        updateEduCarouselVisibility(); 
+                    } else if (eduIsSmallScreen && !eduAutoSlideInterval && eduItems.length > 1) {
+                        startEduAutoSlide();
+                    }
+                }
+    
+                if (eduItems.length > 0) { 
+                    if(eduPrevButton) {
+                        eduPrevButton.addEventListener('click', () => {
+                            stopEduAutoSlide(); 
+                            prevEduSlide();
+                            if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500); 
+                        });
+                    }
+                    if(eduNextButton) {
+                        eduNextButton.addEventListener('click', () => {
+                            stopEduAutoSlide(); 
+                            nextEduSlide();
+                            if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500);
+                        });
+                    }
+                    let touchStartX = 0;
+                    let touchEndX = 0;
+
+                    eduGrid.addEventListener('touchstart', (event) => {
+                        if (!eduIsSmallScreen || eduItems.length <= 1) return;
+                        touchStartX = event.changedTouches[0].screenX;
+                        stopEduAutoSlide(); 
+                    }, { passive: true });
+
+                    eduGrid.addEventListener('touchend', (event) => {
+                        if (!eduIsSmallScreen || eduItems.length <= 1) return;
+                        touchEndX = event.changedTouches[0].screenX;
+                        handleSwipeGesture();
+                        if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500); 
+                    }, { passive: true });
+
+                    function handleSwipeGesture() {
+                        const swipeThreshold = 50; 
+                        if (touchEndX < touchStartX - swipeThreshold) { 
+                            nextEduSlide();
+                        } else if (touchEndX > touchStartX + swipeThreshold) { 
+                            prevEduSlide();
+                        }
+                    }
+                }
+    
+                window.addEventListener('resize', handleEduScreenResize);
+                handleEduScreenResize(); 
+            });
+    
+            const cvLink = document.getElementById('cvLink');
+    
+        </script>
+</body>
+</html>
