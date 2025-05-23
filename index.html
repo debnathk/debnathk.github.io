@@ -339,6 +339,8 @@
         }
         .education-item { 
             min-height: 330px; 
+            /* Ensure overflow is hidden for zoom effect */
+            overflow: hidden; 
         }
 
         .institute-info-dock {
@@ -502,6 +504,23 @@
         }
         .text-content-area { 
             /* General text content area styling if needed */
+        }
+
+        /* Education Image Zoom and Dock Opacity on Hover for bigger screens */
+        .edu-card-image {
+            transition: transform 0.3s ease-in-out; /* Smooth transition for zoom */
+        }
+
+        @media (min-width: 768px) { /* Corresponds to Tailwind's 'md' breakpoint */
+            .education-item:hover .edu-card-image {
+                transform: scale(1.05); /* Zoom effect: 5% bigger */
+            }
+            .dark-theme .education-item:hover .institute-info-dock {
+                background-color: rgba(31, 41, 55, 0.98); /* More opaque for dark theme */
+            }
+            .light-theme .education-item:hover .institute-info-dock {
+                background-color: rgba(229, 231, 235, 0.98); /* More opaque for light theme */
+            }
         }
 
     </style>
@@ -849,9 +868,11 @@
                 const isLightTheme = theme === 'light';
                 body.classList.add(isLightTheme ? 'light-theme' : 'dark-theme');
 
+                // Define placeholder URLs based on theme
                 const placeholderBase = isLightTheme ? 'https://placehold.co/192x192/FFFFFF/1F2937?text=' : 'https://placehold.co/192x192/111827/E5E7EB?text=';
                 const eduPlaceholderBase = isLightTheme ? 'https://placehold.co/400x200/F9FAFB/1F2937?text=' : 'https://placehold.co/400x200/1f2937/e5e7eb?text='; 
     
+                // Update profile image placeholder if it's an error or already a placeholder
                 if (profileImage) {
                     profileImage.onerror = () => { profileImage.src = placeholderBase + 'KD'; };
                     if (profileImage.src.startsWith('https://placehold.co/')) {
@@ -859,18 +880,20 @@
                     }
                 }
 
+                // Update education logos placeholders if they are errors or already placeholders
                 educationLogos.forEach(logo => {
-                    const altText = logo.alt.split(' ')[0] || 'IMG'; 
+                    const altText = logo.alt.split(' ')[0] || 'IMG'; // Use first word of alt text or 'IMG'
                     logo.onerror = () => { logo.src = eduPlaceholderBase + altText.substring(0,6).toUpperCase(); }; 
                      if (logo.src.startsWith('https://placehold.co/')) {
                         logo.src = eduPlaceholderBase + altText.substring(0,6).toUpperCase();
                     }
                 });
 
+                // Force re-evaluation of onerror for images that might have failed before JS ran
                 if (profileImage && (profileImage.complete && profileImage.naturalWidth === 0) || !profileImage.complete && !profileImage.src.startsWith('https://placehold.co/')) {
                      const currentSrc = profileImage.src; 
-                     profileImage.src = ''; 
-                     profileImage.src = currentSrc; 
+                     profileImage.src = ''; // Temporarily clear src to trigger onerror if needed
+                     profileImage.src = currentSrc; // Restore original src
                 }
                  educationLogos.forEach(logo => {
                     if ((logo.complete && logo.naturalWidth === 0) || !logo.complete && !logo.src.startsWith('https://placehold.co/')) {
@@ -881,6 +904,7 @@
                 });
             }
     
+            // Function to toggle theme and save preference
             function toggleTheme() {
                 const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
                 const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -888,15 +912,18 @@
                 localStorage.setItem('portfolioTheme', newTheme); 
             }
     
+            // Event listener for theme toggle slider
             if (themeToggleSlider) {
                 themeToggleSlider.addEventListener('click', toggleTheme);
             }
     
+            // DOMContentLoaded event listener for initial setup
             document.addEventListener('DOMContentLoaded', () => {
+                // Determine and apply initial theme
                 const savedTheme = localStorage.getItem('portfolioTheme');
                 const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-                let initialTheme = 'light'; 
+                let initialTheme = 'light'; // Default to light theme
                 if (savedTheme) {
                     initialTheme = savedTheme;
                 } else if (prefersDark) {
@@ -904,12 +931,14 @@
                 }
                 applyTheme(initialTheme); 
     
+                // Set current year in footer
                 document.getElementById('currentYear').textContent = new Date().getFullYear();
     
+                // Mobile menu toggle functionality
                 const mobileMenuButton = document.getElementById('mobile-menu-button');
                 const mobileMenu = document.getElementById('mobile-menu');
-                const hamburgerIconPath = "M4 6h16M4 12h16M4 18h16"; 
-                const closeIconPath = "M6 18L18 6M6 6l12 12"; 
+                const hamburgerIconPath = "M4 6h16M4 12h16M4 18h16"; // SVG path for hamburger icon
+                const closeIconPath = "M6 18L18 6M6 6l12 12"; // SVG path for close icon
     
                 if (mobileMenuButton && mobileMenu) {
                     mobileMenuButton.addEventListener('click', () => {
@@ -922,6 +951,7 @@
                         }
                     });
     
+                    // Close mobile menu when a link is clicked
                     const mobileNavLinks = mobileMenu.querySelectorAll('a');
                     mobileNavLinks.forEach(link => {
                         link.addEventListener('click', () => {
@@ -929,33 +959,37 @@
                             const iconSvg = mobileMenuButton.querySelector('svg');
                             const iconPath = iconSvg.querySelector('path');
                             if (iconPath) {
-                                 iconPath.setAttribute('d', hamburgerIconPath); 
+                                 iconPath.setAttribute('d', hamburgerIconPath); // Reset to hamburger icon
                             }
                         });
                     });
                 }
     
+                // Active navigation link highlighting on scroll
                 const sections = document.querySelectorAll('section[id]');
                 const desktopNavLinks = document.querySelectorAll('#nav-links a');
                 const mobileNavLinksForScroll = document.querySelectorAll('#mobile-menu a');
     
                 function updateActiveNavLink() {
                     let currentSectionId = '';
-                    let navHeight = document.querySelector('nav').offsetHeight || 60; 
-                    let offset = navHeight + 40; 
+                    let navHeight = document.querySelector('nav').offsetHeight || 60; // Fallback nav height
+                    let offset = navHeight + 40; // Offset for better accuracy
     
+                    // Special handling for Hero section to be active at the very top
                     const heroSection = document.getElementById('hero'); 
                     if (heroSection) {
                         const heroTop = heroSection.offsetTop;
                         const heroHeight = heroSection.offsetHeight;
+                        // Consider hero active if viewport is within its top 70% (adjust 0.3 as needed)
                         if (pageYOffset < heroTop + heroHeight - (window.innerHeight * 0.3)) {
                             currentSectionId = 'hero'; 
                         }
                     }
     
+                    // Iterate other sections if hero isn't active
                     if (!currentSectionId) { 
                         sections.forEach(section => {
-                            if (section.id === 'hero') return; 
+                            if (section.id === 'hero') return; // Skip hero if already handled or not at top
                             const sectionTop = section.offsetTop;
                             const sectionHeight = section.offsetHeight;
                             if (pageYOffset >= sectionTop - offset && pageYOffset < sectionTop + sectionHeight - offset) {
@@ -964,16 +998,23 @@
                         });
                     }
     
+                    // Fallbacks if no section is actively identified
                     if (!currentSectionId && sections.length > 0) {
+                         // If above the first non-hero section, make it active
                          if (pageYOffset < sections[0].offsetTop - offset && sections[0].id !== 'hero') { 
                             currentSectionId = sections[0].getAttribute('id');
-                        } else if (pageYOffset + window.innerHeight >= document.body.scrollHeight - 20) {
+                        } 
+                        // If at the very bottom of the page, make the last section active
+                        else if (pageYOffset + window.innerHeight >= document.body.scrollHeight - 20) { // Small tolerance for bottom
                             currentSectionId = sections[sections.length - 1].getAttribute('id');
-                        } else if (!currentSectionId && heroSection) { 
+                        }
+                        // Default to hero if still nothing (e.g., if only hero section exists or at very top)
+                        else if (!currentSectionId && heroSection) { 
                              currentSectionId = 'hero';
                         }
                     }
     
+                    // Update desktop nav links
                     desktopNavLinks.forEach(link => {
                         link.classList.remove('active');
                         if (link.getAttribute('href') === `#${currentSectionId}`) {
@@ -981,6 +1022,7 @@
                         }
                     });
     
+                    // Update mobile nav links
                     mobileNavLinksForScroll.forEach(link => {
                         link.classList.remove('active');
                         if (link.getAttribute('href') === `#${currentSectionId}`) {
@@ -990,15 +1032,16 @@
                 }
     
                 window.addEventListener('scroll', updateActiveNavLink);
-                updateActiveNavLink(); 
+                updateActiveNavLink(); // Initial call to set active link on page load
     
+                // Education Carousel Logic
                 const eduCarouselContainer = document.getElementById('education-carousel-container');
                 const eduGrid = document.getElementById('education-items-grid');
                 const eduItems = eduGrid ? Array.from(eduGrid.children).filter(child => child.classList.contains('education-item')) : [];
                 const eduPrevButton = document.getElementById('edu-prev');
                 const eduNextButton = document.getElementById('edu-next');
                 let currentEduSlideIndex = 0;
-                let eduIsSmallScreen = false; 
+                let eduIsSmallScreen = false; // Flag to track if carousel view is active
                 let eduAutoSlideInterval = null; 
                 const AUTO_SLIDE_DELAY = 2000; 
     
@@ -1015,7 +1058,7 @@
                     if (eduItems.length === 0) return;
                     let nextIndex = (currentEduSlideIndex + 1);
                     if (nextIndex >= eduItems.length) {
-                        nextIndex = 0; 
+                        nextIndex = 0; // Loop back to the first slide
                     }
                     showEduSlide(nextIndex);
                 }
@@ -1024,14 +1067,14 @@
                     if (eduItems.length === 0) return;
                     let prevIndex = (currentEduSlideIndex - 1);
                     if (prevIndex < 0) {
-                        prevIndex = eduItems.length - 1; 
+                        prevIndex = eduItems.length - 1; // Loop back to the last slide
                     }
                     showEduSlide(prevIndex);
                 }
     
                 function startEduAutoSlide() {
-                    stopEduAutoSlide(); 
-                    if (eduIsSmallScreen && eduItems.length > 1) { 
+                    stopEduAutoSlide(); // Clear any existing interval
+                    if (eduIsSmallScreen && eduItems.length > 1) { // Only auto-slide on small screens with multiple items
                         eduAutoSlideInterval = setInterval(nextEduSlide, AUTO_SLIDE_DELAY);
                     }
                 }
@@ -1041,39 +1084,40 @@
                     eduAutoSlideInterval = null;
                 }
     
+                // Updates carousel visibility and behavior based on screen size
                 function updateEduCarouselVisibility() {
                     if (!eduGrid || !eduPrevButton || !eduNextButton || !eduCarouselContainer) return;
 
                     if (eduIsSmallScreen) {
-                        eduCarouselContainer.style.overflow = 'hidden'; 
+                        eduCarouselContainer.style.overflow = 'hidden'; // Needed for slide effect
                         eduGrid.classList.remove('grid', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-6', 'md:gap-8');
-                        eduGrid.classList.add('flex'); 
+                        eduGrid.classList.add('flex'); // Change to flex for sliding
                         eduGrid.style.transition = 'transform 0.5s ease-in-out';
 
                         eduItems.forEach(item => {
-                            item.style.width = '100%'; 
+                            item.style.width = '100%'; // Each item takes full width of container
                             item.style.flexShrink = '0';
                         });
                         
-                        showEduSlide(currentEduSlideIndex); 
+                        showEduSlide(currentEduSlideIndex); // Ensure correct slide is shown
 
                         if (eduItems.length > 1) {
                             eduPrevButton.classList.remove('hidden');
                             eduNextButton.classList.remove('hidden');
                             startEduAutoSlide();
-                        } else {
+                        } else { // Hide arrows if only one item
                             eduPrevButton.classList.add('hidden');
                             eduNextButton.classList.add('hidden');
                         }
-                    } else {
-                        eduCarouselContainer.style.overflow = ''; 
+                    } else { // Larger screens: revert to grid layout
+                        eduCarouselContainer.style.overflow = ''; // Reset overflow
                         eduGrid.classList.remove('flex');
                         eduGrid.classList.add('grid', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-6', 'md:gap-8'); 
-                        eduGrid.style.transform = ''; 
-                        eduGrid.style.transition = ''; 
+                        eduGrid.style.transform = ''; // Reset transform
+                        eduGrid.style.transition = ''; // Reset transition
 
                         eduItems.forEach(item => {
-                            item.style.width = ''; 
+                            item.style.width = ''; // Reset item width
                             item.style.flexShrink = '';
                         });
                         eduPrevButton.classList.add('hidden');
@@ -1082,26 +1126,30 @@
                     }
                 }
     
+                // Handles screen resize events for the education carousel
                 function handleEduScreenResize() {
-                    const smallScreenBreakpoint = 640; 
+                    const smallScreenBreakpoint = 640; // Tailwind's 'sm' breakpoint
                     const newIsSmallScreen = window.innerWidth < smallScreenBreakpoint;
                     
-                    if (newIsSmallScreen !== eduIsSmallScreen) { 
+                    if (newIsSmallScreen !== eduIsSmallScreen) { // If screen mode changed
                         eduIsSmallScreen = newIsSmallScreen;
-                        if (!eduIsSmallScreen) { 
+                        if (!eduIsSmallScreen) { // If moving from small to large, reset slide index
                             currentEduSlideIndex = 0; 
                         }
                         updateEduCarouselVisibility(); 
                     } else if (eduIsSmallScreen && !eduAutoSlideInterval && eduItems.length > 1) {
+                        // If still small screen and auto-slide isn't running (e.g., after manual nav), restart it
                         startEduAutoSlide();
                     }
                 }
     
+                // Initialize education carousel if items exist
                 if (eduItems.length > 0) { 
                     if(eduPrevButton) {
                         eduPrevButton.addEventListener('click', () => {
                             stopEduAutoSlide(); 
                             prevEduSlide();
+                            // Restart auto-slide after a delay if still on small screen
                             if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500); 
                         });
                     }
@@ -1112,36 +1160,40 @@
                             if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500);
                         });
                     }
+                    // Touch swipe handling for education carousel on small screens
                     let touchStartX = 0;
                     let touchEndX = 0;
 
                     eduGrid.addEventListener('touchstart', (event) => {
                         if (!eduIsSmallScreen || eduItems.length <= 1) return;
                         touchStartX = event.changedTouches[0].screenX;
-                        stopEduAutoSlide(); 
+                        stopEduAutoSlide(); // Pause auto-slide during touch
                     }, { passive: true });
 
                     eduGrid.addEventListener('touchend', (event) => {
                         if (!eduIsSmallScreen || eduItems.length <= 1) return;
                         touchEndX = event.changedTouches[0].screenX;
                         handleSwipeGesture();
+                        // Restart auto-slide after swipe, if applicable
                         if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500); 
                     }, { passive: true });
 
                     function handleSwipeGesture() {
-                        const swipeThreshold = 50; 
-                        if (touchEndX < touchStartX - swipeThreshold) { 
+                        const swipeThreshold = 50; // Minimum pixels for a swipe
+                        if (touchEndX < touchStartX - swipeThreshold) { // Swiped left
                             nextEduSlide();
-                        } else if (touchEndX > touchStartX + swipeThreshold) { 
+                        } else if (touchEndX > touchStartX + swipeThreshold) { // Swiped right
                             prevEduSlide();
                         }
                     }
                 }
     
+                // Add resize listener and call initially to set up carousel
                 window.addEventListener('resize', handleEduScreenResize);
                 handleEduScreenResize(); 
             });
     
+            // CV Link (if any specific JS interaction is needed in the future)
             const cvLink = document.getElementById('cvLink');
     
         </script>
