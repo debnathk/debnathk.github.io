@@ -8,608 +8,299 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* Default Dark Theme Styles - NETFLIX INSPIRED: BLACK/DARK GRAY BASE, NETFLIX RED ACCENTS */
+        /* Base Body Styles */
         body {
             font-family: 'Inter', sans-serif;
             transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out;
+            padding-top: 0;
         }
 
+        /* --- Left Sidebar Styles --- */
+        #left-sidebar {
+            width: 4.5rem; /* 72px collapsed width */
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden;
+        }
+        #left-sidebar:hover, #left-sidebar.mobile-open {
+            width: 16rem; /* 256px expanded width */
+        }
+
+        .nav-item {
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+        .nav-item:hover {
+            transform: scale(1.1); /* Zoom effect on hover */
+        }
+
+        .nav-item .nav-text {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-10px);
+            transition: opacity 0.2s ease-out 0.05s, transform 0.2s ease-out 0.05s, visibility 0s linear 0.25s;
+        }
+
+        #left-sidebar:hover .nav-item .nav-text,
+        #left-sidebar.mobile-open .nav-item .nav-text {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+            transition: opacity 0.25s ease-in 0.1s, transform 0.25s ease-in 0.1s, visibility 0s linear 0.1s;
+        }
+        /* #left-sidebar:hover #sidebar-logo-text,
+        #left-sidebar.mobile-open #sidebar-logo-text {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        } */
+        #sidebar-logo-text {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-10px);
+            transition: opacity 0.2s ease-out 0.05s, transform 0.2s ease-out 0.05s, visibility 0s linear 0.25s;
+        }
+
+        #sidebar-nav-links::-webkit-scrollbar {
+            display: none;
+        }
+        #sidebar-nav-links {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        main {
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (min-width: 768px) {
+            main {
+                margin-left: 4.5rem;
+            }
+            #sidebar-toggle-button {
+                display: none;
+            }
+        }
+        @media (max-width: 767px) {
+            #left-sidebar {
+                transform: translateX(-100%);
+                width: 16rem;
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            #left-sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            main {
+                margin-left: 0;
+            }
+             #sidebar-toggle-button {
+                display: flex;
+            }
+        }
+
+        /* Default Dark Theme Styles - NETFLIX INSPIRED */
         body.dark-theme {
-            background-color: #141414; /* Netflix Black */
-            color: #E5E7EB; /* Light Gray (Good for text) */
+            background-color: #141414;
+            color: #E5E7EB;
+        }
+        .dark-theme #left-sidebar {
+            background: linear-gradient(to right, #000000 50%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0) 100%);
+        }
+        .dark-theme .nav-item {
+            color: #B3B3B3; 
+        }
+        .dark-theme .nav-item:hover {
+            color: #FFFFFF; 
+        }
+        .dark-theme .nav-item.active {
+             color: #FFFFFF; 
+             /* border-left: 3px solid #E50914;  Removed */
+             /* padding-left: calc(1rem - 3px); Removed */
         }
 
+        .dark-theme #sidebar-toggle-button {
+            background-color: rgba(20, 20, 20, 0.8);
+            color: #E5E7EB;
+        }
         .dark-theme .accent-gradient-text {
-            background: linear-gradient(to right, #E50914, #B00710); /* Netflix Red gradient */
+            background: linear-gradient(to right, #E50914, #B00710);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .dark-theme .accent-border {
-            border-bottom-width: 4px; /* Match section-title border thickness */
-            border-style: solid;
-            border-image-slice: 1;
-            border-image-source: linear-gradient(to right, #E50914, #B00710); /* Netflix Red gradient */
+            border-image-source: linear-gradient(to right, #E50914, #B00710);
         }
         .dark-theme .card {
-            background-color: #222222; /* Dark Gray for cards */
-            border-radius: 0.75rem;
-            padding: 1.5rem;
+            background-color: #222222;
+            border-radius: 1rem; 
+            padding: 1.75rem; 
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.4s ease-in-out;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
         .dark-theme .card:not(.no-hover-effect):not(.education-item):hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(229, 9, 20, 0.25), 0 4px 6px -4px rgba(229, 9, 20, 0.25); /* Netflix Red shadow */
+            box-shadow: 0 10px 15px -3px rgba(229, 9, 20, 0.25), 0 4px 6px -4px rgba(229, 9, 20, 0.25);
         }
         .dark-theme .tag {
-            background-color: #333333; /* Medium Gray */
-            color: #D1D5DB; /* Lighter Gray */
+            background-color: #333333; color: #D1D5DB;
         }
         .dark-theme .hobby-tag {
-            background-color: #E50914; /* Netflix Red */
-            color: #FFFFFF; /* White text */
+            background-color: #E50914; color: #FFFFFF;
         }
-        .dark-theme .icon-link { color: #AAAAAA; } /* Lighter Gray for icons */
-        .dark-theme .icon-link:hover { color: #E50914; } /* Netflix Red hover */
-
-        .dark-theme nav {
-            background-color: rgba(20, 20, 20, 0.9); /* Darker, more opaque nav background */
-            backdrop-filter: blur(5px);
-        }
-        .dark-theme #nav-links a { color: #D1D5DB; }
-        .dark-theme #nav-links a:hover, .dark-theme #nav-links a.active {
-            color: #FFFFFF; /* White for active/hover link */
-            border-bottom-color: #E50914; /* Netflix Red underline */
-        }
-        .dark-theme #mobile-menu a { color: #D1D5DB; }
-        .dark-theme #mobile-menu a:hover { background-color: #333333; color: #E50914; } /* Medium gray bg, Netflix Red text */
-        .dark-theme #mobile-menu a.active { background-color: #E50914; color: #FFFFFF; } /* Netflix Red bg, White text */
-        .dark-theme #mobile-menu-button svg { stroke: #D1D5DB; }
-
+        .dark-theme .icon-link { color: #AAAAAA; }
+        .dark-theme .icon-link:hover { color: #E50914; }
         .dark-theme .btn-primary {
-            background: linear-gradient(to right, #E50914, #B00710); /* Netflix Red gradient */
-            color: white;
+            background: linear-gradient(to right, #E50914, #B00710); color: white;
         }
         .dark-theme .btn-primary:hover {
-            background: linear-gradient(to right, #B00710, #830000); /* Darker Netflix Red gradient */
-            box-shadow: 0 0 15px rgba(229, 9, 20, 0.5); /* Netflix Red shadow */
+            background: linear-gradient(to right, #B00710, #830000);
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.5);
         }
         .dark-theme .btn-secondary {
-            background-color: transparent;
-            color: #E50914; /* Netflix Red text */
-            border-color: #E50914; /* Netflix Red border */
+            color: #E50914; border-color: #E50914;
         }
-        .dark-theme .btn-secondary:hover { background-color: #E50914; color: white; } /* Netflix Red bg, White text */
-
-        /* Hero Section Specific Styles - Dark Theme */
-        .dark-theme #hero .hero-name {
-            /* Kusal will be this color, Debnath (span) will use accent-gradient-text */
-            color: #FFFFFF; /* White for the main part of the name */
-            background: none; /* Remove existing gradient */
-            -webkit-background-clip: initial; /* Reset clip */
-            -webkit-text-fill-color: initial; /* Reset fill color */
+        .dark-theme .btn-secondary:hover { background-color: #E50914; color: white; }
+        .dark-theme #hero .hero-name { color: #FFFFFF; background: none; -webkit-background-clip: initial; -webkit-text-fill-color: initial;}
+        .dark-theme #hero .hero-designation { color: #AAAAAA !important; }
+        .dark-theme #hero .profile-image-border { border-color: #E50914; }
+        .dark-theme #hero .card {
+            padding: 1.5rem; 
         }
-        .dark-theme #hero .hero-designation {
-            color: #AAAAAA !important; /* Lighter Gray for designation */
-        }
-        .dark-theme #hero .profile-image-border {
-            border-color: #E50914; /* Netflix Red */
+        @media (min-width: 768px) {
+            .dark-theme #hero .card {
+                 padding: 2rem; 
+            }
         }
 
-        /* About Me Section Specific Styles - Dark Theme */
-        .dark-theme #about-me .text-content-color {
-             color: #AAAAAA !important; /* Lighter Gray */
+        .dark-theme #about-me .text-content-color { color: #AAAAAA !important; }
+        .dark-theme .text-content-area .text-gray-400, .dark-theme .education-folder-content .text-gray-400 { color: #AAAAAA !important; }
+        .dark-theme .text-content-area .text-gray-500, .dark-theme .education-folder-content .text-gray-500 { color: #888888 !important; }
+        .dark-theme .education-folder-tab .text-indigo-400, .dark-theme .education-folder-tab .text-amber-400, .dark-theme .education-folder-tab .text-teal-400, .dark-theme .education-folder-tab .text-purple-400 { color: #E50914 !important; }
+        .dark-theme .text-content-area .text-pink-400, .dark-theme .text-content-area .text-amber-400:not(.education-folder-tab .text-amber-400), .dark-theme .text-content-area .text-teal-400:not(.education-folder-tab .text-teal-400), .dark-theme .text-content-area .text-purple-400:not(.education-folder-tab .text-purple-400) { color: #E50914 !important; }
+        .dark-theme .project-card-footer a, .dark-theme .text-content-area .text-amber-500, .dark-theme #contact .card .text-pink-400, .dark-theme .education-folder-content .text-amber-500 { color: #E50914 !important; }
+        .dark-theme .project-card-footer a:hover, .dark-theme .text-content-area .text-amber-500:hover, .dark-theme #contact .card a:hover, .dark-theme .education-folder-content .text-amber-500:hover { color: #B00710 !important; }
+        .dark-theme #hobbies .card .text-gray-300, .dark-theme .education-folder-content p, .dark-theme .education-folder-content ul, .dark-theme .education-folder-content li, .dark-theme .education-folder-content span, .dark-theme .education-folder-content a, .dark-theme #about-me .card p { color: #D1D5DB; }
+        .dark-theme footer { background-color: #000000; color: #888888; }
+        .dark-theme footer .text-gray-500 { color: #666666 !important; }
+        .dark-theme footer .text-gray-600 { color: #555555 !important; }
+        .dark-theme footer .fa-heart { color: #E50914 !important; }
+        .dark-theme ::-webkit-scrollbar-track { background: #222222; }
+        .dark-theme ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #E50914, #B00710); }
+        .dark-theme ::-webkit-scrollbar-thumb:hover { background: linear-gradient(to bottom, #B00710, #830000); }
+        .dark-theme .institute-info-dock { background-color: rgba(20, 20, 20, 0.9); }
+        .dark-theme .institute-info-dock .degree-title { color: #E50914 !important; }
+        .dark-theme .institute-info-dock .degree-info { color: #D1D5DB !important; }
+        .dark-theme .edu-nav-arrow { background-color: #333333; color: #E50914; }
+        .dark-theme .edu-nav-arrow:not(:disabled):hover { background-color: #555555; }
+        .dark-theme .education-folder-tab { background-color: #282828; border-color: #404040; }
+        .dark-theme .education-folder-tab:hover { background-color: #333333; }
+        .dark-theme .education-folder-content { background-color: #222222; border-color: #404040; }
+        .dark-theme .education-folder-container:hover { box-shadow: 0 6px 12px rgba(229, 9, 20, 0.2); }
+        .dark-theme .education-item.card { 
+            padding: 0 !important; 
+            border-radius: 0.5rem; 
         }
-
-
-        .dark-theme .text-content-area .text-gray-400,
-        .dark-theme .education-folder-content .text-gray-400
-        { color: #AAAAAA !important; } /* Lighter Gray */
-
-        .dark-theme .text-content-area .text-gray-500,
-        .dark-theme .education-folder-content .text-gray-500
-        { color: #888888 !important; } /* Medium-Light Gray */
-
-        .dark-theme .education-folder-tab .text-indigo-400 { color: #E50914 !important; } /* Netflix Red */
-        .dark-theme .education-folder-tab .text-amber-400 { color: #E50914 !important; }  /* Netflix Red */
-        .dark-theme .education-folder-tab .text-teal-400 { color: #E50914 !important; }   /* Netflix Red */
-        .dark-theme .education-folder-tab .text-purple-400 { color: #E50914 !important; } /* Netflix Red */
-
-        .dark-theme .text-content-area .text-pink-400 { color: #E50914 !important; } /* Netflix Red for skills headers etc. */
-        .dark-theme .text-content-area .text-amber-400:not(.education-folder-tab .text-amber-400) { color: #E50914 !important; } /* Netflix Red */
-        .dark-theme .text-content-area .text-teal-400:not(.education-folder-tab .text-teal-400) { color: #E50914 !important; } /* Netflix Red */
-        .dark-theme .text-content-area .text-purple-400:not(.education-folder-tab .text-purple-400) { color: #E50914 !important; } /* Netflix Red */
-
-        .dark-theme .project-card-footer a { color: #E50914; } /* Netflix Red */
-        .dark-theme .project-card-footer a:hover { color: #B00710; } /* Darker Netflix Red */
-        .dark-theme .text-content-area .text-amber-500 { color: #E50914; } /* Netflix Red for GitHub/DOI links */
-        .dark-theme .text-content-area .text-amber-500:hover { color: #B00710; } /* Darker Netflix Red */
-        .dark-theme #contact .card .text-pink-400 { color: #E50914 !important; } /* Netflix Red for icons */
-        .dark-theme #contact .card a:hover { color: #B00710 !important; } /* Darker Netflix Red for links */
-        .dark-theme #hobbies .card .text-gray-300 { color: #D1D5DB !important; } /* Fine as is */
-
-        .dark-theme .education-folder-content p, .dark-theme .education-folder-content ul, .dark-theme .education-folder-content li, .dark-theme .education-folder-content span, .dark-theme .education-folder-content a
-        { color: #D1D5DB; } /* Fine as is */
-         .dark-theme #about-me .card p { color: #D1D5DB; } /* Fine as is */
-
-
-        .dark-theme .education-folder-content .text-amber-500 { color: #E50914 !important; } /* Netflix Red */
-        .dark-theme .education-folder-content .text-amber-500:hover { color: #B00710 !important; } /* Darker Netflix Red */
-
-        .dark-theme footer { background-color: #000000; color: #888888; } /* Black footer, Medium-Light Gray text */
-        .dark-theme footer .text-gray-500 { color: #666666 !important; } /* Darker Gray */
-        .dark-theme footer .text-gray-600 { color: #555555 !important; } /* Even Darker Gray */
-        .dark-theme footer .fa-heart { color: #E50914 !important; } /* Netflix Red heart */
-
-        .dark-theme ::-webkit-scrollbar-track { background: #222222; } /* Dark Gray track */
-        .dark-theme ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #E50914, #B00710); } /* Netflix Red gradient thumb */
-        .dark-theme ::-webkit-scrollbar-thumb:hover { background: linear-gradient(to bottom, #B00710, #830000); } /* Darker Netflix Red gradient thumb */
-
-        /* Theme Toggle Slider Styles */
-        .dark-theme .theme-slider { background-color: #333333; border-color: #555555; } /* Medium Gray slider */
-        .dark-theme .theme-slider-thumb {
-            background-color: #FFFFFF; /* White thumb */
-            border: 1px solid #4B5563; /* Darker border for visibility on dark slider */
-            transform: translateX(30px);
-        }
-        .dark-theme .theme-slider .sun-icon { color: #E50914; opacity: 1;} /* Netflix Red for sun icon */
-        .dark-theme .theme-slider .moon-icon { color: #E5E7EB; opacity: 0;} /* Light Gray for moon icon */
-
-        /* Education Card Specifics (Docked Info) */
-        .dark-theme .institute-info-dock {
-            background-color: rgba(20, 20, 20, 0.9); /* Matches nav background */
-        }
-        .dark-theme .institute-info-dock .degree-title {
-            color: #E50914 !important; /* Netflix Red for degree title */
-        }
-        .dark-theme .institute-info-dock .degree-info {
-            color: #D1D5DB !important; /* Fine as is */
-        }
-
-        /* Education Carousel Arrows */
-        .dark-theme .edu-nav-arrow {
-            background-color: #333333; /* Medium Gray */
-            color: #E50914; /* Netflix Red icon */
-        }
-        .dark-theme .edu-nav-arrow:not(:disabled):hover {
-            background-color: #555555; /* Darker Medium Gray */
-        }
-
-        /* Folder Styles */
-        .dark-theme .education-folder-tab {
-            background-color: #282828; /* Slightly darker than card for differentiation */
-            border-color: #404040; /* Dark Gray border */
-        }
-        .dark-theme .education-folder-tab:hover {
-            background-color: #333333; /* Medium Gray on hover */
-        }
-        .dark-theme .education-folder-content {
-            background-color: #222222; /* Matches card background */
-            border-color: #404040; /* Dark Gray border */
-        }
-        .dark-theme .education-folder-container:hover {
-            box-shadow: 0 6px 12px rgba(229, 9, 20, 0.2); /* Netflix Red shadow */
-        }
-
-        /* Education Image Zoom and Dock Opacity on Hover for bigger screens */
-        .dark-theme .education-item:hover .institute-info-dock {
-            background-color: rgba(20, 20, 20, 0.98); /* More opaque for dark theme */
-        }
-
-
-        /* Light Theme Styles - SPOTIFY INSPIRED: WHITE BASE, SPOTIFY GREEN ACCENTS */
-        body.light-theme {
-            background-color: #FFFFFF;
-            color: #191414; /* Spotify Black for text */
-        }
-
-        .light-theme .accent-gradient-text {
-            background: linear-gradient(to right, #1DB954, #1AA34A); /* Spotify Green gradient */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .light-theme .accent-border {
-            border-bottom-width: 4px;
-            border-style: solid;
-            border-image-slice: 1;
-            border-image-source: linear-gradient(to right, #1DB954, #1AA34A); /* Spotify Green gradient */
-        }
-        .light-theme .section-title {
-            color: #1DB954; /* Spotify Green */
-        }
-        .light-theme .card {
-            background-color: #F0F0F0; /* Light Gray for cards */
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.4s ease-in-out;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border: 1px solid #DCDCDC; /* Slightly darker border for cards */
-        }
-        .light-theme .card:not(.no-hover-effect):not(.education-item):hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(29, 185, 84, 0.1), 0 4px 6px -4px rgba(29, 185, 84, 0.1); /* Spotify Green shadow */
-        }
-        .light-theme .tag {
-            background-color: #B3B3B3; /* Medium Gray for tags */
-            color: #191414; /* Spotify Black text */
-        }
-        .light-theme .hobby-tag {
-            background-color: #1DB954; /* Spotify Green */
-            color: #FFFFFF; /* White text */
-        }
-        .light-theme .icon-link { color: #535353; } /* Spotify Medium Gray for icons */
-        .light-theme .icon-link:hover { color: #1DB954; } /* Spotify Green hover */
-
-        .light-theme nav {
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly more opaque white */
-            backdrop-filter: blur(5px);
-            border-bottom: 1px solid #E0E0E0; /* Lighter border */
-        }
-        .light-theme #nav-links a { color: #535353; } /* Spotify Medium Gray for nav links */
-        .light-theme #nav-links a:hover, .light-theme #nav-links a.active {
-            color: #1DB954; /* Spotify Green */
-            border-bottom-color: #1DB954; /* Spotify Green underline */
-        }
-        .light-theme #mobile-menu a { color: #535353; }
-        .light-theme #mobile-menu a:hover { background-color: #E9E9E9; color: #1DB954; } /* Light gray bg, Spotify Green text */
-        .light-theme #mobile-menu a.active { background-color: #1DB954; color: #FFFFFF; } /* Spotify Green bg, White text */
-        .light-theme #mobile-menu-button svg { stroke: #191414; } /* Spotify Black for hamburger */
-
-        .light-theme .btn-primary {
-            background: linear-gradient(to right, #1DB954, #1AA34A); /* Spotify Green gradient */
-            color: white;
-        }
-        .light-theme .btn-primary:hover {
-            background: linear-gradient(to right, #1AA34A, #128A3C); /* Darker Spotify Green gradient */
-            box-shadow: 0 0 15px rgba(29, 185, 84, 0.4); /* Spotify Green shadow */
-        }
-        .light-theme .btn-secondary {
-            background-color: transparent;
-            color: #1DB954; /* Spotify Green text */
-            border-color: #1DB954; /* Spotify Green border */
-        }
-        .light-theme .btn-secondary:hover { background-color: #1DB954; color: white; } /* Spotify Green bg, White text */
-
-        /* Hero Section Specific Styles - Light Theme */
-        .light-theme #hero .hero-name {
-             /* Kusal will be this color, Debnath (span) will use accent-gradient-text */
-            color: #191414; /* Spotify Black for the main part of the name */
-            background: none; /* Remove existing gradient */
-            -webkit-background-clip: initial; /* Reset clip */
-            -webkit-text-fill-color: initial; /* Reset fill color */
-        }
-        .light-theme #hero .hero-designation {
-             color: #535353 !important; /* Spotify Medium Gray */
-        }
-        .light-theme #hero .profile-image-border {
-            border-color: #1DB954; /* Spotify Green */
-        }
-
-        /* About Me Section Specific Styles - Light Theme */
-        .light-theme #about-me .text-content-color {
-            color: #535353 !important; /* Spotify Medium Gray */
-        }
-
-
-        .light-theme .text-content-area h3, .light-theme .text-content-area p, .light-theme .text-content-area li, .light-theme .text-content-area a,
-        .light-theme .education-folder-content h3, .light-theme .education-folder-content p, .light-theme .education-folder-content li, .light-theme .education-folder-content a
-        { color: #191414; } /* Spotify Black for general text */
-        .light-theme #about-me .card p { color: #191414; }
-        .light-theme #about-me .text-content-color { color: #535353 !important; }
-
-
-        .light-theme .text-content-area .text-gray-400,
-        .light-theme .education-folder-content .text-gray-400
-        { color: #B3B3B3 !important; } /* Spotify Light Gray */
-
-        .light-theme .text-content-area .text-gray-500,
-        .light-theme .education-folder-content .text-gray-500
-        { color: #535353 !important; } /* Spotify Medium Gray */
-
-        .light-theme .education-folder-tab .text-indigo-400 { color: #1DB954 !important; } /* Spotify Green */
-        .light-theme .education-folder-tab .text-amber-400 { color: #1DB954 !important; }  /* Spotify Green */
-        .light-theme .education-folder-tab .text-teal-400 { color: #1DB954 !important; }   /* Spotify Green */
-        .light-theme .education-folder-tab .text-purple-400 { color: #1DB954 !important; } /* Spotify Green */
-
-        .light-theme .text-content-area .text-pink-400 { color: #1DB954 !important; } /* Spotify Green for skills headers etc. */
-        .light-theme .text-content-area .text-amber-400:not(.education-folder-tab .text-amber-400) { color: #1DB954 !important; } /* Spotify Green */
-        .light-theme .text-content-area .text-teal-400:not(.education-folder-tab .text-teal-400) { color: #1DB954 !important; } /* Spotify Green */
-        .light-theme .text-content-area .text-purple-400:not(.education-folder-tab .text-purple-400) { color: #1DB954 !important; } /* Spotify Green */
-
-        .light-theme .project-card-footer a { color: #1DB954; } /* Spotify Green */
-        .light-theme .project-card-footer a:hover { color: #1AA34A; } /* Darker Spotify Green */
-        .light-theme .text-content-area .text-amber-500 { color: #1DB954; } /* Spotify Green for GitHub/DOI links */
-        .light-theme .text-content-area .text-amber-500:hover { color: #1AA34A; } /* Darker Spotify Green */
-        .light-theme #contact .card .text-pink-400 { color: #1DB954 !important; } /* Spotify Green for icons */
-        .light-theme #contact .card a:hover { color: #1AA34A !important; } /* Darker Spotify Green for links */
-        .light-theme #hobbies .card .text-gray-300 { color: #191414 !important; } /* Spotify Black */
-
-        .light-theme .education-folder-content p, .light-theme .education-folder-content ul, .light-theme .education-folder-content li, .light-theme .education-folder-content span, .light-theme .education-folder-content a
-        { color: #191414; } /* Spotify Black */
-
-        .light-theme .education-folder-content .text-gray-400 { color: #B3B3B3 !important; } /* Spotify Light Gray */
-        .light-theme .education-folder-content .text-gray-500 { color: #535353 !important; } /* Spotify Medium Gray */
-        .light-theme .education-folder-content .text-amber-500 { color: #1DB954 !important; } /* Spotify Green */
-        .light-theme .education-folder-content .text-amber-500:hover { color: #1AA34A !important; } /* Darker Spotify Green */
-
-        .light-theme footer { background-color: #F0F0F0; color: #535353; border-top: 1px solid #DCDCDC;} /* Light Gray footer, Medium Gray text */
-        .light-theme footer .text-gray-500 { color: #535353 !important; }
-        .light-theme footer .text-gray-600 { color: #B3B3B3 !important; } /* Lighter gray for secondary footer text */
-        .light-theme footer .fa-heart { color: #1DB954 !important; } /* Spotify Green heart */
-
-        .light-theme ::-webkit-scrollbar-track { background: #E9E9E9; } /* Light Gray scrollbar track */
-        .light-theme ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #1DB954, #1AA34A); } /* Spotify Green gradient thumb */
-        .light-theme ::-webkit-scrollbar-thumb:hover { background: linear-gradient(to bottom, #1AA34A, #128A3C); } /* Darker Spotify Green gradient thumb */
+        .dark-theme .education-item:hover .institute-info-dock { background-color: rgba(20, 20, 20, 0.98); }
 
         /* Common styles */
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom-width: 4px;
-            border-style: solid;
-        }
-        .tag {
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-            display: inline-block;
-        }
+        .section-title { font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom-width: 4px; border-style: solid; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; margin-right: 0.5rem; margin-bottom: 0.5rem; display: inline-block; }
         html { scroll-behavior: smooth; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-thumb { border-radius: 4px; }
-
-        /* Theme Toggle Slider Styles */
-        .theme-slider-container { display: flex; align-items: center; margin-left: 1rem; }
-        .theme-slider { display: flex; align-items: center; cursor: pointer; width: 64px; height: 32px; border-radius: 16px; position: relative; transition: background-color 0.4s ease-in-out; border: 1px solid transparent; }
-        .theme-slider-thumb { width: 26px; height: 26px; border-radius: 50%; position: absolute; top: 2px; left: 3px; transition: transform 0.4s ease-in-out, background-color 0.4s ease-in-out; box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); }
-        .theme-slider .icon { font-size: 14px; transition: opacity 0.4s ease-in-out, color 0.4s ease-in-out; position: absolute; top: 50%; transform: translateY(-50%); pointer-events: none; }
-        .theme-slider .sun-icon { left: 6px; }
-        .theme-slider .moon-icon { right: 6px; }
-
-        .light-theme .theme-slider { background-color: #e1dede; border-color: #A0A0A0; } /* Spotify Light Gray slider */
-        .light-theme .theme-slider-thumb {
-            background-color: #ffffff; /* White thumb */
-            border: 1px solid #DCDCDC; /* Light gray border for visibility */
-            transform: translateX(0px);
-        }
-        .light-theme .theme-slider .sun-icon { color: #E50914; opacity: 0;} /* Netflix Red sun icon */
-        .light-theme .theme-slider .moon-icon { color: #1DB954; opacity: 1;} /* Spotify Green moon icon */
-
-        /* Hero Section Specifics (Static Layout) */
-        #hero {
-            margin-bottom: 3rem;
-            scroll-margin-top: 5rem;
-        }
-
-        /* Education Card Specifics (Docked Info) */
-        #education-carousel-container {
-            overflow: hidden;
-        }
-        .education-item {
-            min-height: 330px;
-            /* Ensure overflow is hidden for zoom effect */
-            overflow: hidden;
-        }
-
-        .institute-info-dock {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 0.75rem;
-            text-align: center;
-            z-index: 10;
-            transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out;
-        }
-
-        .light-theme .institute-info-dock {
-            background-color: rgba(240, 240, 240, 0.9); /* Matches card background, slightly more opaque */
-        }
-        .light-theme .institute-info-dock .degree-title {
-            color: #1DB954 !important; /* Spotify Green */
-        }
-        .light-theme .institute-info-dock .degree-info {
-            color: #191414 !important; /* Spotify Black */
-        }
-
-        .degree-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-        .degree-info {
-            font-size: 0.875rem;
-            line-height: 1.25rem;
-        }
-
-
-        /* Education Carousel Arrows */
-        .edu-nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 0.75rem;
-            border-radius: 9999px;
-            z-index: 10;
-            cursor: pointer;
-            transition: background-color 0.2s ease, opacity 0.2s ease;
-        }
-        .edu-nav-arrow:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
+        ::-webkit-scrollbar { width: 8px; } 
+        ::-webkit-scrollbar-thumb { border-radius: 4px; } 
+        #hero { margin-bottom: 3rem; scroll-margin-top: 1rem; }
+        #education-carousel-container { overflow: hidden; }
+        .education-item { min-height: 330px; overflow: hidden; }
+        .institute-info-dock { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.75rem; text-align: center; z-index: 10; transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out; }
+        .degree-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .degree-info { font-size: 0.875rem; line-height: 1.25rem; }
+        .edu-nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); padding: 0.75rem; border-radius: 9999px; z-index: 10; cursor: pointer; transition: background-color 0.2s ease, opacity 0.2s ease; }
+        .edu-nav-arrow:disabled { opacity: 0.4; cursor: not-allowed; }
         #edu-prev { left: -1rem; }
         #edu-next { right: -1rem; }
-
-
-        .light-theme .edu-nav-arrow {
-            background-color: #DCDCDC; /* Light Gray */
-            color: #1DB954; /* Spotify Green icon */
+        .education-folders-wrapper { display: flex; flex-direction: column; gap: 1rem; }
+        .education-folder-container { border-radius: 0.75rem; transition: box-shadow 0.3s ease-in-out; overflow: hidden; }
+        .education-folder-tab { padding: 1rem 1.5rem; cursor: pointer; position: relative; transition: background-color 0.3s ease; border: 1px solid; border-top-left-radius: 0.75rem; border-top-right-radius: 0.75rem; }
+        .education-folder-tab h3 { margin-bottom: 0; display: flex; justify-content: space-between; align-items: center; width: 100%; font-size: 1.125rem; }
+        .education-folder-tab .tab-arrow { transition: transform 0.3s ease-in-out; font-size: 0.8em; margin-left: 0.5rem; }
+        .education-folder-content { max-height: 0; opacity: 0; overflow: hidden; padding: 0 1.5rem; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-out, padding-top 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding-bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid; border-top: none; border-bottom-left-radius: 0.75rem; border-bottom-right-radius: 0.75rem; }
+        .education-folder-container:hover .education-folder-content { max-height: 700px; opacity: 1; padding-top: 1.5rem; padding-bottom: 1.5rem; }
+        .education-folder-container:hover .tab-arrow { transform: rotate(180deg); }
+        .edu-card-image { transition: transform 0.3s ease-in-out; }
+        @media (min-width: 768px) {
+            .education-item:hover .edu-card-image { transform: scale(1.05); }
         }
-        .light-theme .edu-nav-arrow:not(:disabled):hover {
-            background-color: #C8C8C8; /* Darker Light Gray */
-        }
-
-        /* Folder Styles */
-        .education-folders-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .education-folder-container {
-            border-radius: 0.75rem;
-            transition: box-shadow 0.3s ease-in-out;
-            overflow: hidden;
-        }
-        .education-folder-tab {
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            position: relative;
-            transition: background-color 0.3s ease;
-            border: 1px solid;
-            border-top-left-radius: 0.75rem;
-            border-top-right-radius: 0.75rem;
-        }
-        .education-folder-tab h3 {
-            margin-bottom: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            font-size: 1.125rem;
-        }
-        .education-folder-tab .tab-arrow {
-            transition: transform 0.3s ease-in-out;
-            font-size: 0.8em;
-            margin-left: 0.5rem;
-        }
-        .education-folder-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            padding: 0 1.5rem;
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-out, padding-top 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding-bottom 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid;
-            border-top: none;
-            border-bottom-left-radius: 0.75rem;
-            border-bottom-right-radius: 0.75rem;
-        }
-        .education-folder-container:hover .education-folder-content {
-            max-height: 700px; /* Adjust as needed */
-            opacity: 1;
-            padding-top: 1.5rem;
-            padding-bottom: 1.5rem;
-        }
-        .education-folder-container:hover .tab-arrow {
-            transform: rotate(180deg);
-        }
-
-        .light-theme .education-folder-tab {
-            background-color: #E9E9E9; /* Lighter Gray */
-            border-color: #DCDCDC; /* Light Gray border */
-        }
-        .light-theme .education-folder-tab:hover {
-            background-color: #DCDCDC; /* Darker Light Gray on hover */
-        }
-        .light-theme .education-folder-content {
-            background-color: #F0F0F0; /* Matches card background */
-            border-color: #DCDCDC; /* Light Gray border */
-        }
-        .light-theme .education-folder-container:hover {
-            box-shadow: 0 6px 12px rgba(29, 185, 84, 0.15); /* Spotify Green shadow */
-        }
-        .text-content-area {
-            /* General text content area styling if needed */
-        }
-
-        /* Education Image Zoom and Dock Opacity on Hover for bigger screens */
-        .edu-card-image {
-            transition: transform 0.3s ease-in-out; /* Smooth transition for zoom */
-        }
-
-        @media (min-width: 768px) { /* Corresponds to Tailwind's 'md' breakpoint */
-            .education-item:hover .edu-card-image {
-                transform: scale(1.05); /* Zoom effect: 5% bigger */
-            }
-            .light-theme .education-item:hover .institute-info-dock {
-                background-color: rgba(240, 240, 240, 0.98); /* More opaque for light theme */
-            }
-        }
-
     </style>
 </head>
-<body class="antialiased"> <nav class="sticky top-0 z-50 shadow-lg">
-        <div class="container mx-auto px-4 sm:px-6">
-            <div class="flex justify-between items-center py-3">
-                <a href="#" class="text-2xl font-bold accent-gradient-text">KD</a>
+<body class="dark-theme"> <button id="sidebar-toggle-button" class="fixed top-4 left-4 z-[60] p-2 rounded-md items-center justify-center md:hidden">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" id="sidebar-toggle-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
 
-                <div class="flex items-center">
-                    <div id="nav-links" class="hidden md:flex md:items-center md:space-x-1 lg:space-x-2">
-                        <a href="#about-me" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">About Me</a>
-                        <a href="#education" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Education</a>
-                        <a href="#skills" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Skills</a>
-                        <a href="#experience" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Experience</a>
-                        <a href="#projects" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Projects</a>
-                        <a href="#publications" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Publications</a>
-                        <a href="#hobbies" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Hobbies</a>
-                        <a href="#contact" class="px-2 py-2 rounded-md text-xs lg:text-sm font-medium">Contact</a>
-                    </div>
+    <nav id="left-sidebar" class="fixed top-0 left-0 h-screen z-50 flex flex-col shadow-xl">
+        <div class="flex items-center justify-start h-16 px-4 shrink-0">
+             <a href="#" class="flex items-center overflow-hidden">
+                <span class="text-2xl font-bold accent-gradient-text shrink-0">KD</span>
+                <span id="sidebar-logo-text" class="ml-2 text-xl font-semibold whitespace-nowrap">Kusal Debnath</span>
+            </a>
+        </div>
 
-                    <div class="theme-slider-container">
-                        <div id="theme-toggle-slider" class="theme-slider" aria-label="Toggle theme">
-                            <i class="fas fa-sun icon sun-icon"></i>
-                            <div class="theme-slider-thumb"></div>
-                            <i class="fas fa-moon icon moon-icon"></i>
-                        </div>
-                    </div>
-
-                    <div class="md:hidden flex items-center ml-2">
-                        <button id="mobile-menu-button" class="focus:outline-none">
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div id="mobile-menu" class="hidden md:hidden pb-3">
-                 <a href="#hero" class="block py-2 px-3 text-sm rounded-md">Hero</a>
-                 <a href="#about-me" class="block py-2 px-3 text-sm rounded-md">About Me</a>
-                <a href="#education" class="block py-2 px-3 text-sm rounded-md">Education</a>
-                <a href="#skills" class="block py-2 px-3 text-sm rounded-md">Skills</a>
-                <a href="#experience" class="block py-2 px-3 text-sm rounded-md">Experience</a>
-                <a href="#projects" class="block py-2 px-3 text-sm rounded-md">Projects</a>
-                <a href="#publications" class="block py-2 px-3 text-sm rounded-md">Publications</a>
-                <a href="#hobbies" class="block py-2 px-3 text-sm rounded-md">Hobbies</a>
-                <a href="#contact" class="block py-2 px-3 text-sm rounded-md">Contact</a>
-            </div>
+        <div id="sidebar-nav-links" class="flex-grow overflow-y-auto overflow-x-hidden py-4 space-y-1">
+            <a href="#hero" class="nav-item group flex items-center py-2.5 px-4 rounded-md mx-2">
+                <i class="fas fa-home w-6 h-6 text-lg text-center transition-colors duration-200 mr-3 shrink-0"></i>
+                <span class="nav-text text-sm font-medium">Home</span>
+            </a>
+            <a href="#about-me" class="nav-item group flex items-center py-2.5 px-4 rounded-md mx-2">
+                <i class="fas fa-user w-6 h-6 text-lg text-center transition-colors duration-200 mr-3 shrink-0"></i>
+                <span class="nav-text text-sm font-medium">About Me</span>
+            </a>
+            <a href="#education" class="nav-item group flex items-center py-2.5 px-4 rounded-md mx-2">
+                <i class="fas fa-graduation-cap w-6 h-6 text-lg text-center transition-colors duration-200 mr-3 shrink-0"></i>
+                <span class="nav-text text-sm font-medium">Education</span>
+            </a>
+            <a href="#skills" class="nav-item group flex items-center py-2.5 px-4 rounded-md mx-2">
+                <i class="fas fa-cogs w-6 h-6 text-lg text-center transition-colors duration-200 mr-3 shrink-0"></i>
+                <span class="nav-text text-sm font-medium">Skills</span>
+            </a>
+            <a href="#experience" class="nav-item group flex items-center py-2.5 px-4 rounded-md mx-2">
+                <i class="fas fa-briefcase w-6 h-6 text-lg text-center transition-colors duration-200 mr-3 shrink-0"></i>
+                <span class="nav-text text-sm font-medium">Experience</span>
+            </a>
+            <a href="#projects" class="nav-item group flex items-center py-2.5 px-4 rounded-md mx-2">
+                <i class="fas fa-flask w-6 h-6 text-lg text-center transition-colors duration-200 mr-3 shrink-0"></i>
+                <span class="nav-text text-sm font-medium">Projects</span>
+            </a>
+            <a href="#publications" class="nav-item group flex items-center py-2.5 px-4 rounded-md mx-2">
+                <i class="fas fa-book-open w-6 h-6 text-lg text-center transition-colors duration-200 mr-3 shrink-0"></i>
+                <span class="nav-text text-sm font-medium">Publications</span>
+            </a>
+            <a href="#hobbies" class="nav-item group flex items-center py-2.5 px-4 rounded-md mx-2">
+                <i class="fas fa-icons w-6 h-6 text-lg text-center transition-colors duration-200 mr-3 shrink-0"></i>
+                <span class="nav-text text-sm font-medium">Hobbies</span>
+            </a>
+            <a href="#contact" class="nav-item group flex items-center py-2.5 px-4 rounded-md mx-2">
+                <i class="fas fa-envelope w-6 h-6 text-lg text-center transition-colors duration-200 mr-3 shrink-0"></i>
+                <span class="nav-text text-sm font-medium">Contact</span>
+            </a>
         </div>
     </nav>
 
     <main class="container mx-auto px-4 sm:px-6 py-12">
-
-        <section id="hero" class="scroll-mt-20 mb-12 md:mb-16">
-            <div class="card no-hover-effect p-6 md:p-8 overflow-hidden">
+        <section id="hero" class="scroll-mt-16 mb-12 md:mb-16"> <div class="card no-hover-effect p-6 md:p-8 overflow-hidden">
                 <div class="flex flex-col items-center text-center">
                     <img src="Kusal_D.jpg" alt="Kusal Debnath"
                          class="profile-image w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto rounded-full object-cover border-4 profile-image-border shadow-xl mb-6"
-                         onerror="this.onerror=null; this.src='https://placehold.co/192x192/141414/E5E7EB?text=KD';"> <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 hero-name">
+                         onerror="this.onerror=null; this.src='https://placehold.co/192x192/141414/E5E7EB?text=KD';">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 hero-name">
                         Kusal <span class="accent-gradient-text">Debnath</span>
                     </h1>
                     <p class="text-base sm:text-lg md:text-xl hero-designation mb-6">Graduate Researcher | AI-driven Drug Discovery</p>
-                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="about-me" class="mb-12 md:mb-16 scroll-mt-20">
+        <section id="about-me" class="mb-12 md:mb-16 scroll-mt-16">
             <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">About Me</h2>
             <div class="card no-hover-effect text-content-area">
                 <p class="text-base sm:text-lg leading-relaxed text-content-color text-left sm:text-center mb-6">
-                    Graduate Researcher specializing in AI-driven drug discovery, with expertise in Machine Learning (ML), Deep Learning (DL), Generative AI (Gen-AI) RNA-Seq analysis, and molecular docking. Experienced in de novo drug design and drug-target interaction (DTI) prediction modeling. Passionate about leveraging computational biology and AI to advance precision medicine and cheminformatics. Aspiring to lead interdisciplinary research integrating AI and pharmacogenomics for drug discovery.
+                    Graduate Researcher specializing in AI-driven drug discovery, with expertise in Machine Learning (ML), Deep Learning (DL), Generative AI (Gen-AI), RNA-Seq analysis, and molecular docking. Experienced in de novo drug design and drug-target interaction (DTI) prediction modeling. Passionate about leveraging computational biology and AI to advance precision medicine and cheminformatics. Aspiring to lead interdisciplinary research integrating AI and pharmacogenomics for drug discovery.
                 </p>
                 <div class="buttons-container flex flex-col space-y-3 w-full max-w-xs mx-auto sm:flex-row sm:space-y-0 sm:space-x-4 sm:max-w-sm mt-4">
                     <a href="#contact" class="btn btn-primary w-full text-sm py-2.5 sm:text-base sm:py-3 rounded-lg text-center">Get in Touch</a>
@@ -618,14 +309,15 @@
             </div>
         </section>
 
-        <section id="education" class="mb-12 md:mb-16 scroll-mt-20">
+        <section id="education" class="mb-12 md:mb-16 scroll-mt-16">
             <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Education</h2>
             <div id="education-carousel-container" class="relative">
                 <div id="education-items-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     <div class="education-item card rounded-lg shadow-lg overflow-hidden relative p-0">
                         <img src="vcu.jpg" alt="Virginia Commonwealth University"
                              class="edu-card-image absolute inset-0 w-full h-full object-cover"
-                             onerror="this.src='https://placehold.co/400x200/222222/e5e7eb?text=VCU'"> <div class="institute-info-dock">
+                             onerror="this.src='https://placehold.co/400x200/222222/e5e7eb?text=VCU'">
+                        <div class="institute-info-dock">
                             <h3 class="degree-title">Doctor of Philosophy (PhD) in Computer Science</h3>
                             <p class="degree-info">Virginia Commonwealth University</p>
                             <p class="degree-info text-xs">Aug 2023 – Present</p>
@@ -634,7 +326,8 @@
                     <div class="education-item card rounded-lg shadow-lg overflow-hidden relative p-0">
                         <img src="iitkgp.jpg" alt="IIT Kharagpur"
                              class="edu-card-image absolute inset-0 w-full h-full object-cover"
-                             onerror="this.src='https://placehold.co/400x200/222222/e5e7eb?text=IITKGP'"> <div class="institute-info-dock">
+                             onerror="this.src='https://placehold.co/400x200/222222/e5e7eb?text=IITKGP'">
+                        <div class="institute-info-dock">
                             <h3 class="degree-title">Master of Technology (MTech) in Biomedical Engineering</h3>
                             <p class="degree-info">Indian Institute of Technology, Kharagpur</p>
                             <p class="degree-info text-xs">Aug 2021 – June 2023 (GPA: 8.70/10.0)</p>
@@ -643,7 +336,8 @@
                     <div class="education-item card rounded-lg shadow-lg overflow-hidden relative p-0">
                          <img src="hit.jpeg" alt="Haldia Institute of Technology"
                              class="edu-card-image absolute inset-0 w-full h-full object-cover"
-                             onerror="this.src='https://placehold.co/400x200/222222/e5e7eb?text=HIT'"> <div class="institute-info-dock">
+                             onerror="this.src='https://placehold.co/400x200/222222/e5e7eb?text=HIT'">
+                        <div class="institute-info-dock">
                             <h3 class="degree-title">Bachelor of Technology (BTech) in Biotechnology</h3>
                             <p class="degree-info">Haldia Institute of Technology, Haldia</p>
                             <p class="degree-info text-xs">Aug 2017 – July 2021 (GPA: 9.43/10.0)</p>
@@ -659,7 +353,7 @@
             </div>
         </section>
 
-        <section id="skills" class="mb-12 md:mb-16 scroll-mt-20">
+        <section id="skills" class="mb-12 md:mb-16 scroll-mt-16">
             <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Skills</h2>
             <div class="card text-content-area no-hover-effect">
                 <div class="mb-4">
@@ -677,7 +371,7 @@
             </div>
         </section>
 
-        <section id="experience" class="mb-12 md:mb-16 scroll-mt-20">
+        <section id="experience" class="mb-12 md:mb-16 scroll-mt-16">
             <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Research Experience</h2>
             <div class="education-folders-wrapper">
                 <div class="education-folder-container">
@@ -729,7 +423,7 @@
             </div>
         </section>
 
-        <section id="projects" class="mb-12 md:mb-16 scroll-mt-20">
+        <section id="projects" class="mb-12 md:mb-16 scroll-mt-16">
             <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Research Projects</h2>
             <div class="education-folders-wrapper">
                 <div class="education-folder-container">
@@ -779,7 +473,7 @@
             </div>
         </section>
 
-        <section id="publications" class="mb-12 md:mb-16 scroll-mt-20">
+        <section id="publications" class="mb-12 md:mb-16 scroll-mt-16">
             <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Publications</h2>
             <div class="education-folders-wrapper">
                 <div class="education-folder-container">
@@ -825,7 +519,7 @@
             </div>
         </section>
 
-        <section id="hobbies" class="mb-12 md:mb-16 scroll-mt-20">
+        <section id="hobbies" class="mb-12 md:mb-16 scroll-mt-16">
             <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Hobbies & Interests</h2>
             <div class="card text-content-area no-hover-effect">
                 <p class="text-gray-300 mb-4 text-base sm:text-lg">Beyond my academic and research pursuits, I enjoy a variety of activities that help me relax and grow:</p>
@@ -840,7 +534,7 @@
             </div>
         </section>
 
-        <section id="contact" class="scroll-mt-20">
+        <section id="contact" class="scroll-mt-16">
             <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Get in Touch</h2>
             <div class="card text-center text-content-area no-hover-effect">
                 <p class="text-base sm:text-lg mb-6">
@@ -864,144 +558,77 @@
 
         <script>
             // DOM Elements
-            const themeToggleSlider = document.getElementById('theme-toggle-slider');
             const body = document.body;
             const profileImage = document.querySelector('#hero img.profile-image');
             const educationLogos = document.querySelectorAll('.edu-card-image');
+            const leftSidebar = document.getElementById('left-sidebar');
+            const sidebarToggleButton = document.getElementById('sidebar-toggle-button');
+            const sidebarToggleIcon = document.getElementById('sidebar-toggle-icon');
+            const mainContent = document.querySelector('main');
 
+            // Sidebar Toggle for Mobile
+            const hamburgerIconPath = "M4 6h16M4 12h16M4 18h16";
+            const closeIconPath = "M6 18L18 6M6 6l12 12";
 
-            // Function to apply the chosen theme
-            function applyTheme(theme) {
-                body.classList.remove('dark-theme', 'light-theme');
-                const isLightTheme = theme === 'light';
-                body.classList.add(isLightTheme ? 'light-theme' : 'dark-theme');
+            if (sidebarToggleButton && leftSidebar && sidebarToggleIcon) {
+                sidebarToggleButton.addEventListener('click', () => {
+                    const isOpen = leftSidebar.classList.toggle('mobile-open');
+                    sidebarToggleIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${isOpen ? closeIconPath : hamburgerIconPath}" />`;
+                });
+            }
 
-                // Define placeholder URLs based on theme
-                const placeholderBase = isLightTheme ?
-                    'https://placehold.co/192x192/FFFFFF/191414?text=' : // Light theme: White bg, Spotify Black text
-                    'https://placehold.co/192x192/141414/E5E7EB?text='; // Dark theme: Netflix black bg, light gray text
-                const eduPlaceholderBase = isLightTheme ?
-                    'https://placehold.co/400x200/F0F0F0/191414?text=' : // Light theme: Light Gray bg, Spotify Black text
-                    'https://placehold.co/400x200/222222/E5E7EB?text='; // Dark theme: Card bg, light gray text
+            document.addEventListener('DOMContentLoaded', () => {
+                // Directly apply dark-theme and set placeholders
+                body.classList.add('dark-theme');
+                const placeholderBaseDark = 'https://placehold.co/192x192/141414/E5E7EB?text=';
+                const eduPlaceholderBaseDark = 'https://placehold.co/400x200/222222/E5E7EB?text=';
 
-                // Update profile image placeholder if it's an error or already a placeholder
                 if (profileImage) {
-                    profileImage.onerror = () => { profileImage.src = placeholderBase + 'KD'; };
-                    if (profileImage.src.startsWith('https://placehold.co/')) {
-                        profileImage.src = placeholderBase + 'KD';
+                    profileImage.onerror = () => { profileImage.src = placeholderBaseDark + 'KD'; };
+                    if (profileImage.src.startsWith('https://placehold.co/') || !profileImage.src) { 
+                        profileImage.src = placeholderBaseDark + 'KD';
                     }
                 }
-
-                // Update education logos placeholders if they are errors or already placeholders
                 educationLogos.forEach(logo => {
-                    const altText = logo.alt.split(' ')[0] || 'IMG'; // Use first word of alt text or 'IMG'
-                    logo.onerror = () => { logo.src = eduPlaceholderBase + altText.substring(0,6).toUpperCase(); };
-                     if (logo.src.startsWith('https://placehold.co/')) {
-                        logo.src = eduPlaceholderBase + altText.substring(0,6).toUpperCase();
+                    const altText = logo.alt.split(' ')[0] || 'IMG';
+                    logo.onerror = () => { logo.src = eduPlaceholderBaseDark + altText.substring(0,6).toUpperCase(); };
+                     if (logo.src.startsWith('https://placehold.co/') || !logo.src) {
+                        logo.src = eduPlaceholderBaseDark + altText.substring(0,6).toUpperCase();
                     }
                 });
-
-                // Force re-evaluation of onerror for images that might have failed before JS ran
-                if (profileImage && (profileImage.complete && profileImage.naturalWidth === 0) || !profileImage.complete && !profileImage.src.startsWith('https://placehold.co/')) {
+                if (profileImage && ((profileImage.complete && profileImage.naturalWidth === 0) || !profileImage.complete) && !profileImage.src.startsWith('https://placehold.co/')) {
                      const currentSrc = profileImage.src;
-                     profileImage.src = ''; // Temporarily clear src to trigger onerror if needed
-                     profileImage.src = currentSrc; // Restore original src
+                     profileImage.src = ''; profileImage.src = currentSrc || placeholderBaseDark + 'KD';
                 }
                  educationLogos.forEach(logo => {
-                    if ((logo.complete && logo.naturalWidth === 0) || !logo.complete && !logo.src.startsWith('https://placehold.co/')) {
+                    const altText = logo.alt.split(' ')[0] || 'IMG';
+                    if (((logo.complete && logo.naturalWidth === 0) || !logo.complete) && !logo.src.startsWith('https://placehold.co/')) {
                         const currentSrc = logo.src;
-                        logo.src = '';
-                        logo.src = currentSrc;
+                        logo.src = ''; logo.src = currentSrc || eduPlaceholderBaseDark + altText.substring(0,6).toUpperCase();
                     }
                 });
-            }
 
-            // Function to toggle theme and save preference
-            function toggleTheme() {
-                const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                applyTheme(newTheme);
-                localStorage.setItem('portfolioTheme', newTheme);
-            }
 
-            // Event listener for theme toggle slider
-            if (themeToggleSlider) {
-                themeToggleSlider.addEventListener('click', toggleTheme);
-            }
-
-            // DOMContentLoaded event listener for initial setup
-            document.addEventListener('DOMContentLoaded', () => {
-                // Determine and apply initial theme
-                const savedTheme = localStorage.getItem('portfolioTheme');
-                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-                let initialTheme = 'light'; // Default to light theme
-                if (savedTheme) {
-                    initialTheme = savedTheme;
-                } else if (prefersDark) {
-                    initialTheme = 'dark';
-                }
-                applyTheme(initialTheme);
-
-                // Set current year in footer
                 document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-                // Mobile menu toggle functionality
-                const mobileMenuButton = document.getElementById('mobile-menu-button');
-                const mobileMenu = document.getElementById('mobile-menu');
-                const hamburgerIconPath = "M4 6h16M4 12h16M4 18h16"; // SVG path for hamburger icon
-                const closeIconPath = "M6 18L18 6M6 6l12 12"; // SVG path for close icon
-
-                if (mobileMenuButton && mobileMenu) {
-                    mobileMenuButton.addEventListener('click', () => {
-                        const isOpen = !mobileMenu.classList.contains('hidden');
-                        mobileMenu.classList.toggle('hidden');
-                        const iconSvg = mobileMenuButton.querySelector('svg');
-                        const iconPath = iconSvg.querySelector('path');
-                        if (iconPath) {
-                            iconPath.setAttribute('d', isOpen ? hamburgerIconPath : closeIconPath);
-                        }
-                    });
-
-                    // Close mobile menu when a link is clicked
-                    const mobileNavLinks = mobileMenu.querySelectorAll('a');
-                    mobileNavLinks.forEach(link => {
-                        link.addEventListener('click', () => {
-                            mobileMenu.classList.add('hidden');
-                            const iconSvg = mobileMenuButton.querySelector('svg');
-                            const iconPath = iconSvg.querySelector('path');
-                            if (iconPath) {
-                                 iconPath.setAttribute('d', hamburgerIconPath); // Reset to hamburger icon
-                            }
-                        });
-                    });
-                }
-
-                // Active navigation link highlighting on scroll
-                const sections = document.querySelectorAll('section[id]');
-                const desktopNavLinks = document.querySelectorAll('#nav-links a');
-                const mobileNavLinksForScroll = document.querySelectorAll('#mobile-menu a');
+                const sections = document.querySelectorAll('main section[id]');
+                const sidebarNavLinks = document.querySelectorAll('#sidebar-nav-links a.nav-item');
 
                 function updateActiveNavLink() {
                     let currentSectionId = '';
-                    let navHeight = document.querySelector('nav').offsetHeight || 60; // Fallback nav height
-                    let offset = navHeight + 40; // Offset for better accuracy
+                    let offset = window.innerHeight * 0.2;
 
-                    // Special handling for Hero section to be active at the very top
                     const heroSection = document.getElementById('hero');
                     if (heroSection) {
                         const heroTop = heroSection.offsetTop;
                         const heroHeight = heroSection.offsetHeight;
-                        // Consider hero active if viewport is within its top 70% (adjust 0.3 as needed)
-                        if (pageYOffset < heroTop + heroHeight - (window.innerHeight * 0.3)) {
+                         if (pageYOffset < heroTop + heroHeight - (window.innerHeight * 0.5)) {
                             currentSectionId = 'hero';
                         }
                     }
 
-                    // Iterate other sections if hero isn't active
                     if (!currentSectionId) {
                         sections.forEach(section => {
-                            if (section.id === 'hero') return; // Skip hero if already handled or not at top
                             const sectionTop = section.offsetTop;
                             const sectionHeight = section.offsetHeight;
                             if (pageYOffset >= sectionTop - offset && pageYOffset < sectionTop + sectionHeight - offset) {
@@ -1009,51 +636,44 @@
                             }
                         });
                     }
-
-                    // Fallbacks if no section is actively identified
                     if (!currentSectionId && sections.length > 0) {
-                         // If above the first non-hero section, make it active
-                         if (pageYOffset < sections[0].offsetTop - offset && sections[0].id !== 'hero') {
+                        if (pageYOffset < sections[0].offsetTop - offset && sections[0].id !== 'hero') {
                             currentSectionId = sections[0].getAttribute('id');
-                        }
-                        // If at the very bottom of the page, make the last section active
-                        else if (pageYOffset + window.innerHeight >= document.body.scrollHeight - 20) { // Small tolerance for bottom
+                        } else if (pageYOffset + window.innerHeight >= document.body.scrollHeight - 20) {
                             currentSectionId = sections[sections.length - 1].getAttribute('id');
-                        }
-                        // Default to hero if still nothing (e.g., if only hero section exists or at very top)
-                        else if (!currentSectionId && heroSection) {
-                             currentSectionId = 'hero';
+                        } else if (!currentSectionId && heroSection) {
+                            currentSectionId = 'hero';
                         }
                     }
 
-                    // Update desktop nav links
-                    desktopNavLinks.forEach(link => {
+                    sidebarNavLinks.forEach(link => {
                         link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${currentSectionId}`) {
-                            link.classList.add('active');
-                        }
-                    });
-
-                    // Update mobile nav links
-                    mobileNavLinksForScroll.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${currentSectionId}`) {
+                        const linkHref = link.getAttribute('href');
+                        if (linkHref && linkHref.substring(1) === currentSectionId) {
                             link.classList.add('active');
                         }
                     });
                 }
 
                 window.addEventListener('scroll', updateActiveNavLink);
-                updateActiveNavLink(); // Initial call to set active link on page load
+                updateActiveNavLink();
 
-                // Education Carousel Logic
+                sidebarNavLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (leftSidebar.classList.contains('mobile-open')) {
+                            leftSidebar.classList.remove('mobile-open');
+                            sidebarToggleIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${hamburgerIconPath}" />`;
+                        }
+                    });
+                });
+
                 const eduCarouselContainer = document.getElementById('education-carousel-container');
                 const eduGrid = document.getElementById('education-items-grid');
                 const eduItems = eduGrid ? Array.from(eduGrid.children).filter(child => child.classList.contains('education-item')) : [];
                 const eduPrevButton = document.getElementById('edu-prev');
                 const eduNextButton = document.getElementById('edu-next');
                 let currentEduSlideIndex = 0;
-                let eduIsSmallScreen = false; // Flag to track if carousel view is active
+                let eduIsSmallScreen = false;
                 let eduAutoSlideInterval = null;
                 const AUTO_SLIDE_DELAY = 2000;
 
@@ -1069,24 +689,20 @@
                 function nextEduSlide() {
                     if (eduItems.length === 0) return;
                     let nextIndex = (currentEduSlideIndex + 1);
-                    if (nextIndex >= eduItems.length) {
-                        nextIndex = 0; // Loop back to the first slide
-                    }
+                    if (nextIndex >= eduItems.length) { nextIndex = 0; }
                     showEduSlide(nextIndex);
                 }
 
                 function prevEduSlide() {
                     if (eduItems.length === 0) return;
                     let prevIndex = (currentEduSlideIndex - 1);
-                    if (prevIndex < 0) {
-                        prevIndex = eduItems.length - 1; // Loop back to the last slide
-                    }
+                    if (prevIndex < 0) { prevIndex = eduItems.length - 1; }
                     showEduSlide(prevIndex);
                 }
 
                 function startEduAutoSlide() {
-                    stopEduAutoSlide(); // Clear any existing interval
-                    if (eduIsSmallScreen && eduItems.length > 1) { // Only auto-slide on small screens with multiple items
+                    stopEduAutoSlide();
+                    if (eduIsSmallScreen && eduItems.length > 1) {
                         eduAutoSlideInterval = setInterval(nextEduSlide, AUTO_SLIDE_DELAY);
                     }
                 }
@@ -1096,118 +712,81 @@
                     eduAutoSlideInterval = null;
                 }
 
-                // Updates carousel visibility and behavior based on screen size
                 function updateEduCarouselVisibility() {
                     if (!eduGrid || !eduPrevButton || !eduNextButton || !eduCarouselContainer) return;
-
                     if (eduIsSmallScreen) {
-                        eduCarouselContainer.style.overflow = 'hidden'; // Needed for slide effect
+                        eduCarouselContainer.style.overflow = 'hidden';
                         eduGrid.classList.remove('grid', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-6', 'md:gap-8');
-                        eduGrid.classList.add('flex'); // Change to flex for sliding
+                        eduGrid.classList.add('flex');
                         eduGrid.style.transition = 'transform 0.5s ease-in-out';
-
-                        eduItems.forEach(item => {
-                            item.style.width = '100%'; // Each item takes full width of container
-                            item.style.flexShrink = '0';
-                        });
-
-                        showEduSlide(currentEduSlideIndex); // Ensure correct slide is shown
-
+                        eduItems.forEach(item => { item.style.width = '100%'; item.style.flexShrink = '0'; });
+                        showEduSlide(currentEduSlideIndex);
                         if (eduItems.length > 1) {
                             eduPrevButton.classList.remove('hidden');
                             eduNextButton.classList.remove('hidden');
                             startEduAutoSlide();
-                        } else { // Hide arrows if only one item
+                        } else {
                             eduPrevButton.classList.add('hidden');
                             eduNextButton.classList.add('hidden');
                         }
-                    } else { // Larger screens: revert to grid layout
-                        eduCarouselContainer.style.overflow = ''; // Reset overflow
+                    } else {
+                        eduCarouselContainer.style.overflow = '';
                         eduGrid.classList.remove('flex');
                         eduGrid.classList.add('grid', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-6', 'md:gap-8');
-                        eduGrid.style.transform = ''; // Reset transform
-                        eduGrid.style.transition = ''; // Reset transition
-
-                        eduItems.forEach(item => {
-                            item.style.width = ''; // Reset item width
-                            item.style.flexShrink = '';
-                        });
+                        eduGrid.style.transform = ''; eduGrid.style.transition = '';
+                        eduItems.forEach(item => { item.style.width = ''; item.style.flexShrink = ''; });
                         eduPrevButton.classList.add('hidden');
                         eduNextButton.classList.add('hidden');
                         stopEduAutoSlide();
                     }
                 }
 
-                // Handles screen resize events for the education carousel
                 function handleEduScreenResize() {
-                    const smallScreenBreakpoint = 640; // Tailwind's 'sm' breakpoint
+                    const smallScreenBreakpoint = 640;
                     const newIsSmallScreen = window.innerWidth < smallScreenBreakpoint;
-
-                    if (newIsSmallScreen !== eduIsSmallScreen) { // If screen mode changed
+                    if (newIsSmallScreen !== eduIsSmallScreen) {
                         eduIsSmallScreen = newIsSmallScreen;
-                        if (!eduIsSmallScreen) { // If moving from small to large, reset slide index
-                            currentEduSlideIndex = 0;
-                        }
+                        if (!eduIsSmallScreen) { currentEduSlideIndex = 0; }
                         updateEduCarouselVisibility();
                     } else if (eduIsSmallScreen && !eduAutoSlideInterval && eduItems.length > 1) {
-                        // If still small screen and auto-slide isn't running (e.g., after manual nav), restart it
                         startEduAutoSlide();
                     }
                 }
 
-                // Initialize education carousel if items exist
                 if (eduItems.length > 0) {
                     if(eduPrevButton) {
                         eduPrevButton.addEventListener('click', () => {
-                            stopEduAutoSlide();
-                            prevEduSlide();
-                            // Restart auto-slide after a delay if still on small screen
+                            stopEduAutoSlide(); prevEduSlide();
                             if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500);
                         });
                     }
                     if(eduNextButton) {
                         eduNextButton.addEventListener('click', () => {
-                            stopEduAutoSlide();
-                            nextEduSlide();
+                            stopEduAutoSlide(); nextEduSlide();
                             if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500);
                         });
                     }
-                    // Touch swipe handling for education carousel on small screens
-                    let touchStartX = 0;
-                    let touchEndX = 0;
-
+                    let touchStartX = 0; let touchEndX = 0;
                     eduGrid.addEventListener('touchstart', (event) => {
                         if (!eduIsSmallScreen || eduItems.length <= 1) return;
                         touchStartX = event.changedTouches[0].screenX;
-                        stopEduAutoSlide(); // Pause auto-slide during touch
+                        stopEduAutoSlide();
                     }, { passive: true });
-
                     eduGrid.addEventListener('touchend', (event) => {
                         if (!eduIsSmallScreen || eduItems.length <= 1) return;
                         touchEndX = event.changedTouches[0].screenX;
                         handleSwipeGesture();
-                        // Restart auto-slide after swipe, if applicable
                         if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500);
                     }, { passive: true });
-
                     function handleSwipeGesture() {
-                        const swipeThreshold = 50; // Minimum pixels for a swipe
-                        if (touchEndX < touchStartX - swipeThreshold) { // Swiped left
-                            nextEduSlide();
-                        } else if (touchEndX > touchStartX + swipeThreshold) { // Swiped right
-                            prevEduSlide();
-                        }
+                        const swipeThreshold = 50;
+                        if (touchEndX < touchStartX - swipeThreshold) { nextEduSlide(); }
+                        else if (touchEndX > touchStartX + swipeThreshold) { prevEduSlide(); }
                     }
                 }
-
-                // Add resize listener and call initially to set up carousel
                 window.addEventListener('resize', handleEduScreenResize);
                 handleEduScreenResize();
             });
-
-            // CV Link (if any specific JS interaction is needed in the future)
-            const cvLink = document.getElementById('cvLink');
-
         </script>
 </body>
-</html>
+</ht
