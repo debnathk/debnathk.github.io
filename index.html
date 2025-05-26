@@ -46,12 +46,6 @@
             transform: translateX(0);
             transition: opacity 0.25s ease-in 0.1s, transform 0.25s ease-in 0.1s, visibility 0s linear 0.1s;
         }
-        /* #left-sidebar:hover #sidebar-logo-text,
-        #left-sidebar.mobile-open #sidebar-logo-text {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(0);
-        } */
         #sidebar-logo-text {
             opacity: 0;
             visibility: hidden;
@@ -111,8 +105,6 @@
         }
         .dark-theme .nav-item.active {
              color: #FFFFFF; 
-             /* border-left: 3px solid #E50914;  Removed */
-             /* padding-left: calc(1rem - 3px); Removed */
         }
 
         .dark-theme #sidebar-toggle-button {
@@ -199,7 +191,72 @@
         .dark-theme .education-item:hover .institute-info-dock { background-color: rgba(20, 20, 20, 0.98); }
 
         /* Common styles */
-        .section-title { font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom-width: 4px; border-style: solid; }
+        .section-title { 
+            font-weight: 700; 
+            margin-bottom: 1.5rem; 
+            position: relative; 
+            display: inline-block; 
+            padding-bottom: 12px; 
+            border-bottom-style: none !important; 
+        }
+
+        /* Underline animation styles */
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0px; 
+            left: 50%; 
+            width: 60%; 
+            height: 4px; 
+            background: linear-gradient(to right, #E50914, #B00710); 
+            border-radius: 2px; 
+            opacity: 0; 
+            transform: translateX(-83.333%); 
+        }
+
+        /* Animation 1: Sweep from left edge of text to right edge of text, then disappear */
+        @keyframes sweep-out-right {
+            0% { 
+                transform: translateX(-83.333%); 
+                opacity: 1;
+            }
+            80% { 
+                transform: translateX(-16.667%); 
+                opacity: 1;
+            }
+            100% { 
+                transform: translateX(33.333%); 
+                opacity: 0;
+            }
+        }
+
+        /* Animation 2: Appear from left edge of text and settle at the left edge */
+        @keyframes appear-left-settle-center { /* Renaming to appear-left-settle-left for clarity, but keeping original name for now to avoid JS changes if not needed */
+            0% { 
+                transform: translateX(-83.333%);
+                opacity: 0;
+            }
+            30% { 
+                transform: translateX(-83.333%);
+                opacity: 1;
+            }
+            100% { /* Settles with its left edge aligned with the text's left edge */
+                transform: translateX(-83.333%); 
+                opacity: 1;
+            }
+        }
+
+        /* Class to trigger the first part of the animation (sweep and disappear) */
+        .section-title.animate-sweep-disappear::after {
+            animation: sweep-out-right 0.7s ease-in forwards;
+        }
+
+        /* Class to trigger the second part of the animation (appear and settle) */
+        .section-title.animate-appear-settle::after {
+            animation: appear-left-settle-center 0.8s ease-out forwards;
+        }
+
+
         .tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; margin-right: 0.5rem; margin-bottom: 0.5rem; display: inline-block; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 8px; } 
@@ -556,7 +613,8 @@
         <p class="text-gray-600 text-xs mt-1">Designed with <i class="fas fa-heart"></i> using Tailwind CSS.</p>
     </footer>
 
-        <script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
             // DOM Elements
             const body = document.body;
             const profileImage = document.querySelector('#hero img.profile-image');
@@ -564,7 +622,7 @@
             const leftSidebar = document.getElementById('left-sidebar');
             const sidebarToggleButton = document.getElementById('sidebar-toggle-button');
             const sidebarToggleIcon = document.getElementById('sidebar-toggle-icon');
-            const mainContent = document.querySelector('main');
+            // const mainContent = document.querySelector('main'); // Not directly used here, but good to have if needed
 
             // Sidebar Toggle for Mobile
             const hamburgerIconPath = "M4 6h16M4 12h16M4 18h16";
@@ -576,217 +634,259 @@
                     sidebarToggleIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${isOpen ? closeIconPath : hamburgerIconPath}" />`;
                 });
             }
+            
+            // Apply dark theme and set image placeholders
+            body.classList.add('dark-theme');
+            const placeholderBaseDark = 'https://placehold.co/192x192/141414/E5E7EB?text=';
+            const eduPlaceholderBaseDark = 'https://placehold.co/400x200/222222/E5E7EB?text=';
 
-            document.addEventListener('DOMContentLoaded', () => {
-                // Directly apply dark-theme and set placeholders
-                body.classList.add('dark-theme');
-                const placeholderBaseDark = 'https://placehold.co/192x192/141414/E5E7EB?text=';
-                const eduPlaceholderBaseDark = 'https://placehold.co/400x200/222222/E5E7EB?text=';
+            if (profileImage) {
+                profileImage.onerror = () => { profileImage.src = placeholderBaseDark + 'KD'; };
+                if (profileImage.src.startsWith('https://placehold.co/') || !profileImage.src) { 
+                    profileImage.src = placeholderBaseDark + 'KD';
+                }
+            }
+            educationLogos.forEach(logo => {
+                const altText = logo.alt.split(' ')[0] || 'IMG';
+                logo.onerror = () => { logo.src = eduPlaceholderBaseDark + altText.substring(0,6).toUpperCase(); };
+                 if (logo.src.startsWith('https://placehold.co/') || !logo.src) {
+                    logo.src = eduPlaceholderBaseDark + altText.substring(0,6).toUpperCase();
+                }
+            });
+            if (profileImage && ((profileImage.complete && profileImage.naturalWidth === 0) || !profileImage.complete) && !profileImage.src.startsWith('https://placehold.co/')) {
+                 const currentSrc = profileImage.src;
+                 profileImage.src = ''; profileImage.src = currentSrc || placeholderBaseDark + 'KD';
+            }
+             educationLogos.forEach(logo => {
+                const altText = logo.alt.split(' ')[0] || 'IMG';
+                if (((logo.complete && logo.naturalWidth === 0) || !logo.complete) && !logo.src.startsWith('https://placehold.co/')) {
+                    const currentSrc = logo.src;
+                    logo.src = ''; logo.src = currentSrc || eduPlaceholderBaseDark + altText.substring(0,6).toUpperCase();
+                }
+            });
 
-                if (profileImage) {
-                    profileImage.onerror = () => { profileImage.src = placeholderBaseDark + 'KD'; };
-                    if (profileImage.src.startsWith('https://placehold.co/') || !profileImage.src) { 
-                        profileImage.src = placeholderBaseDark + 'KD';
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // Navigation active state update
+            const sections = document.querySelectorAll('main section[id]');
+            const sidebarNavLinks = document.querySelectorAll('#sidebar-nav-links a.nav-item');
+
+            function updateActiveNavLink() {
+                let currentSectionId = '';
+                let offset = window.innerHeight * 0.2;
+
+                const heroSection = document.getElementById('hero');
+                if (heroSection) {
+                    const heroTop = heroSection.offsetTop;
+                    const heroHeight = heroSection.offsetHeight;
+                     if (pageYOffset < heroTop + heroHeight - (window.innerHeight * 0.5)) {
+                        currentSectionId = 'hero';
                     }
                 }
-                educationLogos.forEach(logo => {
-                    const altText = logo.alt.split(' ')[0] || 'IMG';
-                    logo.onerror = () => { logo.src = eduPlaceholderBaseDark + altText.substring(0,6).toUpperCase(); };
-                     if (logo.src.startsWith('https://placehold.co/') || !logo.src) {
-                        logo.src = eduPlaceholderBaseDark + altText.substring(0,6).toUpperCase();
-                    }
-                });
-                if (profileImage && ((profileImage.complete && profileImage.naturalWidth === 0) || !profileImage.complete) && !profileImage.src.startsWith('https://placehold.co/')) {
-                     const currentSrc = profileImage.src;
-                     profileImage.src = ''; profileImage.src = currentSrc || placeholderBaseDark + 'KD';
-                }
-                 educationLogos.forEach(logo => {
-                    const altText = logo.alt.split(' ')[0] || 'IMG';
-                    if (((logo.complete && logo.naturalWidth === 0) || !logo.complete) && !logo.src.startsWith('https://placehold.co/')) {
-                        const currentSrc = logo.src;
-                        logo.src = ''; logo.src = currentSrc || eduPlaceholderBaseDark + altText.substring(0,6).toUpperCase();
-                    }
-                });
 
-
-                document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-                const sections = document.querySelectorAll('main section[id]');
-                const sidebarNavLinks = document.querySelectorAll('#sidebar-nav-links a.nav-item');
-
-                function updateActiveNavLink() {
-                    let currentSectionId = '';
-                    let offset = window.innerHeight * 0.2;
-
-                    const heroSection = document.getElementById('hero');
-                    if (heroSection) {
-                        const heroTop = heroSection.offsetTop;
-                        const heroHeight = heroSection.offsetHeight;
-                         if (pageYOffset < heroTop + heroHeight - (window.innerHeight * 0.5)) {
-                            currentSectionId = 'hero';
-                        }
-                    }
-
-                    if (!currentSectionId) {
-                        sections.forEach(section => {
-                            const sectionTop = section.offsetTop;
-                            const sectionHeight = section.offsetHeight;
-                            if (pageYOffset >= sectionTop - offset && pageYOffset < sectionTop + sectionHeight - offset) {
-                                currentSectionId = section.getAttribute('id');
-                            }
-                        });
-                    }
-                    if (!currentSectionId && sections.length > 0) {
-                        if (pageYOffset < sections[0].offsetTop - offset && sections[0].id !== 'hero') {
-                            currentSectionId = sections[0].getAttribute('id');
-                        } else if (pageYOffset + window.innerHeight >= document.body.scrollHeight - 20) {
-                            currentSectionId = sections[sections.length - 1].getAttribute('id');
-                        } else if (!currentSectionId && heroSection) {
-                            currentSectionId = 'hero';
-                        }
-                    }
-
-                    sidebarNavLinks.forEach(link => {
-                        link.classList.remove('active');
-                        const linkHref = link.getAttribute('href');
-                        if (linkHref && linkHref.substring(1) === currentSectionId) {
-                            link.classList.add('active');
+                if (!currentSectionId) {
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        const sectionHeight = section.offsetHeight;
+                        if (pageYOffset >= sectionTop - offset && pageYOffset < sectionTop + sectionHeight - offset) {
+                            currentSectionId = section.getAttribute('id');
                         }
                     });
                 }
-
-                window.addEventListener('scroll', updateActiveNavLink);
-                updateActiveNavLink();
+                if (!currentSectionId && sections.length > 0) {
+                    if (pageYOffset < sections[0].offsetTop - offset && sections[0].id !== 'hero') {
+                        currentSectionId = sections[0].getAttribute('id');
+                    } else if (pageYOffset + window.innerHeight >= document.body.scrollHeight - 20) {
+                        currentSectionId = sections[sections.length - 1].getAttribute('id');
+                    } else if (!currentSectionId && heroSection) { 
+                        currentSectionId = 'hero';
+                    }
+                }
 
                 sidebarNavLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        if (leftSidebar.classList.contains('mobile-open')) {
-                            leftSidebar.classList.remove('mobile-open');
-                            sidebarToggleIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${hamburgerIconPath}" />`;
-                        }
-                    });
-                });
-
-                const eduCarouselContainer = document.getElementById('education-carousel-container');
-                const eduGrid = document.getElementById('education-items-grid');
-                const eduItems = eduGrid ? Array.from(eduGrid.children).filter(child => child.classList.contains('education-item')) : [];
-                const eduPrevButton = document.getElementById('edu-prev');
-                const eduNextButton = document.getElementById('edu-next');
-                let currentEduSlideIndex = 0;
-                let eduIsSmallScreen = false;
-                let eduAutoSlideInterval = null;
-                const AUTO_SLIDE_DELAY = 2000;
-
-                function showEduSlide(index) {
-                    if (!eduGrid || eduItems.length === 0) return;
-                    const percentage = -index * 100;
-                    eduGrid.style.transform = `translateX(${percentage}%)`;
-                    currentEduSlideIndex = index;
-                    if (eduPrevButton) eduPrevButton.disabled = index === 0;
-                    if (eduNextButton) eduNextButton.disabled = index === eduItems.length - 1;
-                }
-
-                function nextEduSlide() {
-                    if (eduItems.length === 0) return;
-                    let nextIndex = (currentEduSlideIndex + 1);
-                    if (nextIndex >= eduItems.length) { nextIndex = 0; }
-                    showEduSlide(nextIndex);
-                }
-
-                function prevEduSlide() {
-                    if (eduItems.length === 0) return;
-                    let prevIndex = (currentEduSlideIndex - 1);
-                    if (prevIndex < 0) { prevIndex = eduItems.length - 1; }
-                    showEduSlide(prevIndex);
-                }
-
-                function startEduAutoSlide() {
-                    stopEduAutoSlide();
-                    if (eduIsSmallScreen && eduItems.length > 1) {
-                        eduAutoSlideInterval = setInterval(nextEduSlide, AUTO_SLIDE_DELAY);
+                    link.classList.remove('active');
+                    const linkHref = link.getAttribute('href');
+                    if (linkHref && linkHref.substring(1) === currentSectionId) {
+                        link.classList.add('active');
                     }
-                }
+                });
+            }
+            window.addEventListener('scroll', updateActiveNavLink);
+            updateActiveNavLink(); 
 
-                function stopEduAutoSlide() {
-                    clearInterval(eduAutoSlideInterval);
-                    eduAutoSlideInterval = null;
-                }
+            sidebarNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (leftSidebar.classList.contains('mobile-open')) {
+                        leftSidebar.classList.remove('mobile-open');
+                        sidebarToggleIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${hamburgerIconPath}" />`;
+                    }
+                });
+            });
 
-                function updateEduCarouselVisibility() {
-                    if (!eduGrid || !eduPrevButton || !eduNextButton || !eduCarouselContainer) return;
-                    if (eduIsSmallScreen) {
-                        eduCarouselContainer.style.overflow = 'hidden';
-                        eduGrid.classList.remove('grid', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-6', 'md:gap-8');
-                        eduGrid.classList.add('flex');
-                        eduGrid.style.transition = 'transform 0.5s ease-in-out';
-                        eduItems.forEach(item => { item.style.width = '100%'; item.style.flexShrink = '0'; });
-                        showEduSlide(currentEduSlideIndex);
-                        if (eduItems.length > 1) {
-                            eduPrevButton.classList.remove('hidden');
-                            eduNextButton.classList.remove('hidden');
-                            startEduAutoSlide();
-                        } else {
-                            eduPrevButton.classList.add('hidden');
-                            eduNextButton.classList.add('hidden');
+            // Intersection Observer for Section Title Underline Animation
+            const sectionTitlesToAnimate = document.querySelectorAll('.section-title');
+            const underlineObserverOptions = {
+                root: null, 
+                rootMargin: '0px',
+                threshold: 0.1 
+            };
+
+            const underlineScrollObserver = new IntersectionObserver((entries, observerInstance) => {
+                entries.forEach(entry => {
+                    const target = entry.target;
+                    // Store timeout ID on the element itself to manage it
+                    if (entry.isIntersecting) {
+                        if (target.animationSequenceTimeoutId) {
+                            clearTimeout(target.animationSequenceTimeoutId);
                         }
+                        target.classList.remove('animate-appear-settle', 'animate-sweep-disappear');
+                        void target.offsetHeight; // Force reflow
+
+                        target.classList.add('animate-sweep-disappear');
+
+                        target.animationSequenceTimeoutId = setTimeout(() => {
+                            target.classList.remove('animate-sweep-disappear');
+                            void target.offsetHeight; // Force reflow
+                            target.classList.add('animate-appear-settle');
+                        }, 700); // Duration of sweep-out-right (0.7s)
                     } else {
-                        eduCarouselContainer.style.overflow = '';
-                        eduGrid.classList.remove('flex');
-                        eduGrid.classList.add('grid', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-6', 'md:gap-8');
-                        eduGrid.style.transform = ''; eduGrid.style.transition = '';
-                        eduItems.forEach(item => { item.style.width = ''; item.style.flexShrink = ''; });
+                        // When it scrolls out of view, reset for the next time
+                        target.classList.remove('animate-appear-settle', 'animate-sweep-disappear');
+                        if (target.animationSequenceTimeoutId) {
+                            clearTimeout(target.animationSequenceTimeoutId);
+                            target.animationSequenceTimeoutId = null; // Clear the stored ID
+                        }
+                    }
+                });
+            }, underlineObserverOptions);
+
+            sectionTitlesToAnimate.forEach(title => {
+                underlineScrollObserver.observe(title);
+            });
+
+            // Education Carousel Logic
+            const eduCarouselContainer = document.getElementById('education-carousel-container');
+            const eduGrid = document.getElementById('education-items-grid');
+            const eduItems = eduGrid ? Array.from(eduGrid.children).filter(child => child.classList.contains('education-item')) : [];
+            const eduPrevButton = document.getElementById('edu-prev');
+            const eduNextButton = document.getElementById('edu-next');
+            let currentEduSlideIndex = 0;
+            let eduIsSmallScreen = false;
+            let eduAutoSlideInterval = null;
+            const AUTO_SLIDE_DELAY = 2000;
+
+            function showEduSlide(index) {
+                if (!eduGrid || eduItems.length === 0) return;
+                const percentage = -index * 100;
+                eduGrid.style.transform = `translateX(${percentage}%)`;
+                currentEduSlideIndex = index;
+                if (eduPrevButton) eduPrevButton.disabled = index === 0;
+                if (eduNextButton) eduNextButton.disabled = index === eduItems.length - 1;
+            }
+
+            function nextEduSlide() {
+                if (eduItems.length === 0) return;
+                let nextIndex = (currentEduSlideIndex + 1);
+                if (nextIndex >= eduItems.length) { nextIndex = 0; } 
+                showEduSlide(nextIndex);
+            }
+
+            function prevEduSlide() {
+                if (eduItems.length === 0) return;
+                let prevIndex = (currentEduSlideIndex - 1);
+                if (prevIndex < 0) { prevIndex = eduItems.length - 1; } 
+                showEduSlide(prevIndex);
+            }
+
+            function startEduAutoSlide() {
+                stopEduAutoSlide(); 
+                if (eduIsSmallScreen && eduItems.length > 1) {
+                    eduAutoSlideInterval = setInterval(nextEduSlide, AUTO_SLIDE_DELAY);
+                }
+            }
+
+            function stopEduAutoSlide() {
+                clearInterval(eduAutoSlideInterval);
+                eduAutoSlideInterval = null;
+            }
+
+            function updateEduCarouselVisibility() {
+                if (!eduGrid || !eduPrevButton || !eduNextButton || !eduCarouselContainer) return;
+                if (eduIsSmallScreen) {
+                    eduCarouselContainer.style.overflow = 'hidden';
+                    eduGrid.classList.remove('grid', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-6', 'md:gap-8');
+                    eduGrid.classList.add('flex');
+                    eduGrid.style.transition = 'transform 0.5s ease-in-out';
+                    eduItems.forEach(item => { item.style.width = '100%'; item.style.flexShrink = '0'; });
+                    showEduSlide(currentEduSlideIndex); 
+                    if (eduItems.length > 1) {
+                        eduPrevButton.classList.remove('hidden');
+                        eduNextButton.classList.remove('hidden');
+                        startEduAutoSlide();
+                    } else {
                         eduPrevButton.classList.add('hidden');
                         eduNextButton.classList.add('hidden');
-                        stopEduAutoSlide();
                     }
+                } else { 
+                    eduCarouselContainer.style.overflow = ''; 
+                    eduGrid.classList.remove('flex');
+                    eduGrid.classList.add('grid', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-6', 'md:gap-8');
+                    eduGrid.style.transform = ''; 
+                    eduGrid.style.transition = ''; 
+                    eduItems.forEach(item => { item.style.width = ''; item.style.flexShrink = ''; }); 
+                    eduPrevButton.classList.add('hidden');
+                    eduNextButton.classList.add('hidden');
+                    stopEduAutoSlide();
                 }
+            }
 
-                function handleEduScreenResize() {
-                    const smallScreenBreakpoint = 640;
-                    const newIsSmallScreen = window.innerWidth < smallScreenBreakpoint;
-                    if (newIsSmallScreen !== eduIsSmallScreen) {
-                        eduIsSmallScreen = newIsSmallScreen;
-                        if (!eduIsSmallScreen) { currentEduSlideIndex = 0; }
-                        updateEduCarouselVisibility();
-                    } else if (eduIsSmallScreen && !eduAutoSlideInterval && eduItems.length > 1) {
-                        startEduAutoSlide();
-                    }
+            function handleEduScreenResize() {
+                const smallScreenBreakpoint = 640; 
+                const newIsSmallScreen = window.innerWidth < smallScreenBreakpoint;
+                if (newIsSmallScreen !== eduIsSmallScreen) {
+                    eduIsSmallScreen = newIsSmallScreen;
+                    if (!eduIsSmallScreen) { currentEduSlideIndex = 0; } 
+                    updateEduCarouselVisibility();
+                } else if (eduIsSmallScreen && !eduAutoSlideInterval && eduItems.length > 1) {
+                    startEduAutoSlide();
                 }
-
-                if (eduItems.length > 0) {
-                    if(eduPrevButton) {
-                        eduPrevButton.addEventListener('click', () => {
-                            stopEduAutoSlide(); prevEduSlide();
-                            if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500);
-                        });
-                    }
-                    if(eduNextButton) {
-                        eduNextButton.addEventListener('click', () => {
-                            stopEduAutoSlide(); nextEduSlide();
-                            if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500);
-                        });
-                    }
-                    let touchStartX = 0; let touchEndX = 0;
-                    eduGrid.addEventListener('touchstart', (event) => {
-                        if (!eduIsSmallScreen || eduItems.length <= 1) return;
-                        touchStartX = event.changedTouches[0].screenX;
-                        stopEduAutoSlide();
-                    }, { passive: true });
-                    eduGrid.addEventListener('touchend', (event) => {
-                        if (!eduIsSmallScreen || eduItems.length <= 1) return;
-                        touchEndX = event.changedTouches[0].screenX;
-                        handleSwipeGesture();
+            }
+            
+            if (eduItems.length > 0) {
+                if(eduPrevButton) {
+                    eduPrevButton.addEventListener('click', () => {
+                        stopEduAutoSlide(); prevEduSlide();
+                        if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500); 
+                    });
+                }
+                if(eduNextButton) {
+                    eduNextButton.addEventListener('click', () => {
+                        stopEduAutoSlide(); nextEduSlide();
                         if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500);
-                    }, { passive: true });
-                    function handleSwipeGesture() {
-                        const swipeThreshold = 50;
-                        if (touchEndX < touchStartX - swipeThreshold) { nextEduSlide(); }
-                        else if (touchEndX > touchStartX + swipeThreshold) { prevEduSlide(); }
-                    }
+                    });
                 }
-                window.addEventListener('resize', handleEduScreenResize);
-                handleEduScreenResize();
-            });
-        </script>
+                let touchStartX = 0; let touchEndX = 0;
+                eduGrid.addEventListener('touchstart', (event) => {
+                    if (!eduIsSmallScreen || eduItems.length <= 1) return;
+                    touchStartX = event.changedTouches[0].screenX;
+                    stopEduAutoSlide(); 
+                }, { passive: true });
+                eduGrid.addEventListener('touchend', (event) => {
+                    if (!eduIsSmallScreen || eduItems.length <= 1) return;
+                    touchEndX = event.changedTouches[0].screenX;
+                    handleSwipeGesture();
+                    if (eduIsSmallScreen && eduItems.length > 1) setTimeout(startEduAutoSlide, AUTO_SLIDE_DELAY + 500);
+                }, { passive: true });
+
+                function handleSwipeGesture() {
+                    const swipeThreshold = 50; 
+                    if (touchEndX < touchStartX - swipeThreshold) { nextEduSlide(); } 
+                    else if (touchEndX > touchStartX + swipeThreshold) { prevEduSlide(); }
+                }
+            }
+            window.addEventListener('resize', handleEduScreenResize);
+            handleEduScreenResize(); 
+        });
+    </script>
 </body>
-</ht
+</html>
