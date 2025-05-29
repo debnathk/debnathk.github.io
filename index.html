@@ -256,8 +256,25 @@
             animation: appear-left-settle-center 0.8s ease-out forwards;
         }
 
-
         .tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; margin-right: 0.5rem; margin-bottom: 0.5rem; display: inline-block; }
+        .research-domain-tag { 
+            padding: 0.375rem 0.875rem; 
+            border-radius: 9999px; 
+            font-size: 0.75rem; 
+            font-weight: 500;
+            margin: 0.25rem; 
+            display: inline-block; 
+            background: linear-gradient(135deg, rgba(229, 9, 20, 0.1), rgba(176, 7, 16, 0.1));
+            color: #E50914;
+            border: 1px solid rgba(229, 9, 20, 0.3);
+            transition: all 0.3s ease;
+        }
+        .research-domain-tag:hover {
+            background: linear-gradient(135deg, rgba(229, 9, 20, 0.2), rgba(176, 7, 16, 0.2));
+            border-color: rgba(229, 9, 20, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(229, 9, 20, 0.15);
+        }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 8px; } 
         ::-webkit-scrollbar-thumb { border-radius: 4px; } 
@@ -348,7 +365,21 @@
                     <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 hero-name">
                         Kusal <span class="accent-gradient-text">Debnath</span>
                     </h1>
-                    <p class="text-base sm:text-lg md:text-xl hero-designation mb-6">Graduate Researcher | AI-driven Drug Discovery</p>
+                    <p class="text-base sm:text-lg md:text-xl hero-designation mb-4">Graduate Researcher | AI-driven Drug Discovery</p>
+                    
+                    <!-- Research Domain Tags -->
+                    <div class="flex flex-wrap justify-center gap-2 mb-6 max-w-4xl">
+                        <span class="research-domain-tag">Machine Learning</span>
+                        <span class="research-domain-tag">Deep Learning</span>
+                        <!-- <span class="research-domain-tag">Drug-Target Interaction</span> -->
+                        <span class="research-domain-tag">De Novo Drug Design</span>
+                        <span class="research-domain-tag">RNA-Seq Analysis</span>
+                        <!-- <span class="research-domain-tag">Molecular Docking</span> -->
+                        <span class="research-domain-tag">Cheminformatics</span>
+                        <!-- <span class="research-domain-tag">Computational Biology</span> -->
+                        <span class="research-domain-tag">Generative AI</span>
+                        <!-- <span class="research-domain-tag">Pharmacogenomics</span> -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -414,15 +445,15 @@
             <h2 class="section-title accent-border text-2xl sm:text-3xl md:text-4xl">Skills</h2>
             <div class="card text-content-area no-hover-effect">
                 <div class="mb-4">
-                    <h3 class="text-md sm:text-lg font-semibold text-pink-400 mb-2">Programming Languages:</h3>
+                    <h3 class="text-md sm:text-lg font-semibold text-pink-400 mb-2">Programming & Development:</h3>
                     <span class="tag">C</span> <span class="tag">C++</span> <span class="tag">Python</span> <span class="tag">R</span> <span class="tag">JavaScript</span>
                 </div>
                 <div class="mb-4">
-                    <h3 class="text-md sm:text-lg font-semibold text-pink-400 mb-2">Frameworks:</h3>
+                    <h3 class="text-md sm:text-lg font-semibold text-pink-400 mb-2">Machine Learning & AI:</h3>
                     <span class="tag">PyTorch</span> <span class="tag">TensorFlow</span>
                 </div>
                 <div>
-                    <h3 class="text-md sm:text-lg font-semibold text-pink-400 mb-2">Soft Skills:</h3>
+                    <h3 class="text-md sm:text-lg font-semibold text-pink-400 mb-2">Research & Communication:</h3>
                     <span class="tag">Research Communication</span> <span class="tag">Adaptability</span> <span class="tag">Team Player</span> <span class="tag">Critical Thinking</span>
                 </div>
             </div>
