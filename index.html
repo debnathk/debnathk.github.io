@@ -275,6 +275,36 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 8px rgba(229, 9, 20, 0.15);
         }
+        .btn-spacing-fix {
+        /* Reset any inconsistent margins */
+        margin: 0 !important;
+        
+        /* Apply consistent padding */
+        padding: 12px 24px !important;
+        
+        /* Ensure consistent box-sizing */
+        box-sizing: border-box !important;
+        
+        /* Optional: Add consistent spacing between buttons if they're siblings */
+        margin-right: 16px !important;
+        }
+
+        /* Remove margin from the last button to prevent extra space */
+        .btn-spacing-fix:last-child {
+        margin-right: 0 !important;
+        }
+
+        /* Alternative version without !important if you prefer specificity approach */
+        .btn-spacing-fix-alt {
+        margin: 0;
+        padding: 12px 24px;
+        box-sizing: border-box;
+        margin-right: 16px;
+        }
+
+        .btn-spacing-fix-alt:last-child {
+        margin-right: 0;
+        }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 8px; } 
         ::-webkit-scrollbar-thumb { border-radius: 4px; } 
@@ -391,8 +421,9 @@
                     Graduate Researcher specializing in AI-driven drug discovery, with expertise in Machine Learning (ML), Deep Learning (DL), Generative AI (Gen-AI), RNA-Seq analysis, and molecular docking. Experienced in de novo drug design and drug-target interaction (DTI) prediction modeling. Passionate about leveraging computational biology and AI to advance precision medicine and cheminformatics. Aspiring to lead interdisciplinary research integrating AI and pharmacogenomics for drug discovery.
                 </p>
                 <div class="buttons-container flex flex-col space-y-3 w-full max-w-xs mx-auto sm:flex-row sm:space-y-0 sm:space-x-4 sm:max-w-sm mt-4">
-                    <a href="#contact" class="btn btn-primary w-full text-sm py-2.5 sm:text-base sm:py-3 rounded-lg text-center">Get in Touch</a>
-                    <a href="CV.pdf" target="_blank" class="btn btn-secondary w-full text-sm py-2.5 sm:text-base sm:py-3 rounded-lg text-center" id="cvLink">Download CV</a>
+                    <a href="#contact" class="btn w-full text-sm py-2.5 sm:text-base sm:py-3 text-center research-domain-tag btn-spacing-fix">Get in Touch</a>
+                    <a href="CV.pdf" target="_blank" class="btn w-full text-sm py-2.5 sm:text-base sm:py-3 text-center research-domain-tag btn-spacing-fix">Download CV</a>
+                    <!-- <a href="CV.pdf" target="_blank" class="btn btn-secondary w-full text-sm py-2.5 sm:text-base sm:py-3 rounded-lg text-center" id="cvLink">Download CV</a> -->
                 </div>
             </div>
         </section>
