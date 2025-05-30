@@ -285,25 +285,25 @@
         /* Ensure consistent box-sizing */
         box-sizing: border-box !important;
         
-        /* Optional: Add consistent spacing between buttons if they're siblings */
-        margin-right: 16px !important;
+        /* Default: vertical spacing for small screens (stacked buttons) */
+        margin-bottom: 12px !important;
         }
 
         /* Remove margin from the last button to prevent extra space */
         .btn-spacing-fix:last-child {
-        margin-right: 0 !important;
+        margin-bottom: 0 !important;
         }
 
-        /* Alternative version without !important if you prefer specificity approach */
-        .btn-spacing-fix-alt {
-        margin: 0;
-        padding: 12px 24px;
-        box-sizing: border-box;
-        margin-right: 16px;
+        /* Medium screens and up: horizontal spacing for side-by-side buttons */
+        @media (min-width: 768px) {
+        .btn-spacing-fix {
+            margin-bottom: 0 !important;
+            margin-right: 16px !important;
         }
-
-        .btn-spacing-fix-alt:last-child {
-        margin-right: 0;
+        
+        .btn-spacing-fix:last-child {
+            margin-right: 0 !important;
+        }
         }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 8px; } 
