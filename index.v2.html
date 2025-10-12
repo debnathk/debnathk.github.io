@@ -79,13 +79,22 @@
         </p>
         <span>
             <button>
-                <a href="">CV</a>
+                <a href="#" target="_blank" id="button-CV">CV</a>
             </button> 
             <button>
-                LinkedIn
+                <a href="https://www.linkedin.com/in/debnathkusal221b/" target="_blank" ">LinkedIn</a>
             </button>
         </span>
     </div>
+
+    <script>
+        document.getElementById('button-CV').addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.href = "https://raw.githubusercontent.com/debnathk/debnathk.github.io/main/Kusal_Debnath_CV.pdf";
+            link.download = 'Kusal_Debnath_CV.pdf';
+            link.click();
+        })
+    </script>
 
 </body>
 </html>
