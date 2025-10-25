@@ -18,12 +18,23 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
+        .left-container {
+            margin: 10px;
+            width: 30%;
+            min-width: 200px;
+            height: 0vh;
+            border-right: 2px solid #000;
+            /* border-radius: 15px; */
+            /* padding: 0px; */
+        }
+
         .top-container {
             width: 100%;
             display: flex;
             flex-wrap: wrap;
             align-items: flex-start;
-            margin: 20px 20px 20px 20px;
+            margin: 10px 10px 10px 450px;
+            border: 2px solid #000;
             border-radius: 15px;
             /* border: 2px solid #000; */
         }
@@ -31,8 +42,8 @@
         .headshot{
             border-radius: 15px;
             overflow: hidden;
-            width: 250px;
-            height: 250px;
+            width: 400px;
+            height: 400px;
             border: 2px solid #000; 
             /* margin: 20px 20px 0px 0px; */
             flex-shrink: 0;
@@ -46,23 +57,24 @@
 
         .bio {
             height: 250px;
-            min-width: 250px;
+            width: 400px;
+            min-width: 200px;
             flex: 1;
-            margin-left: 20px;
-            border-radius: 15px;
-            border: 2px solid #000;
+            /* margin-left: 20px; */
+            /* border-radius: 15px; */
+            /* border: 2px solid #000; */
             padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            /* justify-content: center; */
             text-align: center;
             font-size: 18px;
         }
 
         .bio h2 {
             margin: 0 0 8px 0;
-            font-size: 20px;
+            font-size: 50px;
         }
 
         .bio p {
@@ -73,25 +85,13 @@
             margin-top: 15px;
         }
 
-        .middle-container {
-            width: 100%;
-            padding: 0px 20px 20px 20px;
-            border-radius: 15px;
-            border: 2px solid #000;
-            margin: 0px 20px 20px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            /* align-items: center; */
-        }
-
         .bottom-container {
             flex-grow: 1;
             width: 100%;
             padding: 0px 20px 20px 20px;
             border-radius: 15px;
             border: 2px solid #000;
-            margin: 0px 20px 20px 20px;
+            margin: 0px 10px 10px 450px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -101,16 +101,13 @@
     </style>
 </head>
 <body>
-    <div class="top-container">
+    <div class="left-container">
         <div class="headshot">
             <img src="kusal_headshot.png" alt="Kusal Profile Picture">
         </div>
-        
         <div class="bio">
-            <h2>Biography</h2>
-            <p>
-                Graduate Researcher specializing in AI-driven drug discovery, with expertise in Machine Learning (ML), Deep Learning (DL), Generative AI (Gen-AI), RNA-Seq analysis, and molecular docking. Experienced in de novo drug design and drug-target interaction (DTI) prediction modeling. Passionate about leveraging computational biology and AI to advance precision medicine and cheminformatics. Aspiring to lead interdisciplinary research integrating AI and pharmacogenomics for drug discovery.
-            </p>
+            <!-- <h2>Kusal Debnath</h2> -->
+            <p>Hi! I'm Kusal Debnath, a passinate researcher in Ai-driven drug discovery. I am pursuing my PhD at Virginia Commonwealth University, USA. My research focuses on leveraging artificial intelligence and machine learning techniques to accelerate the drug discovery process, aiming to develop novel therapeutics for complex diseases.</p>
             <span>
                 <button>
                     <a href="#" target="_blank" id="button-CV">CV</a>
@@ -122,7 +119,7 @@
         </div>
     </div>
 
-    <div class="middle-container">
+    <div class="top-container">
         <h2>Latest Updates</h2>
         <ul>
             <li>Published a research paper on "AI-Driven Drug Discovery: A Comprehensive Review" in the Journal of Computational Biology, 2024.</li>
@@ -131,7 +128,7 @@
     </div>
 
     <div class="bottom-container">
-        <h2>Projects</h2>
+        <h2>Publications</h2>
         <p>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga fugiat maxime, labore dolore voluptatem explicabo ut. Vel neque autem repellat, voluptates quod ducimus incidunt ratione. Sunt rerum laudantium earum dolores.
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum rem voluptatum quos! Officia iusto dignissimos tempore cum possimus deserunt, sint a necessitatibus quisquam! Reiciendis consequatur doloribus nam deserunt repudiandae ut?
