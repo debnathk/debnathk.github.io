@@ -255,18 +255,27 @@
       }
 
       .pub-list {
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow-y: hidden;
+        overflow-x: auto;
         flex: 1;
+        display: flex;
+        gap: 15px;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        padding-bottom: 10px;
       }
 
       .pub-item {
         background: #1f2937; /* Secondary Background for items */
         border-radius: 8px; /* Tighter radius */
         padding: 15px;
-        margin-bottom: 12px;
+        margin-bottom: 0;
         transition: box-shadow 0.3s ease, transform 0.3s ease;
         border: 1px solid transparent; /* Prepare for hover border */
+        min-width: 400px;
+        max-width: 400px;
+        flex-shrink: 0;
+        scroll-snap-align: start;
       }
 
       .pub-item:hover {
@@ -326,10 +335,40 @@
       }
 
       /* -------------------------------
+         PUBLICATION MARKERS
+      --------------------------------*/
+      .pub-markers {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        padding: 15px 0 10px 0;
+        flex-shrink: 0;
+      }
+
+      .pub-marker {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #374151;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .pub-marker.active {
+        background-color: #3b82f6;
+        transform: scale(1.2);
+      }
+
+      .pub-marker:hover {
+        background-color: #60a5fa;
+      }
+
+      /* -------------------------------
          SCROLLBAR STYLING
       --------------------------------*/
       ::-webkit-scrollbar {
         width: 8px;
+        height: 8px;
       }
 
       ::-webkit-scrollbar-track {
@@ -753,8 +792,8 @@
         <div class="publications">
           <h2>Publications</h2>
 
-          <div class="pub-list">
-            <div class="pub-item">
+          <div class="pub-list" id="pub-list">
+            <div class="pub-item" data-index="0">
               <div class="pub-title">
                 A survey on deep learning for drug-target binding prediction:
                 models, benchmarks, evaluation, and case studies
@@ -770,7 +809,7 @@
               </div>
             </div>
 
-            <div class="pub-item">
+            <div class="pub-item" data-index="1">
               <div class="pub-title">
                 24R,25(OH)2D3 regulates tumorigenesis in estrogen sensitive
                 laryngeal cancer cells via membrane-associated receptor
@@ -791,7 +830,7 @@
               </div>
             </div>
 
-            <div class="pub-item">
+            <div class="pub-item" data-index="2">
               <div class="pub-title">
                 GramSeq-DTA: A Grammar-Based Drug–Target Affinity Prediction
                 Approach Fusing Gene Expression Information
@@ -810,6 +849,12 @@
               </div>
             </div>
           </div>
+
+          <div class="pub-markers" id="pub-markers">
+            <div class="pub-marker active" data-index="0"></div>
+            <div class="pub-marker" data-index="1"></div>
+            <div class="pub-marker" data-index="2"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -821,6 +866,38 @@
           "https://raw.githubusercontent.com/debnathk/debnathk.github.io/main/Kusal_Debnath_CV.pdf";
         link.download = "Kusal_Debnath_CV.pdf";
         link.click();
+      });
+
+      // Publication markers functionality
+      const pubList = document.getElementById("pub-list");
+      const markers = document.querySelectorAll(".pub-marker");
+
+      // Update active marker based on scroll position
+      pubList.addEventListener("scroll", () => {
+        const scrollLeft = pubList.scrollLeft;
+        const itemWidth = pubList.querySelector(".pub-item").offsetWidth + 15; // width + gap
+        const activeIndex = Math.round(scrollLeft / itemWidth);
+
+        markers.forEach((marker, index) => {
+          if (index === activeIndex) {
+            marker.classList.add("active");
+          } else {
+            marker.classList.remove("active");
+          }
+        });
+      });
+
+      // Click marker to scroll to publication
+      markers.forEach((marker) => {
+        marker.addEventListener("click", () => {
+          const index = parseInt(marker.getAttribute("data-index"));
+          const pubItems = pubList.querySelectorAll(".pub-item");
+          pubItems[index].scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "start",
+          });
+        });
       });
     </script>
   </body>
