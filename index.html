@@ -258,15 +258,25 @@
         flex-shrink: 0;
       }
 
+      .pub-carousel {
+        position: relative;
+        display: flex;
+        min-height: 0;
+      }
+
       .pub-list {
-        overflow-y: hidden;
-        overflow-x: auto;
         flex: 1;
         display: flex;
         gap: 15px;
+        overflow-x: auto;
+        overflow-y: auto;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
-        padding-bottom: 10px;
+        scrollbar-width: none; /* dots are the position indicator */
+      }
+
+      .pub-list::-webkit-scrollbar {
+        display: none;
       }
 
       .pub-item {
@@ -276,10 +286,9 @@
         margin-bottom: 0;
         transition: box-shadow 0.3s ease, transform 0.3s ease;
         border: 1px solid transparent; /* Prepare for hover border */
-        min-width: 400px;
-        max-width: 400px;
-        flex-shrink: 0;
-        scroll-snap-align: start;
+        flex: 0 0 100%; /* one slide per view, never clipped */
+        scroll-snap-align: center;
+        align-self: start;
       }
 
       .pub-item:hover {
@@ -339,32 +348,67 @@
       }
 
       /* -------------------------------
+         CAROUSEL ARROWS
+      --------------------------------*/
+      .pub-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        border: 1px solid #374151;
+        border-radius: 50%;
+        background: rgba(31, 41, 55, 0.92);
+        color: #e5e7eb;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 2;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+
+      .pub-nav:hover {
+        background: #3b82f6;
+        border-color: #3b82f6;
+      }
+
+      .pub-nav[hidden] {
+        display: none;
+      }
+
+      .pub-nav.prev {
+        left: 8px;
+      }
+
+      .pub-nav.next {
+        right: 8px;
+      }
+
+      /* -------------------------------
          PUBLICATION MARKERS
       --------------------------------*/
       .pub-markers {
         display: flex;
-        gap: 8px;
+        gap: 6px;
         justify-content: center;
-        padding: 15px 0 10px 0;
+        padding: 12px 0 4px 0;
         flex-shrink: 0;
       }
 
       .pub-marker {
-        width: 10px;
-        height: 10px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
-        background-color: #374151;
-        transition: background-color 0.3s ease, transform 0.3s ease;
+        background-color: #4b5563;
         cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
       }
 
       .pub-marker.active {
         background-color: #3b82f6;
-        transform: scale(1.2);
-      }
-
-      .pub-marker:hover {
-        background-color: #60a5fa;
+        transform: scale(1.25);
       }
 
       /* -------------------------------
@@ -441,7 +485,6 @@
 
         .pub-item {
           padding: 12px;
-          margin-bottom: 10px;
         }
       }
 
@@ -563,7 +606,6 @@
 
         .pub-item {
           padding: 12px;
-          margin-bottom: 10px;
         }
 
         .pub-title {
@@ -685,7 +727,6 @@
 
         .pub-item {
           padding: 10px;
-          margin-bottom: 8px;
         }
 
         .pub-title {
@@ -770,13 +811,13 @@
       </div>
 
       <div class="right-section">
-        <div class="updates-container">
-          <h2>Ongoing Research</h2>
-          <div>
+        <!-- <div class="updates-container"> -->
+          <!-- <h2>Ongoing Research</h2> -->
+          <!-- <div> -->
             <!-- <p class="updates-container-date">September 22, 2025</p> -->
-            <p>Currently I am working on <a href="https://github.com/debnathk/drug-optimization-dev" target="_blank" class="ongoing-research">drug-structure optimization</a> and <a href="https://github.com/debnathk/drug-drug-synergy-dev" target="_blank" class="ongoing-research">drug-drug synergy prediction</a></p>
-          </div>
-        </div>
+            <!-- <p>Currently I am working on <a href="https://github.com/debnathk/drug-optimization-dev" target="_blank" class="ongoing-research">drug-structure optimization</a> and <a href="https://github.com/debnathk/drug-drug-synergy-dev" target="_blank" class="ongoing-research">drug-drug synergy prediction</a></p> -->
+          <!-- </div> -->
+        <!-- </div> -->
 
         <div class="updates-container">
           <h2>Latest Updates</h2>
@@ -792,30 +833,14 @@
               Our work titled "Attention-Based Multi-Omics Fusion for Drug Synergy Prediction" got selected as a full paper at the <i> 17th ACM Conference on Bioinformatics, Computational Biology and Health Informatics (ACM BCB) 2026</i>!
             </p>
           </div>
-          <!-- <div>
-            <p class="updates-container-date">September 22, 2025</p>
-            <p>
-              Our work titled "A survey on deep learning for drug-target binding
-              prediction: models, benchmarks, evaluation, and case studies" got
-              published in <i>Briefings in Bioinformatics</i>!
-            </p>
-          </div> -->
-          <!-- <div>
-            <p class="updates-container-date">September 8, 2025</p>
-            <p>
-              Our work titled "24R,25(OH)2D3 regulates tumorigenesis in estrogen
-              sensitive laryngeal cancer cells via membrane-associated receptor
-              complexes in ER+ and ER− cells" got published in
-              <i>International Journal of Cancer</i>!
-            </p> -->
-          </div>
         </div>
 
         <div class="publications">
           <h2>Publications</h2>
 
-          <div class="pub-list" id="pub-list">
-            <div class="pub-item" data-index="0">
+          <div class="pub-carousel">
+            <div class="pub-list" id="pub-list">
+            <div class="pub-item">
               <div class="pub-title">
                 Attention-Based Multi-Omics Fusion for Drug Synergy Prediction
               </div>
@@ -833,7 +858,7 @@
               </div>
             </div>
 
-            <div class="pub-item" data-index="0">
+            <div class="pub-item">
               <div class="pub-title">
                 A survey on deep learning for drug-target binding prediction:
                 models, benchmarks, evaluation, and case studies
@@ -849,7 +874,7 @@
               </div>
             </div>
 
-            <div class="pub-item" data-index="1">
+            <div class="pub-item">
               <div class="pub-title">
                 24R,25(OH)2D3 regulates tumorigenesis in estrogen sensitive
                 laryngeal cancer cells via membrane-associated receptor
@@ -870,7 +895,7 @@
               </div>
             </div>
 
-            <div class="pub-item" data-index="2">
+            <div class="pub-item">
               <div class="pub-title">
                 GramSeq-DTA: A Grammar-Based Drug–Target Affinity Prediction
                 Approach Fusing Gene Expression Information
@@ -887,14 +912,17 @@
                   >Code</a
                 >
               </div>
+              </div>
             </div>
+            <button class="pub-nav prev" id="pub-prev" aria-label="Previous publication" hidden>
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="pub-nav next" id="pub-next" aria-label="Next publication">
+              <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
 
-          <div class="pub-markers" id="pub-markers">
-            <div class="pub-marker active" data-index="0"></div>
-            <div class="pub-marker" data-index="1"></div>
-            <div class="pub-marker" data-index="2"></div>
-          </div>
+          <div class="pub-markers" id="pub-markers"></div>
         </div>
       </div>
     </div>
@@ -908,36 +936,41 @@
         link.click();
       });
 
-      // Publication markers functionality
+      // Instagram-style carousel: dots + arrows, built from the list
       const pubList = document.getElementById("pub-list");
-      const markers = document.querySelectorAll(".pub-marker");
+      const pubItems = [...pubList.children];
+      const markerBox = document.getElementById("pub-markers");
+      const prev = document.getElementById("pub-prev");
+      const next = document.getElementById("pub-next");
+      let active = 0;
 
-      // Update active marker based on scroll position
-      pubList.addEventListener("scroll", () => {
-        const scrollLeft = pubList.scrollLeft;
-        const itemWidth = pubList.querySelector(".pub-item").offsetWidth + 15; // width + gap
-        const activeIndex = Math.round(scrollLeft / itemWidth);
-
-        markers.forEach((marker, index) => {
-          if (index === activeIndex) {
-            marker.classList.add("active");
-          } else {
-            marker.classList.remove("active");
-          }
+      const go = (i) =>
+        pubList.scrollTo({
+          left: pubItems[i].offsetLeft - pubItems[0].offsetLeft,
         });
+
+      const dots = pubItems.map((item, i) => {
+        const dot = document.createElement("div");
+        dot.className = "pub-marker" + (i ? "" : " active");
+        dot.addEventListener("click", () => go(i));
+        markerBox.appendChild(dot);
+        return dot;
       });
 
-      // Click marker to scroll to publication
-      markers.forEach((marker) => {
-        marker.addEventListener("click", () => {
-          const index = parseInt(marker.getAttribute("data-index"));
-          const pubItems = pubList.querySelectorAll(".pub-item");
-          pubItems[index].scrollIntoView({
-            behavior: "smooth",
-            block: "nearest",
-            inline: "start",
-          });
-        });
+      prev.addEventListener("click", () => go(Math.max(active - 1, 0)));
+      next.addEventListener("click", () =>
+        go(Math.min(active + 1, pubItems.length - 1))
+      );
+
+      pubList.addEventListener("scroll", () => {
+        const mid = pubList.scrollLeft + pubList.clientWidth / 2;
+        active = pubItems.findIndex(
+          (item) =>
+            item.offsetLeft - pubItems[0].offsetLeft + item.offsetWidth > mid
+        );
+        dots.forEach((d, i) => d.classList.toggle("active", i === active));
+        prev.hidden = active === 0;
+        next.hidden = active === pubItems.length - 1;
       });
     </script>
   </body>
